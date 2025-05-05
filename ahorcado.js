@@ -317,7 +317,7 @@ function mostrarPanel(jugador) {
 
   } else {
     panel.style.backgroundColor = "rgb(90, 212, 79)";
-    turnText.style.color = "white";
+    turnText.style.color = "black";
   }
 
   // Actualiza el texto del turno

@@ -1,55 +1,89 @@
-
 * {
   box-sizing: border-box;
 }
 
+/* Mantener estructura original del body */
+body {
+  font-family: Cambria, Cochin, Georgia, "Times New Roman", Times, serif;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+  /* Mantener color original */
+  background-color: #1a0a2a;
+  /* Nuevo color */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(139, 58, 191, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(91, 33, 182, 0.15) 0%, transparent 25%);
+}
 
 h1.titulo {
   margin: 0px auto 20px auto;
   text-align: center;
-  font-family: Cambria, Cochin, Georgia, "Times New Roman", Times, serif;
-  font-size: 3rem;              /* Tamaño mayor para resaltar */
-  text-transform: uppercase;    /* Mayúsculas */
-  letter-spacing: 3px;          /* Espaciado entre letras */
-  background: linear-gradient(45deg, #f06, #4a90e2);
+  font-size: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 10px 0;
+  /* Solo cambiar estos estilos */
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  background: linear-gradient(45deg, #d4a0ff, #8a5aff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  padding: 10px 0;
+  text-shadow: 0 0 10px rgba(138, 90, 255, 0.5);
+  animation: brillo 2s infinite alternate;
 }
 
 h1#msg-final {
   text-align: center;
-  color: crimson;
   transition: all .5s ease;
   transform: scale(0);
   min-height: 50px;
   margin-bottom: 0;
+  /* Solo color y sombra */
+  color: #da326d;
+  text-shadow: 0 0 10px rgba(255, 107, 158, 0.5);
 }
+
 .zoom-in {
   transform: scale(1) !important;
 }
+
 #acierto {
   text-align: center;
   min-height: 24px;
   transform: scale(0);
 }
+
 .acierto {
   animation: zoomInOut 1s ease;
   font-size: 50px;
 }
+
 .rojo {
   color: red;
 }
+
 .verde {
   color: green;
 }
+
 @keyframes zoomInOut {
-  0% { transform: scale(0); }
-  50% { transform: scale(1); }
-  70% { transform: scale(1); }
-  100% { transform: scale(0); }
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
 }
+
 h2.palabra {
   margin: 0 auto 25px auto;
   text-align: center;
@@ -59,22 +93,33 @@ h2.palabra {
   position: absolute;
   font-size: 40px;
 }
+
 .ahorcados {
-  width: 100%;       /* o el ancho que prefieras */
-  align-items: center; /* centra el contenido verticalmente */
+  width: 100%;
+  align-items: center;
   display: flex;
   justify-content: space-evenly;
   margin-top: -2%;
-
+  /* Añadir solo estilos visuales */
+  background-color: rgba(42, 16, 74, 0.7);
+  border-radius: 20px;
+  padding: 20px;
+  border: 2px solid #6a2a9a;
 }
 
-.ahorcado1, 
+.ahorcado1,
 .ahorcado2 {
   position: relative;
-  width: 300px; /* Ancho según tus imágenes */
-  height: 300px; /* Altura según tus imágenes */
+  width: 300px;
+  height: 300px;
   margin: 0 auto;
+  /* Añadir solo estilos visuales */
+  background-color: rgba(50, 20, 80, 0.5);
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(91, 33, 182, 0.2) inset;
 }
+
 .scoreRojo,
 .scoreAmarillo {
   font-size: 1.5rem;
@@ -83,30 +128,36 @@ h2.palabra {
   width: 80%;
   padding: 10px 0;
   position: absolute;
-  top: -80px;          /* Posición vertical, ajústalo según necesites */
+  top: -80px;
+  /* Posición vertical, ajústalo según necesites */
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  border-radius: 10px;  /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra sutil */
+  border-radius: 10px;
+  /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Sombra sutil */
+  /* Nuevos estilos visuales */
+  background: linear-gradient(135deg, #ff9ec6, #da326d);
+  color: white;
+  border: 1px solid #da326d;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 #back-btn {
-    background-color: #9932cc;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    margin: 1rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  margin: 1rem;
+  /* Nuevos estilos */
+  background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 90, 255, 0.5);
 }
 
+
 #back-btn:hover {
-    background-color: #8b008b;
-    transform: scale(1.05);
+  background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
 }
 
 .scoreRojo {
@@ -120,6 +171,11 @@ h2.palabra {
   color: #663300;
   border: 1px solid #ffd633;
 }
+@keyframes brillo {
+  from { text-shadow: 0 0 10px rgba(138, 90, 255, 0.5); }
+  to { text-shadow: 0 0 20px rgba(212, 160, 255, 0.8); }
+}
+
 .intentosRojo,
 .intentosAmarillo {
   font-size: 1.5rem;
@@ -128,19 +184,24 @@ h2.palabra {
   width: 80%;
   padding: 10px 0;
   position: absolute;
-  top: 340px;          /* Posición vertical, ajústalo según necesites */
+  top: 340px;
+  /* Posición vertical, ajústalo según necesites */
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  border-radius: 10px;  /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra sutil */
+  border-radius: 10px;
+  /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Sombra sutil */
 
 }
+
 .intentosRojo {
   background: rgb(218, 50, 109);
   color: white;
   border: 1px solid #ff4d4d;
 }
+
 .intentosAmarillo {
   background: rgb(90, 212, 79);
   color: #663300;
@@ -151,10 +212,12 @@ h2.palabra {
   width: 50%;
   text-align: center;
 }
+
 #turnos h3 {
   margin: auto;
 }
-h3{
+
+h3 {
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
   color: #333;
@@ -163,18 +226,22 @@ h3{
   padding: 10px;
   margin-top: 50px;
 }
+
 h3 span {
-   color: orangered;
+  color: orangered;
 }
+
 .letra:disabled {
-  color:rgba(255, 0, 0, 0.5);
+  color: rgba(255, 0, 0, 0.5);
 }
+
 picture {
   display: block;
   position: relative;
   width: 100%;
   height: 100%;
 }
+
 picture img {
   position: absolute;
   left: 50%;
@@ -183,69 +250,119 @@ picture img {
   width: auto;
   top: 0;
 }
-#image5, #image4, #image3,
-#image2, #image1, #image0 {
+
+#image5,
+#image4,
+#image3,
+#image2,
+#image1,
+#image0 {
   opacity: 0;
   transition: opacity .3s ease;
 }
-#image5_1, #image4_1, #image3_1,
-#image2_1, #image1_1, #image0_1 {
+
+#image5_1,
+#image4_1,
+#image3_1,
+#image2_1,
+#image1_1,
+#image0_1 {
   opacity: 0;
   transition: opacity .3s ease;
 }
+
 .fade-in {
   opacity: 1 !important;
 }
+
 .encuadre {
   border: 2px dashed crimson;
   padding: 3px 2px 2px 6px;
 }
+
 .contenedor-flex {
   display: flex;
-  justify-content: center; /* Centrado horizontal */
+  justify-content: center;
+  /* Centrado horizontal */
 }
 
 
-.letrero{
-  background-color: #f2f2f2;
+.letrero {
+  /* Mantener estructura original */
   border-radius: 5px;
   padding: 10px;
   margin: 20px auto;
   text-align: center;
   font-size: 18px;
-  color: #333;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-} 
-.letras{
-  background-color: #f2f2f2;
-  border-radius: 5px;
-  font-size: 25px;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  
+  /* Nuevos estilos visuales */
+  background-color: rgba(50, 20, 80, 0.7); /* Fondo semitransparente */
+  color: #e0d0ff; /* Color de texto del primer CSS */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+  border: 1px solid #8a5aff; /* Borde estilo neón */
 }
 
-.turn-panel {
-  position: relative; /* Cambiamos a posicionamiento relativo */
-  margin: 0px auto 10px; /* 400px de margen superior + centrado horizontal */
-  width: 300px;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 10px;
-  text-align: center;
-  z-index: 999;
-  opacity: 0;
+.letras {
+  /* Mantener estructura original */
+  border-radius: 5px;
+  font-size: 25px;
+  
+  /* Nuevos estilos visuales */
+  background-color: rgba(50, 20, 80, 0.7); /* Mismo fondo que .letrero */
+  color: #e0d0ff; /* Color de texto consistente */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); /* Sombra coordinada */
+  border: 1px solid #8a5aff; /* Borde matching */
+  padding: 10px; /* Añadir padding para mejor espaciado */
+}
+
+/* Estado pulsado */
+.letrero:active,
+.letrero.activo { /* Si usas una clase JS */
+  background-color: rgba(50, 20, 80, 0.4); /* Más transparente */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Si el efecto era al ganar/perder */
+.letrero.transparente {
+  opacity: 0.5;
   transition: opacity 0.5s ease;
+}
+.turn-panel {
+  position: relative; /* Mantener posicionamiento original */
+  margin: 0px auto 10px; /* Conservar márgenes críticos */
+  width: 300px; /* Mismo ancho */
+  padding: 20px; /* Padding original */
+  background-color: rgba(50, 20, 80, 0.9); /* Nuevo color con transparencia */
+  border-radius: 10px; /* Mismo radio */
+  text-align: center;
+  z-index: 999; /* Mismo z-index */
+  opacity: 0;
+  transition: opacity 0.5s ease; /* Transición original */
+  /* Nuevos estilos visuales */
+  border: 2px solid #8a5aff;
+  box-shadow: 0 0 20px rgba(138, 90, 255, 0.5);
 }
 
 .turn-panel.show {
   opacity: 1;
+  animation: pulse 1.5s infinite; /* Animación del primer CSS */
 }
+
 .turn-panel p {
-  color: #fff;
-  font-size: 1.5rem;
+  color: #d4a0ff; /* Color texto del primer CSS */
+  font-size: 1.5rem; /* Tamaño original */
+  text-shadow: 0 0 5px rgba(212, 160, 255, 0.5); /* Efecto del primer CSS */
+}
+
+/* Añadir keyframes del primer CSS si no existen */
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 90, 255, 0.5); }
+  50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(138, 90, 255, 0.8); }
+  100% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 90, 255, 0.5); }
 }
 
 
@@ -254,11 +371,13 @@ picture img {
     transform: translateY(-50px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
   }
 }
+
 /* Fondo del modal que cubre toda la pantalla */
 .modal {
   position: fixed;
@@ -266,40 +385,52 @@ picture img {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
-  display: none; /* Oculto por defecto */
-  align-items: center;  /* Centrado verticalmente */
-  justify-content: center;  /* Centrado horizontalmente */
+  background: rgba(0, 0, 0, 0.5);
+  /* Fondo oscuro semitransparente */
+  display: none;
+  /* Oculto por defecto */
+  align-items: center;
+  /* Centrado verticalmente */
+  justify-content: center;
+  /* Centrado horizontalmente */
   z-index: 1000;
 }
 
-/* Clase para mostrar el modal */
+/* Clase para mostrar el modal - Mantener estructura original */
 .modal.show {
-  display: flex;
+  display: flex; /* Esto se mantiene igual para funcionalidad */
 }
 
-/* Contenido del modal */
+/* Contenido del modal - Aplicar nuevos estilos visuales */
 .modal-content {
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #2a104a; /* Color del primer CSS */
+  padding: 20px 30px; /* Mantener padding original */
+  border-radius: 10px; /* Mantener radio original */
+  text-align: center; 
+  box-shadow: 0 10px 25px rgba(91, 33, 182, 0.5); /* Sombra del primer CSS */
+  border: 2px solid #8a5aff; /* Borde del primer CSS */
+  color: #e0d0ff; /* Color de texto del primer CSS */
+  /* Mantener tamaño y posición original */
+  max-width: 500px; 
+  margin: auto;
 }
 
-/* Estilos para el botón */
+/* Botón del modal - Nuevos estilos visuales */
 .modal-content button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007BFF;
+  margin-top: 20px; /* Mantener margen original */
+  padding: 12px 24px; /* Ajuste de padding del primer CSS */
+  background: linear-gradient(to bottom, #8a5aff, #6a3ac8); /* Gradiente del primer CSS */
   border: none;
-  border-radius: 5px;
-  color: #fff;
+  border-radius: 30px; /* Borde más redondeado del primer CSS */
+  color: white;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s; /* Transición completa del primer CSS */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 90, 255, 0.5); /* Sombras combinadas */
 }
 
 .modal-content button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(to bottom, #9a6aff, #7a4ad8); /* Gradiente hover del primer CSS */
+  transform: translateY(-2px); /* Efecto de elevación */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(138, 90, 255, 0.7); /* Sombras hover */
 }
