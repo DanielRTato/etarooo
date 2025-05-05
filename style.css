@@ -22,7 +22,7 @@ body {
     overflow: hidden;
 }
 
-/* ESTILOS PARA EL FONDO (SOLUCIÓN DEFINITIVA) */
+/* ESTILOS PARA EL FONDO */
 .contenedor-fondo {
     position: fixed;
     top: 0;
@@ -42,64 +42,69 @@ body {
     object-fit: cover;
 }
 
-/* CONTENEDOR DE BOTONES */
-.contenedor-botones {
-    position: absolute;
+/* CONTENEDOR GRID PRINCIPAL */
+.parent {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    z-index: 1;
 }
 
-/* ESTILOS PARA LOS BOTONES (EFECTOS MEJORADOS) */
-.boton1-juego, 
-.boton2-juego, 
-.boton3-juego, 
-.boton4-juego {
-    width: 220px;
+/* POSICIONAMIENTO DE BOTONES EN LA GRID */
+.div1 { 
+    grid-area: 3 / 3 / 4 / 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div2 { 
+    grid-area: 2 / 4 / 3 / 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div3 { 
+    grid-area: 2 / 5 / 3 / 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div4 { 
+    grid-area: 3 / 7 / 4 / 8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ESTILOS PARA LOS BOTONES */
+.boton-juego {
+    width: 180px; /* Tamaño base */
     height: auto;
     cursor: pointer;
     transition: all 0.4s ease-out;
-    filter: drop-shadow(0 0 5px #000);
     transform: scale(1);
 }
 
-/* Efecto hover ampliado con iluminación */
-.boton1-juego:hover, 
-.boton2-juego:hover, 
-.boton3-juego:hover, 
-.boton4-juego:hover {
+/* Efecto hover mejorado */
+.boton-juego:hover {
     transform: scale(1.15);
     filter: drop-shadow(var(--brillo-hover)) brightness(1.2);
     transition: all 0.2s ease-in;
 }
 
-/* Posicionamiento específico para cada botón */
-.boton1-juego {
-    position: absolute;
-    top: 40%;
-    left: 20%;
-}
-
-.boton2-juego {
-    position: absolute;
-    top: 40%;
-    right: 20%;
-}
-
-.boton3-juego {
-    position: absolute;
-    top: 60%;
-    left: 30%;
-}
-
-.boton4-juego {
-    position: absolute;
-    top: 60%;
-    right: 30%;
+.enlace-juego {
+    display: block;
+    text-decoration: none;
 }
 
 /* ESTILOS DEL FOOTER */
@@ -112,6 +117,7 @@ footer {
     text-align: center;
     border-top: 1px solid var(--color-secundario);
     backdrop-filter: blur(3px);
+    z-index: 2;
 }
 
 .pie-footer {
