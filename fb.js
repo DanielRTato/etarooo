@@ -221,6 +221,10 @@ function ranaVoladora(e) {
             velocidadY = -6; // Movimiento normal
         }
     }
+    // Reiniciar con R
+    if (e.code == "KeyR") {
+        reiniciarJuego();
+    }
 }
 
 function detectarColision (a,b){
