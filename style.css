@@ -1,11 +1,14 @@
+/* Variables de colores */
 :root {
-    --primary-color: #6a0dad;
-    --secondary-color: #9932cc;
-    --background-color: #1a001a;
-    --text-color: #ffffff;
-    --card-hover: #8b008b;
+    --color-primario: #6a0dad;
+    --color-secundario: #9932cc;
+    --color-fondo: #1a001a;
+    --color-texto: #ffffff;
+    --color-hover: #8b008b;
+    --brillo-hover: 0 0 15px #ff00ff;
 }
 
+/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -14,223 +17,135 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    min-height: 100vh;
-    position: relative;
-    z-index: 1;
-    padding: 1rem;
-    font-size: 16px;
+    color: var(--color-texto);
+    height: 100vh;
+    overflow: hidden;
 }
 
+/* ESTILOS PARA EL FONDO (SOLUCIÓN DEFINITIVA) */
+.contenedor-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.imagen-fondo {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+/* CONTENEDOR DE BOTONES */
+.contenedor-botones {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+/* ESTILOS PARA LOS BOTONES (EFECTOS MEJORADOS) */
+.boton1-juego, 
+.boton2-juego, 
+.boton3-juego, 
+.boton4-juego {
+    width: 220px;
+    height: auto;
+    cursor: pointer;
+    transition: all 0.4s ease-out;
+    filter: drop-shadow(0 0 5px #000);
+    transform: scale(1);
+}
+
+/* Efecto hover ampliado con iluminación */
+.boton1-juego:hover, 
+.boton2-juego:hover, 
+.boton3-juego:hover, 
+.boton4-juego:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(var(--brillo-hover)) brightness(1.2);
+    transition: all 0.2s ease-in;
+}
+
+/* Posicionamiento específico para cada botón */
+.boton1-juego {
+    position: absolute;
+    top: 40%;
+    left: 20%;
+}
+
+.boton2-juego {
+    position: absolute;
+    top: 40%;
+    right: 20%;
+}
+
+.boton3-juego {
+    position: absolute;
+    top: 60%;
+    left: 30%;
+}
+
+.boton4-juego {
+    position: absolute;
+    top: 60%;
+    right: 30%;
+}
+
+/* ESTILOS DEL FOOTER */
 footer {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    padding: 2rem 0;
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
-    border-top: 2px solid var(--secondary-color);
-    z-index: 1000;
+    width: 100%;
+    background: rgba(26, 0, 26, 0.7);
+    padding: 10px 0;
+    text-align: center;
+    border-top: 1px solid var(--color-secundario);
+    backdrop-filter: blur(3px);
 }
 
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+.pie-footer {
+    display: inline-block;
 }
 
-.footer-section h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-}
-
-.footer-section p {
-    margin-bottom: 0.5rem;
-}
-
-.footer-links {
+.enlaces-footer {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 5px 0;
 }
 
-.footer-links li {
-    margin-bottom: 0.5rem;
+.enlaces-footer li {
+    display: inline-block;
+    margin: 0 15px;
 }
 
-.footer-links a {
-    color: var(--text-color);
+.enlaces-footer a {
+    color: var(--color-texto);
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-size: 14px;
+    transition: color 0.3s;
 }
 
-.footer-links a:hover {
-    color: var(--card-hover);
-    text-decoration: underline;
+.enlaces-footer a:hover {
+    color: var(--color-hover);
 }
 
-.social-icons {
-    display: flex;
-    gap: 1rem;
-}
-
-.social-icon {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    transition: color 0.3s ease;
-}
-
-.social-icon:hover {
-    color: var(--card-hover);
-}
-
-.footer-bottom {
-    text-align: center;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.email-link {
-    color: var(--primary-color);
+.correo-enlace {
+    color: var(--color-primario);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s;
+    font-size: 14px;
 }
 
-.email-link:hover {
-    color: var(--card-hover);
-    text-decoration: underline;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    width: 95%;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-h1 {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-}
-
-.frog-icon {
-    font-size: clamp(3rem, 8vw, 4.5rem);
-    color: #00ff00;
-    margin-bottom: 1.5rem;
-}
-
-main {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 1.5rem;
-}
-
-.game-card {
-    background: rgba(106, 0, 173, 0.8);
-    border-radius: 15px;
-    padding: 1.5rem;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid var(--secondary-color);
-    box-shadow: 0 4px 15px rgba(106, 0, 173, 0.3);
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-    height: 100%;
-    min-height: 300px;
-}
-
-.game-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(106, 0, 173, 0.4);
-}
-
-.game-card i {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    margin-bottom: 1rem;
-    color: var(--secondary-color);
-}
-
-.game-card h2 {
-    font-size: clamp(1.4rem, 3vw, 1.8rem);
-    margin-bottom: 0.8rem;
-    color: var(--text-color);
-}
-
-.game-card p {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 1.2rem;
-    line-height: 1.4;
-}
-
-.play-btn {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 20px;
-    font-size: clamp(0.9rem, 2vw, 1.2rem);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 240px;
-    margin: 0 auto;
-}
-
-.play-btn:hover {
-    background-color: var(--card-hover);
-    transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 1rem;
-    }
-    
-    .game-card {
-        padding: 1.2rem;
-    }
-    
-    main {
-        grid-template-columns: 1fr;
-        gap: 1.2rem;
-    }
-    
-    .play-btn {
-        font-size: 1rem;
-        padding: 0.8rem 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        font-size: 15px;
-    }
-    
-    .game-card {
-        padding: 1rem;
-    }
-    
-    .play-btn {
-        font-size: 0.9rem;
-        padding: 0.7rem 1rem;
-    }
+.correo-enlace:hover {
+    color: var(--color-hover);
 }
