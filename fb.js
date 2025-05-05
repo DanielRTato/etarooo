@@ -49,10 +49,19 @@ let gameOver = false
 let puntuacion = 0
 
 // Sonidos
-let volarSonido = new Audio("../assets/audio/FB/sfx_wing.wav");
-let hitSonido = new Audio("../assets/audio/FB/sfx_hit.wav");
-let fondoSonido = new Audio("../assets/audio/FB/Bg_BABA_YAGA.mp3");
-fondoSonido.loop = true;
+let volarSonido = new Audio();
+let hitSonido = new Audio();
+let fondoSonido = new Audio();
+
+// Intentar cargar los sonidos
+try {
+    volarSonido.src = "assets/audio/FB/sfx_wing.wav";
+    hitSonido.src = "assets/audio/FB/sfx_hit.wav";
+    fondoSonido.src = "assets/audio/FB/Bg_BABA_YAGA.mp3";
+    fondoSonido.loop = true;
+} catch (error) {
+    console.error("Error loading sounds:", error);
+}
 
 
 window.onload = function() { 
@@ -62,22 +71,48 @@ window.onload = function() {
     tablero.height = tableroHeight
     dibujo = tablero.getContext("2d")
 
-   tuberiaArribaImg = new Image()
-   tuberiaArribaImg.src = "../assets/imagenes/FB/toppipe.png "
+    // Cargar imágenes
+    const images = {
+        meiga: new Image(),
+        topPipe: new Image(),
+        bottomPipe: new Image()
+    };
 
-    tuberiaAbajoImg = new Image()
-    tuberiaAbajoImg.src = "../assets/imagenes/FB/bottompipe.png"
+    images.meiga.src = "assets/imagenes/FB/Rana_sinBordeNegro.svg";
+    images.topPipe.src = "assets/imagenes/FB/toppipe.png";
+    images.bottomPipe.src = "assets/imagenes/FB/bottompipe.png";
 
-    meigaImg = new Image()
-    meigaImg.src = "../assets/imagenes/FB/Rana_sinBordeNegro.svg"
-    meigaImg.onload = function(){
-        dibujo.drawImage(meigaImg ,meiga.x, meiga.y, meiga.width, meiga.height)
+    // Esperar a que todas las imágenes se carguen
+    let loadedImages = 0;
+    const totalImages = 3;
+
+    function handleImageLoad() {
+        loadedImages++;
+        if (loadedImages === totalImages) {
+            // Todas las imágenes cargadas
+            meigaImg = images.meiga;
+            tuberiaArribaImg = images.topPipe;
+            tuberiaAbajoImg = images.bottomPipe;
+            dibujo.drawImage(meigaImg, meiga.x, meiga.y, meiga.width, meiga.height);
+            requestAnimationFrame(update);
+            setInterval(ponTuberia, 800);
+            document.addEventListener("keydown", ranaVoladora);
+            
+            // Emitir evento para ocultar pantalla de carga
+            const event = new Event('gameReady');
+            window.dispatchEvent(event);
+        }
     }
-    requestAnimationFrame(update)
-    setInterval(ponTuberia, 800) // cada 1,5 segundos
-    document.addEventListener("keydown", ranaVoladora)
-}
 
+    // Agregar event listeners para las imágenes
+    Object.values(images).forEach(img => {
+        img.onload = handleImageLoad;
+        img.onerror = function() {
+            console.error(`Error loading image: ${this.src}`);
+            alert("Error loading game assets. Please make sure all game files are in the correct location.");
+        };
+    });
+}
 
 
 function update() {
