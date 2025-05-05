@@ -61,6 +61,7 @@ try {
     fondoSonido.loop = true;
 } catch (error) {
     console.error("Error loading sounds:", error);
+    mostrarError('Error al cargar los sonidos. El juego continuará sin sonido.');
 }
 
 
@@ -78,13 +79,32 @@ window.onload = function() {
         bottomPipe: new Image()
     };
 
-    images.meiga.src = "assets/imagenes/FB/Rana_sinBordeNegro.svg";
-    images.topPipe.src = "assets/imagenes/FB/toppipe.png";
-    images.bottomPipe.src = "assets/imagenes/FB/bottompipe.png";
+    // Obtener la ruta absoluta del directorio del juego
+    const baseDir = window.location.href.split('/').slice(0, -1).join('/') + '/';
+    
+    images.meiga.src = baseDir + "assets/imagenes/FB/Rana_sinBordeNegro.svg";
+    images.topPipe.src = baseDir + "assets/imagenes/FB/toppipe.png";
+    images.bottomPipe.src = baseDir + "assets/imagenes/FB/bottompipe.png";
+
+    // Manejo de errores para las imágenes
+    images.meiga.onerror = () => {
+        console.error('Error al cargar la imagen de la meiga');
+        mostrarError('No se pudo cargar la imagen de la meiga');
+    };
+    images.topPipe.onerror = () => {
+        console.error('Error al cargar la imagen de la tubería superior');
+        mostrarError('No se pudo cargar la imagen de la tubería superior');
+    };
+    images.bottomPipe.onerror = () => {
+        console.error('Error al cargar la imagen de la tubería inferior');
+        mostrarError('No se pudo cargar la imagen de la tubería inferior');
+    };
 
     // Esperar a que todas las imágenes se carguen
     let loadedImages = 0;
     const totalImages = 3;
+    const MAX_LOAD_TIME = 5000; // 5 segundos
+    let loadTimer;
 
     function handleImageLoad() {
         loadedImages++;
@@ -99,8 +119,27 @@ window.onload = function() {
             document.addEventListener("keydown", ranaVoladora);
             
             // Emitir evento para ocultar pantalla de carga
-            const event = new Event('gameReady');
-            window.dispatchEvent(event);
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                loadingScreen.style.display = 'none';
+            }
+            clearTimeout(loadTimer);
+        }
+    }
+
+    // Configurar timeout en caso de que las imágenes no se carguen
+    loadTimer = setTimeout(() => {
+        if (loadedImages < totalImages) {
+            mostrarError('Error al cargar las imágenes. Por favor, verifica que tienes conexión a internet y que las imágenes están en la carpeta correcta.');
+        }
+    }, MAX_LOAD_TIME);
+
+    // Función para mostrar errores
+    function mostrarError(mensaje) {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.querySelector('h2').textContent = 'Error al cargar el juego';
+            loadingScreen.querySelector('p').textContent = mensaje;
         }
     }
 
