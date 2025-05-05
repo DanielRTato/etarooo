@@ -128,23 +128,26 @@ h2.palabra {
 }
 
 #back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
   background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 30px;
-  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 90, 255, 0.5);
-  margin: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
 }
 
 #back-btn:hover {
   background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(138, 90, 255, 0.7);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .scoreRosa {
