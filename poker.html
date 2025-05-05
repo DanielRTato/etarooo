@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesa de Poker</title>
+    <link rel="stylesheet" href="poker.css">
+</head>
+
+<body>
+
+    <div class="juego-container">
+
+        <!-- Botones lado izquierdo -->
+        <div class="control-panel izquierda">
+            <div class="botones">
+                <button onclick="eleccionRojo(true)" class="apostar_rojo_Gana">Apuesto que Gana</button>
+                <button onclick="eleccionRojo(false)" class="apostar_rojo_Pierde">Apuesto que Pierde</button>
+            </div>
+            <div class="multiplicador-panel">
+                <p>Multiplicador: <span class="valor">x0</span></p>
+            </div>
+            <div class="scoreRojo">
+                <p>Score Rojo: <span class="valor">0</span></p>
+            </div>
+        </div>
+
+        <!-- Mesa con cartas -->
+        <div class="mesa">
+
+            <!-- Cartas del rival -->
+            <div class="manos rival">
+                <img src="dark/BACK.png" alt="Carta Rival 1" class="carta" id="rival1">
+                <img src="dark/BACK.png" alt="Carta Rival 2" class="carta" id="rival2">
+            </div>
+
+            <!-- Cartas comunitarias -->
+            <div class="comunitarias">
+                <img src="dark/BACK.png" alt="Carta Mesa 1" class="carta" id="mesa1">
+                <img src="dark/BACK.png" alt="Carta Mesa 2" class="carta" id="mesa2">
+                <img src="dark/BACK.png" alt="Carta Mesa 3" class="carta" id="mesa3">
+                <img src="dark/BACK.png" alt="Carta Mesa 4" class="carta" id="mesa4">
+                <img src="dark/BACK.png" alt="Carta Mesa 5" class="carta" id="mesa5">
+            </div>
+
+            <!-- Tus cartas -->
+            <div class="manos jugador">
+                <img src="dark/1-C.png" alt="Tu Carta 1" class="carta" id="jugador1">
+                <img src="dark/1-C.png" alt="Tu Carta 2" class="carta" id="jugador2">
+            </div>
+
+        </div>
+
+        <!-- Botones lado derecho -->
+        <div class="control-panel derecha">
+            <div class="botones">
+                <button onclick="eleccionAmarillo(true)" class="apostar_amarillo_Gana">Apuesta que Gana</button>
+                <button onclick="eleccionAmarillo(false)" class="apostar_amarillo_Pierde">Apuesta que Pierde</button>
+            </div>
+            <div class="multiplicador-panel">
+                <p>Multiplicador: <span class="valor">x0</span></p>
+            </div>
+            <div class="scoreAmarillo">
+                <p>Score Amarillo: <span class="valor">0</span></p>
+            </div>
+        </div>
+
+    </div>
+    <div id="mensaje" class="panel">Empecemos</div>
+
+    <script src="poker.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,241 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+    background-color: #1a0a2a;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(139, 58, 191, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(91, 33, 182, 0.15) 0%, transparent 25%);
+    color: #e0d0ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    margin: 0;
+}
+
+.juego-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    background-color: rgba(42, 16, 74, 0.7);
+    border-radius: 20px;
+    padding: 20px;
+    border: 2px solid #6a2a9a;
+    box-shadow: 0 10px 25px rgba(91, 33, 182, 0.3);
+}
+
+.mesa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.manos,
+.comunitarias {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.carta {
+    width: 140px;
+    height: 210px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    border: 2px solid #8a5aff;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 15px rgba(138, 90, 255, 0.3);
+}
+
+.carta:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(138, 90, 255, 0.5);
+}
+
+.control-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.botones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.apostar {
+    padding: 12px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 90, 255, 0.3);
+}
+
+.apostar_rojo {
+    background: linear-gradient(145deg, #da326d, #be2b3e);
+    border: 1px solid #da326d;
+}
+
+.apostar_amarillo {
+    background: linear-gradient(145deg, #5ad44f, #48b33d);
+    border: 1px solid #5ad44f;
+    color: #1a3a1a;
+}
+
+.apostar:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(138, 90, 255, 0.5);
+}
+
+.multiplicador-panel {
+    background: rgba(50, 20, 80, 0.7);
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid #8a5aff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #e0d0ff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.multiplicador-panel .valor {
+    color: #8a5aff;
+    text-shadow: 0 0 10px rgba(138, 90, 255, 0.5);
+}
+
+.panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(42, 16, 74, 0.9);
+    color: #e0d0ff;
+    font-size: 1.5em;
+    padding: 1em 2em;
+    border-radius: 15px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1000;
+    border: 2px solid #8a5aff;
+    box-shadow: 0 0 20px rgba(138, 90, 255, 0.3);
+    text-shadow: 0 0 5px rgba(212, 160, 255, 0.5);
+}
+
+.panel.show {
+    opacity: 1;
+    pointer-events: all;
+    animation: pulse 1.5s infinite;
+}
+
+.rojo {
+    background: linear-gradient(145deg, #da326d, #be2b3e);
+    border: 2px solid #da326d;
+}
+
+.amarillo {
+    background: linear-gradient(145deg, #5ad44f, #48b33d);
+    border: 2px solid #5ad44f;
+}
+
+
+.scoreRojo {
+    background: linear-gradient(145deg, #da326d, #be2b3e);
+    border: 2px solid #da326d;
+    color: white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.scoreAmarillo {
+    background: linear-gradient(145deg, #5ad44f, #48b33d);
+    border: 2px solid #5ad44f;
+    color: #1a3a1a;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.apostar_rojo_Gana,
+.apostar_rojo_Pierde {
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: rgb(218, 50, 109);
+  color: white;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.apostar_rojo_Gana:hover,
+.apostar_rojo_Pierde:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.apostar_rojo_Gana:active,
+.apostar_rojo_Pierde:active {
+  transform: scale(0.98);
+}
+
+/* Botones del jugador amarillo */
+.apostar_amarillo_Gana,
+.apostar_amarillo_Pierde {
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: rgb(90, 212, 79);
+  color: black;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.apostar_amarillo_Gana:hover,
+.apostar_amarillo_Pierde:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.apostar_amarillo_Gana:active,
+.apostar_amarillo_Pierde:active {
+  transform: scale(0.98);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 90, 255, 0.3); }
+    50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(138, 90, 255, 0.5); }
+    100% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 90, 255, 0.3); }
+}
+
+@keyframes brillo {
+    from { text-shadow: 0 0 10px rgba(138, 90, 255, 0.5); }
+    to { text-shadow: 0 0 20px rgba(212, 160, 255, 0.8); }
+}
+
+.encuadre {
+    border: 2px dashed #da326d;
+    padding: 3px 2px 2px 6px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 107, 158, 0.3);
+}
+
+.contenedor-flex {
+    display: flex;
+    justify-content: center;
+}
