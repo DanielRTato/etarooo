@@ -151,7 +151,7 @@ function dibujarTablero() {
             }
             
             // Aplicar la imagen al elemento
-            elemento.style.backgroundImage = `url('CC/${imagen}')`;
+            elemento.style.backgroundImage = `url('../assets/imagenes/CC/${imagen}')`;
             celda.appendChild(elemento);
             
             // Añadir evento de clic
