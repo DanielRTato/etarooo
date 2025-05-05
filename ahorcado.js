@@ -306,7 +306,7 @@ function mostrarPanel(jugador) {
     jugadorTipo = "Rosa";
   }
   else {
-    jugadorTipo = "Green";
+    jugadorTipo = "Verde";
   }
   //Cambia el color del panel según el jugador
   // y de la letra
@@ -316,7 +316,7 @@ function mostrarPanel(jugador) {
 
 
   } else {
-    panel.style.backgroundColor = "green";
+    panel.style.backgroundColor = "rgb(90, 212, 79)";
     turnText.style.color = "white";
   }
 

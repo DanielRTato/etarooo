@@ -110,13 +110,13 @@ h2.palabra {
 }
 
 .scoreRojo {
-  background: linear-gradient(135deg, #ff9999, #ff4d4d);
+  background: rgb(218, 50, 109);
   color: white;
   border: 1px solid #ff4d4d;
 }
 
 .scoreAmarillo {
-  background: linear-gradient(135deg, #fff79a, #ffd633);
+  background: rgb(90, 212, 79);
   color: #663300;
   border: 1px solid #ffd633;
 }
@@ -137,12 +137,12 @@ h2.palabra {
 
 }
 .intentosRojo {
-  background: linear-gradient(135deg, #ff9999, #ff4d4d);
+  background: rgb(218, 50, 109);
   color: white;
   border: 1px solid #ff4d4d;
 }
 .intentosAmarillo {
-  background: linear-gradient(135deg, #fff79a, #ffd633);
+  background: rgb(90, 212, 79);
   color: #663300;
   border: 1px solid #ffd633;
 }
