@@ -125,6 +125,15 @@ function intento(letra) {
   let count = 0;
   // Deshabilitar la letra ya seleccionada
   document.getElementById(letra).disabled = true;
+  // Después de clicar que el boton de la letra cambie de color , es un boton
+  // de color rosa o verde dependiendo del jugador
+  if (player) {
+    document.getElementById(letra).classList.add("rojo");
+  } else {
+    document.getElementById(letra).classList.add("verde");
+  }
+
+
 
   if (palabra.indexOf(letra) != -1) {
     // La letra existe en la palabra

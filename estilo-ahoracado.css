@@ -216,6 +216,17 @@ h2.palabra {
 #turnos h3 {
   margin: auto;
 }
+.rojo {
+  color: #da326d !important;
+  background-color: rgba(218, 50, 109, 0.3) !important;
+  border: 1px solid #da326d !important;
+}
+
+.verde {
+  color: #5ad44f !important;
+  background-color: rgba(90, 212, 79, 0.3) !important;
+  border: 1px solid #5ad44f !important;
+}
 
 h3 {
   text-align: center;
