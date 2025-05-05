@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiniJuegos Halloween</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Detección de características -->
+    <script>
+        // Verificar soporte para Canvas
+        if (!window.CanvasRenderingContext2D) {
+            document.write('<div class="error-message">Tu navegador no soporta Canvas. Por favor, actualízalo o usa otro navegador.</div>');
+        }
+        // Verificar soporte para localStorage
+        if (typeof(Storage) === "undefined") {
+            document.write('<div class="error-message">Tu navegador no soporta almacenamiento local. Algunas funciones pueden no funcionar.</div>');
+        }
+    </script>
 </head>
 <body>
     <div class="contenedor-fondo">
@@ -14,7 +25,7 @@
     <div class="parent">
         <div class="div1">
             <a href="memory.html" class="enlace-juego">
-                <img src="assets/imagenes/casa1.png" class="boton-casa" alt="Juego Ahorcado">
+                <img src="assets/imagenes/casa1.png" class="boton-casa" alt="Juego Memory">
             </a>
         </div>
         <div class="div2">
@@ -24,48 +35,16 @@
         </div>
         <div class="div3">
             <a href="fb.html" class="enlace-juego">
-                <img src="assets/imagenes/Casa3.png" class="boton-casa" alt="Juego Flappy Meiga">
+                <img src="assets/imagenes/casa3.png" class="boton-casa" alt="Juego Flappy Meiga">
             </a>
         </div>
         <div class="div4">
             <a href="Ahorcado.html" class="enlace-juego">
-                <img src="assets/imagenes/casa4.png" class="boton-casa" alt="Juego Memory">
+                <img src="assets/imagenes/casa4.png" class="boton-casa" alt="Juego Ahorcado">
             </a>
         </div>
     </div>
     
-    <footer>
-        <div class="pie-footer">
-            <ul class="enlaces-footer">
-                <li><a href="https://github.com/KarlyF-AS/Ataro" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            </ul>
-            <p>&copy; 2025 Ataro-AS. Todos los derechos reservados.</p>
-            <p><a href="mailto:ataroSA@gmail.com" class="correo-enlace">ataroSA@gmail.com</a></p>
-        </div>
-    </footer>
-    <script src="script.js"></script>
-</body>
-</html>
-            </a>
-        </div>
-    </div>
-
-    <footer>
-        <div class="pie-footer">
-            <ul class="enlaces-footer">
-                <li><a href="https://github.com/KarlyF-AS/Ataro" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            </ul>
-            <p>&copy; 2025 Ataro-AS. Todos los derechos reservados.</p>
-            <p><a href="mailto:ataroSA@gmail.com" class="correo-enlace">ataroSA@gmail.com</a></p>
-        </div>
-    </footer>
-    <script src="script.js"></script>
-</body>
-</html>
-            </a>
-        </div>
-    </div>
-
     <footer>
         <div class="pie-footer">
             <ul class="enlaces-footer">

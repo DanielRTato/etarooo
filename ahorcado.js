@@ -135,42 +135,42 @@ function intento(letra) {
       }
     }
     hueco.innerHTML = oculta.join("");
-    document.getElementById("acierto").innerHTML = "Bien!";
+    document.getElementById("acierto").innerHTML = "¡Bien! La letra " + letra + " está en la palabra";
     document.getElementById("acierto").classList.add("acierto", "verde");
 
     // Incrementar el puntaje del jugador actual
     if (player) {
       scorePlayer1 += calcularCuenta(count, comprobarVocal(letra));
-      scoreP1.innerHTML = "Score: " + scorePlayer1;
+      document.querySelector('.scoreRosa').textContent = `Score: ${scorePlayer1}`;
     } else {
       scorePlayer2 += calcularCuenta(count, comprobarVocal(letra));
-      scoreP2.innerHTML = "Score: " + scorePlayer2;
+      document.querySelector('.scoreVerde').textContent = `Score: ${scorePlayer2}`;
     }
   } else {
     // La letra no está en la palabra
-    document.getElementById("acierto").innerHTML = "Fallo!";
+    document.getElementById("acierto").innerHTML = "¡Fallo! La letra " + letra + " no está en la palabra";
     document.getElementById("acierto").classList.add("acierto", "rojo");
 
     if (player) {
       contPlayer1--;
       // Actualizar contador de intentos para jugador 1
-      intentosRojos.innerHTML = "Intentos restantes: " + contPlayer1;
+      document.querySelector('.intentosRosa').textContent = `Intentos restantes: ${contPlayer1}`;
       // Actualizar imagen para jugador 1
       document.getElementById("image" + contPlayer1).classList.add("fade-in");
     } else {
       contPlayer2--;
-      // Actualizar contador de intentos para jugador 2
-      intentosAmarillos.innerHTML = "Intentos restantes: " + contPlayer2;
-      // Actualizar imagen para jugador 2 (nota el sufijo _1)
+      // Actualizar contador de intentos para jugador 2 (nota el sufijo _1)
+      document.querySelector('.intentosVerde').textContent = `Intentos restantes: ${contPlayer2}`;
+      // Actualizar imagen para jugador 2
       document.getElementById("image" + contPlayer2 + "_1").classList.add("fade-in");
     }
   }
 
   // Alternar el turno: si era true pasa a false y viceversa
   player = !player;
+  mostrarPanel(player);
 
   compruebaFin();
-  mostrarPanel(player)
   setTimeout(function () {
     document.getElementById("acierto").className = "";
   }, 800);
@@ -298,22 +298,18 @@ function compruebaFin() {
 // Esta función muestra un panel que indica de quién es el turno
 // y lo oculta después de 2 segundos.
 function mostrarPanel(jugador) {
-  // Tiempo de espera para mostrar el panel
   const panel = document.getElementById('turnPanel');
   const turnText = document.getElementById('turnText');
   let jugadorTipo = "";
   if (jugador == true) {
     jugadorTipo = "Rojo";
-  }
-  else {
+  } else {
     jugadorTipo = "Amarillo";
   }
-  //Cambia el color del panel según el jugador
-  // y de la letra
+
+  // Cambia el color del panel según el jugador
   if (jugador) {
     panel.style.backgroundColor = "#da326d";
-
-    //Cambiar el color de la letra
     turnText.style.color = "white";
   } else {
     panel.style.backgroundColor = "#5ad44f";
@@ -321,11 +317,15 @@ function mostrarPanel(jugador) {
   }
 
   // Actualiza el texto del turno
-  turnText.textContent = 'Turno de Jugador ' + jugadorTipo;
+  turnText.textContent = '¡Turno de Jugador ' + jugadorTipo + '!';
 
   // Muestra el panel añadiendo la clase "show"
   panel.classList.add('show');
 
+  // Oculta el panel después de 1.5 segundos
+  setTimeout(() => {
+    panel.classList.remove('show');
+  }, 1500);
 }
 // Función para mostrar el panel de fin del juego
 function showEndGamePanel() {

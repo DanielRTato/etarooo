@@ -6,6 +6,8 @@
     --color-texto: #ffffff;
     --color-hover: #8b008b;
     --brillo-hover: 0 0 15px #ff00ff;
+    --error-color: #ff0000;
+    --success-color: #00ff00;
 }
 
 /* Reset básico */
@@ -29,17 +31,18 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Este valor debe ser menor que el z-index del footer */
+    z-index: -1;
+    overflow: hidden;
 }
 
 .imagen-fondo {
     position: absolute;
-    min-width: 100%;
-    min-height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 /* CONTENEDOR GRID PRINCIPAL */
@@ -88,18 +91,52 @@ body {
 
 /* ESTILOS PARA LOS BOTONES */
 .boton-juego {
-    width: 180px; /* Tamaño base */
+    width: 180px;
     height: auto;
     cursor: pointer;
-    transition: all 0.4s ease-out;
+    transition: transform 0.4s ease-out, filter 0.4s ease-out;
     transform: scale(1);
+    max-width: 100%;
+    object-fit: contain;
 }
 
-/* Efecto hover mejorado */
+/* Efecto hover mejorado y compatible */
 .boton-juego:hover {
     transform: scale(1.15);
     filter: drop-shadow(var(--brillo-hover)) brightness(1.2);
-    transition: all 0.2s ease-in;
+    transition: transform 0.4s ease-out, filter 0.4s ease-out;
+}
+
+/* Estilos para mensajes de error */
+.error-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--error-color);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 9999;
+    text-align: center;
+    font-size: 18px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para mensajes de éxito */
+.success-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--success-color);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 9999;
+    text-align: center;
+    font-size: 18px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .enlace-juego {
