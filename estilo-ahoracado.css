@@ -163,13 +163,13 @@ h2.palabra {
 .scoreRojo {
   background: rgb(218, 50, 109);
   color: white;
-  border: 1px solid #ff4d4d;
+  border: 1px solid rgb(218, 50, 109);
 }
 
 .scoreAmarillo {
   background: rgb(90, 212, 79);
   color: #663300;
-  border: 1px solid #ffd633;
+  border: 1px solid rgb(90, 212, 79);
 }
 @keyframes brillo {
   from { text-shadow: 0 0 10px rgba(138, 90, 255, 0.5); }
@@ -199,13 +199,13 @@ h2.palabra {
 .intentosRojo {
   background: rgb(218, 50, 109);
   color: white;
-  border: 1px solid #ff4d4d;
+  border: 1px solid rgb(218, 50, 109);
 }
 
 .intentosAmarillo {
   background: rgb(90, 212, 79);
   color: #663300;
-  border: 1px solid #ffd633;
+  border: 1px solid rgb(90, 212, 79);
 }
 
 .col {
