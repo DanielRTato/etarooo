@@ -1,3 +1,7 @@
+const correctSound = new Audio('/assets/audio/Memory/coin.mp3');
+const incorrectSound = new Audio('/assets/audio/Memory/negative.mp3');
+const winnerSound = new Audio('/assets/audio/Memory/winning.mp3');
+
 const totalCards = 12; // 6 pares
 const availableCards = [
   '/assets/img/Bola+Soporte.png',
@@ -25,7 +29,7 @@ const cardTemplate = `
 
 function updateStats() {
   document.querySelector('#stats').innerHTML = `${currentAttempts} intentos`;
-  document.querySelector('#turn').innerText = `Turno: Jugador ${turn}`;
+  document.querySelector('#turn').innerText = `Turno: Jugador ${turn}`;  
   document.querySelector('#score1').innerText = score1;
   document.querySelector('#score2').innerText = score2;
 }
@@ -47,13 +51,38 @@ function activate(e) {
         const val2 = selectedCards[1].querySelector('.face').innerHTML;
 
         if (val1 === val2) {
+          //sonido acertado
+          correctSound.play();
           // Match
           if (turn === 1) score1++;
+
           else score2++;
+          const totalPairs = totalCards / 2;
+          const foundPairs = score1 + score2;
+        
+          if (foundPairs === totalPairs - 0) {
+            winnerSound.play(); //sonido ganador
+
+             // Mostrar confeti
+             confetti({
+             particleCount: 200,
+             spread: 70,
+             origin: { y: 0.6 }
+            });
+
+             // Mostrar mensaje opcional
+             setTimeout(() => {
+             alert(`🎉 ¡Jugador ${turn} gana! 🎉`);
+             }, 500);
+          }
+
           selectedCards = [];
           currentMove = 0;
           updateStats();
         } else {
+          //sonido erroneo
+          incorrectSound.play();
+
           // Si no hay match, aplicar temblor
           selectedCards[0].classList.add('shake');
           selectedCards[1].classList.add('shake');
@@ -65,7 +94,7 @@ function activate(e) {
             currentMove = 0;
             turn = turn === 1 ? 2 : 1;
             updateStats();
-          }, 700); // Tiempo de temblor (debe coincidir con la duración de la animación)
+          }, 500); // Tiempo de temblor (debe coincidir con la duración de la animación)
         }
       }
     }
