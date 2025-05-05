@@ -311,12 +311,13 @@ function mostrarPanel(jugador) {
   //Cambia el color del panel según el jugador
   // y de la letra
   if (jugador) {
-    panel.style.backgroundColor = "pink";
+    panel.style.backgroundColor = "rgb(218, 50, 109)";
+    turnText.style.color = "white";
 
 
   } else {
     panel.style.backgroundColor = "green";
-    turnText.style.color = "black";
+    turnText.style.color = "white";
   }
 
   // Actualiza el texto del turno
