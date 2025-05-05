@@ -140,7 +140,7 @@ body {
 #tablero {
     width: 1200px;
     height: 800px;
-    background: url("../assets/imagenes/FB/fondoBueno.jpg") no-repeat center center;
+    background: url("assets/imagenes/FB/fondoBueno.jpg") no-repeat center center;
     background-size: cover;
     border: 8px solid var(--border-color);
     border-radius: 15px;
