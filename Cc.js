@@ -151,7 +151,7 @@ function dibujarTablero() {
             }
             
             // Aplicar la imagen al elemento
-            elemento.style.backgroundImage = `url('CC/${imagen}')`;
+            elemento.style.backgroundImage = `url('assets/imagenes/CC/${imagen}')`;
             celda.appendChild(elemento);
             
             // Añadir evento de clic
@@ -170,7 +170,7 @@ function dibujarObjetivos() {
         elementoObjetivo.className = 'objetivo';
         
         elementoObjetivo.innerHTML = `
-            <div class="icono" style="background-image: url('CC/${objetivo.tipo}.png')"></div>
+            <div class="icono" style="background-image: url('assets/imagenes/CC/${objetivo.tipo}.png')"></div>
             <div class="texto">Recolectar ${objetivo.cantidad} ${objetivo.tipo}s</div>
             <div class="progreso">0/${objetivo.cantidad}</div>
         `;
@@ -281,7 +281,7 @@ function animarIntercambio(fila1, columna1, fila2, columna2, callback) {
                 imagen1 = 'PocionExp.png';
             }
         }
-        elemento1.style.backgroundImage = `url('CC/${imagen1}')`;
+        elemento1.style.backgroundImage = `url('assets/imagenes/CC/${imagen1}')`;
         
         const celdaTablero2 = estado.tablero[fila2][columna2];
         let imagen2 = celdaTablero2.tipo + '.png';
@@ -292,7 +292,7 @@ function animarIntercambio(fila1, columna1, fila2, columna2, callback) {
                 imagen2 = 'PocionExp.png';
             }
         }
-        elemento2.style.backgroundImage = `url('CC/${imagen2}')`;
+        elemento2.style.backgroundImage = `url('assets/imagenes/CC/${imagen2}')`;
         
         if (callback) callback();
     }, 300);
