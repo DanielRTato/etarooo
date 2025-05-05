@@ -149,7 +149,7 @@ function intento(letra) {
   } else {
     // La letra no está en la palabra
     document.getElementById("acierto").innerHTML = "Fallo!";
-    document.getElementById("acierto").classList.add("acierto", "rojo");
+    document.getElementById("acierto").classList.add("acierto", "rosa");
 
     if (player) {
       contPlayer1--;
@@ -225,7 +225,7 @@ function compruebaFin() {
       }
       if (!fin) {
         fin = true;
-        document.getElementById("msg-final").innerHTML = "Ganó el jugador Rojo !!";
+        document.getElementById("msg-final").innerHTML = "Ganó el jugador Rosa !!";
         let currentRedVictory = parseInt(localStorage.getItem('victoryPointRed')) || 0;
         localStorage.setItem('victoryPointRed', currentRedVictory + 1);
       }
@@ -233,12 +233,12 @@ function compruebaFin() {
     else if (scorePlayer1 < scorePlayer2) {
       if (!fin) {
         fin = true;
-        document.getElementById("msg-final").innerHTML = "Ganó el jugador Amarillo !!";
-        let currentYellowVictory = parseInt(localStorage.getItem('victoryPointYellow')) || 0;
+        document.getElementById("msg-final").innerHTML = "Ganó el jugador Verde !!";
+        let currentYellowVictory = parseInt(localStorage.getItem('victoryPointGreen')) || 0;
         for (var i = 0; i < buttons.length; i++) {
           buttons[i].disabled = true;
         }
-        localStorage.setItem('victoryPointYellow', currentYellowVictory + 1);
+        localStorage.setItem('victoryPointGreen', currentYellowVictory + 1);
       }
     }
     else {
@@ -263,7 +263,7 @@ function compruebaFin() {
   else if (contPlayer1 == 0) {
     if (!fin) {
       fin = true;
-      document.getElementById("msg-final").innerHTML = "El jugador Amarillo ganó !!";
+      document.getElementById("msg-final").innerHTML = "El jugador Verde ganó !!";
       document.getElementById("msg-final").className += " zoom-in";
       let currentYellowVictory = parseInt(localStorage.getItem('victoryPointYellow')) || 0;
       localStorage.setItem('victoryPointYellow', currentYellowVictory + 1);
@@ -279,7 +279,7 @@ function compruebaFin() {
   else if (contPlayer2 == 0) {
     if (!fin) {
       fin = true;
-      document.getElementById("msg-final").innerHTML = "El jugador Rojo ganó !!";
+      document.getElementById("msg-final").innerHTML = "El jugador Rosa ganó !!";
       document.getElementById("msg-final").className += " zoom-in";
       let currentRedVictory = parseInt(localStorage.getItem('victoryPointRed')) || 0;
       localStorage.setItem('victoryPointRed', currentRedVictory + 1);
@@ -303,20 +303,19 @@ function mostrarPanel(jugador) {
   const turnText = document.getElementById('turnText');
   let jugadorTipo = "";
   if (jugador == true) {
-    jugadorTipo = "Rojo";
+    jugadorTipo = "Rosa";
   }
   else {
-    jugadorTipo = "Amarillo";
+    jugadorTipo = "Green";
   }
   //Cambia el color del panel según el jugador
   // y de la letra
   if (jugador) {
-    panel.style.backgroundColor = "red";
+    panel.style.backgroundColor = "pink";
 
-    //Cambiar el color de la letra
-    turnText.style.color = "white";
+
   } else {
-    panel.style.backgroundColor = "yellow";
+    panel.style.backgroundColor = "green";
     turnText.style.color = "black";
   }
 
