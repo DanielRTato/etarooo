@@ -1259,8 +1259,8 @@ function verificarFinJuego(currPlayer) {
   const scoreRojo     = rojoElem     ? Number(rojoElem.textContent)     : 0;
   const scoreAmarillo = amarilloElem ? Number(amarilloElem.textContent) : 0;
 
-  const rojoGana     = scoreRojo     >= 0 || scoreAmarillo     <= -850;
-  const amarilloGana = scoreAmarillo >= 0 || scoreRojo <= -850;
+  const rojoGana     = scoreRojo     >= 1650 || scoreAmarillo     <= -850;
+  const amarilloGana = scoreAmarillo >= 1650 || scoreRojo <= -850;
 
   if (!rojoGana && !amarilloGana) {
     return false;
