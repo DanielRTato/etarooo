@@ -1,7 +1,6 @@
 document.querySelector('.round-back-btn').addEventListener('click', function() {
     window.location.href = 'index.html';
-  });
-
+});
 
 // Configuración del juego
 const configuracion = {
@@ -66,59 +65,50 @@ function iniciarJuego(nivel = 0) {
     dibujarObjetivos();
 }
 
-// Crear el tablero con elementos aleatorios
+// Crear el tablero
 function crearTablero() {
     estado.tablero = [];
-    
     for (let fila = 0; fila < configuracion.filas; fila++) {
         estado.tablero[fila] = [];
         for (let columna = 0; columna < configuracion.columnas; columna++) {
             estado.tablero[fila][columna] = {
                 tipo: obtenerElementoAleatorio(fila, columna),
-                especial: null // Todos los elementos empiezan sin especial
+                especial: null
             };
         }
     }
     
-    // Asegurarnos de que no hay combinaciones al inicio
     while (buscarCombinaciones().length > 0) {
         rellenarEspaciosVacios();
     }
 }
 
-// Obtener un elemento aleatorio evitando combinaciones al inicio
+// Obtener elemento aleatorio evitando combinaciones iniciales
 function obtenerElementoAleatorio(fila, columna) {
     let elementosPosibles = [...configuracion.tiposElementos];
     
-    // Eliminar elementos que podrían crear combinaciones horizontales
     if (columna >= 2) {
         const izquierda1 = estado.tablero[fila][columna-1]?.tipo;
         const izquierda2 = estado.tablero[fila][columna-2]?.tipo;
-        
         if (izquierda1 && izquierda1 === izquierda2) {
             elementosPosibles = elementosPosibles.filter(e => e !== izquierda1);
         }
     }
     
-    // Eliminar elementos que podrían crear combinaciones verticales
     if (fila >= 2) {
         const arriba1 = estado.tablero[fila-1][columna]?.tipo;
         const arriba2 = estado.tablero[fila-2][columna]?.tipo;
-        
         if (arriba1 && arriba1 === arriba2) {
             elementosPosibles = elementosPosibles.filter(e => e !== arriba1);
         }
     }
     
-    // Si no quedan elementos posibles, devolver cualquiera
-    if (elementosPosibles.length === 0) {
-        return configuracion.tiposElementos[Math.floor(Math.random() * configuracion.tiposElementos.length)];
-    }
-    
-    return elementosPosibles[Math.floor(Math.random() * elementosPosibles.length)];
+    return elementosPosibles.length > 0 
+        ? elementosPosibles[Math.floor(Math.random() * elementosPosibles.length)]
+        : configuracion.tiposElementos[Math.floor(Math.random() * configuracion.tiposElementos.length)];
 }
 
-// Dibujar el tablero en el HTML
+// Dibujar el tablero
 function dibujarTablero() {
     const tableroHTML = document.getElementById('tablero');
     tableroHTML.innerHTML = '';
@@ -134,38 +124,33 @@ function dibujarTablero() {
             elemento.className = 'elemento';
             
             const celdaTablero = estado.tablero[fila][columna];
-            let imagen;
+            let imagen = 'vacio.png';
             
-            // Determinar la imagen a mostrar según el tipo y especial
-            if (!celdaTablero.tipo) {
-                // Celda vacía
-                imagen = 'vacio.png'; // Asegúrate de tener una imagen para celdas vacías
-            } else if (celdaTablero.especial) {
-                // Manejo de elementos especiales
-                if (celdaTablero.especial.includes('Frasco')) {
-                    imagen = 'Frasco' + celdaTablero.tipo + 
-                            (celdaTablero.especial === 'FrascoH' ? 'H' : 'V') + '.png';
-                } else if (celdaTablero.especial === 'PocionExp') {
-                    imagen = 'PocionExp.png';
-                } else if (celdaTablero.especial.startsWith('Bolsa')) {
-                    imagen = celdaTablero.especial + '.png';
+            if (celdaTablero.tipo) {
+                if (celdaTablero.especial) {
+                    if (celdaTablero.especial === 'FrascoH') {
+                        imagen = `Frasco${celdaTablero.tipo}H.png`;
+                    } else if (celdaTablero.especial === 'FrascoV') {
+                        imagen = `Frasco${celdaTablero.tipo}V.png`;
+                    } else if (celdaTablero.especial === 'PocionExp') {
+                        imagen = 'PocionExp.png';
+                    } else if (celdaTablero.especial.startsWith('Bolsa')) {
+                        imagen = `${celdaTablero.especial}.png`;
+                    }
+                } else {
+                    imagen = `${celdaTablero.tipo}.png`;
                 }
-            } else {
-                // Elemento normal
-                imagen = celdaTablero.tipo + '.png';
             }
             
-            // Aplicar la imagen al elemento
             elemento.style.backgroundImage = `url('assets/imagenes/CC/${imagen}')`;
             celda.appendChild(elemento);
-            
-            // Añadir evento de clic
             celda.addEventListener('click', () => manejarClic(fila, columna));
             tableroHTML.appendChild(celda);
         }
     }
 }
-// Dibujar los objetivos en el panel
+
+// Dibujar objetivos
 function dibujarObjetivos() {
     const container = document.getElementById('objetivos-container');
     container.innerHTML = '';
@@ -184,57 +169,22 @@ function dibujarObjetivos() {
     });
 }
 
-// Manejar clic en una celda
-function manejarClic(fila, columna) {
-    // Si el juego está bloqueado (por animaciones en curso), no hacer nada
-    if (estado.bloqueado) return;
-    // Primera selección del jugador
-    if (estado.elementoSeleccionado === null) {
-        estado.elementoSeleccionado = { fila, columna };
-        resaltarCelda(fila, columna, true); // Resalta la celda seleccionada
-    // Segunda selección (intercambio)
-    } else {
-        const seleccionado = estado.elementoSeleccionado;
-        // Verifica si la segunda selección es adyacente (horizontal o vertical)
-        const esAdyacente = 
-            (Math.abs(seleccionado.fila - fila) === 1 && seleccionado.columna === columna) ||
-            (Math.abs(seleccionado.columna - columna) === 1 && seleccionado.fila === fila);
-        
-        if (esAdyacente) {
-            estado.bloqueado = true; // Bloquea el tablero durante la animación
-            resaltarCelda(seleccionado.fila, seleccionado.columna, false);  // Quita el resaltado
-            // Anima el intercambio de las dos celdas
-            animarIntercambio(
-                seleccionado.fila, seleccionado.columna,
-                fila, columna,
-                () => {
-                    estado.movimientos--;
-                    actualizarUI();
-                    // Busca combinaciones después del intercambio
-                    const combinaciones = buscarCombinaciones();
-                    if (combinaciones.length === 0) {
-                        // Revertir si no hay combinaciones
-                        animarIntercambio(
-                            seleccionado.fila, seleccionado.columna,
-                            fila, columna,
-                            () => {
-                                estado.movimientos++; // Devuelve el movimiento
-                                actualizarUI();
-                                estado.bloqueado = false;
-                            }
-                        );
-                    } else {
-                         // Si hay combinaciones válidas, las procesa
-                        procesarCombinaciones(combinaciones);
-                    }
-                }
-            );
-        } else {
-            // Si la segunda selección no es adyacente, simplemente quita el resaltado
-            resaltarCelda(seleccionado.fila, seleccionado.columna, false);
-        }
-        // Restablece la selección
-        estado.elementoSeleccionado = null;
+// Animación de caída mejorada (como la versión anterior que preferías)
+function animarCaida(filaOrigen, columnaOrigen, filaDestino, columnaDestino) {
+    // Solo actualiza el tablero sin animación visual
+    estado.tablero[filaDestino][columnaDestino] = {...estado.tablero[filaOrigen][columnaOrigen]};
+    estado.tablero[filaOrigen][columnaOrigen] = {tipo: null, especial: null};
+}
+
+// Animación para nuevos elementos
+function animarNuevoElemento(fila, columna) {
+    const celda = document.querySelector(`.celda[data-fila="${fila}"][data-columna="${columna}"] .elemento`);
+    if (celda) {
+        celda.style.transform = 'scale(0)';
+        setTimeout(() => {
+            celda.style.transition = 'transform 0.3s ease';
+            celda.style.transform = 'scale(1)';
+        }, 10);
     }
 }
 
@@ -252,18 +202,15 @@ function animarIntercambio(fila1, columna1, fila2, columna2, callback) {
     const elemento1 = celda1.querySelector('.elemento');
     const elemento2 = celda2.querySelector('.elemento');
     
-    // Intercambiar visualmente
     elemento1.style.transition = 'transform 0.3s ease';
     elemento2.style.transition = 'transform 0.3s ease';
     
-    // Calcular dirección del movimiento
     const dirX = columna2 - columna1;
     const dirY = fila2 - fila1;
     
     elemento1.style.transform = `translate(${dirX * 100}%, ${dirY * 100}%)`;
     elemento2.style.transform = `translate(${-dirX * 100}%, ${-dirY * 100}%)`;
     
-    // Intercambiar en el tablero después de la animación
     setTimeout(() => {
         // Intercambiar en el modelo
         const temp = {...estado.tablero[fila1][columna1]};
@@ -276,92 +223,45 @@ function animarIntercambio(fila1, columna1, fila2, columna2, callback) {
         elemento1.style.transform = 'none';
         elemento2.style.transform = 'none';
         
-        // Actualizar imágenes
-        const celdaTablero1 = estado.tablero[fila1][columna1];
-        let imagen1 = celdaTablero1.tipo + '.png';
-        if (celdaTablero1.especial) {
-            if (celdaTablero1.especial.includes('Frasco')) {
-                imagen1 = 'Frasco' + celdaTablero1.tipo + celdaTablero1.especial.slice(6) + '.png';
-            } else if (celdaTablero1.especial === 'PocionExp') {
-                imagen1 = 'PocionExp.png';
-            }
-        }
-        elemento1.style.backgroundImage = `url('assets/imagenes/CC/${imagen1}')`;
-        
-        const celdaTablero2 = estado.tablero[fila2][columna2];
-        let imagen2 = celdaTablero2.tipo + '.png';
-        if (celdaTablero2.especial) {
-            if (celdaTablero2.especial.includes('Frasco')) {
-                imagen2 = 'Frasco' + celdaTablero2.tipo + celdaTablero2.especial.slice(6) + '.png';
-            } else if (celdaTablero2.especial === 'PocionExp') {
-                imagen2 = 'PocionExp.png';
-            }
-        }
-        elemento2.style.backgroundImage = `url('assets/imagenes/CC/${imagen2}')`;
-        
+        // Redibujar
+        dibujarTablero();
         if (callback) callback();
     }, 300);
 }
 
-// Buscar combinaciones en el tablero
+// Buscar combinaciones
 function buscarCombinaciones() {
     const combinaciones = [];
     
-    // Buscar combinaciones horizontales
+    // Combinaciones horizontales
     for (let fila = 0; fila < configuracion.filas; fila++) {
         for (let columna = 0; columna < configuracion.columnas - 2; columna++) {
             const tipo = estado.tablero[fila][columna].tipo;
-            if (tipo && 
-                tipo === estado.tablero[fila][columna+1].tipo && 
-                tipo === estado.tablero[fila][columna+2].tipo) {
-                
+            if (tipo && tipo === estado.tablero[fila][columna+1].tipo && tipo === estado.tablero[fila][columna+2].tipo) {
                 let longitud = 3;
-                while (columna + longitud < configuracion.columnas && 
-                       estado.tablero[fila][columna+longitud].tipo === tipo) {
+                while (columna + longitud < configuracion.columnas && estado.tablero[fila][columna+longitud].tipo === tipo) {
                     longitud++;
                 }
                 
-                const celdas = [];
-                for (let i = 0; i < longitud; i++) {
-                    celdas.push({ fila, columna: columna + i });
-                }
-                
-                combinaciones.push({
-                    tipo,
-                    celdas,
-                    esHorizontal: true
-                });
-                
+                const celdas = Array.from({length: longitud}, (_, i) => ({fila, columna: columna + i}));
+                combinaciones.push({tipo, celdas, esHorizontal: true});
                 columna += longitud - 1;
             }
         }
     }
     
-    // Buscar combinaciones verticales
+    // Combinaciones verticales
     for (let columna = 0; columna < configuracion.columnas; columna++) {
         for (let fila = 0; fila < configuracion.filas - 2; fila++) {
             const tipo = estado.tablero[fila][columna].tipo;
-            if (tipo && 
-                tipo === estado.tablero[fila+1][columna].tipo && 
-                tipo === estado.tablero[fila+2][columna].tipo) {
-                
+            if (tipo && tipo === estado.tablero[fila+1][columna].tipo && tipo === estado.tablero[fila+2][columna].tipo) {
                 let longitud = 3;
-                while (fila + longitud < configuracion.filas && 
-                       estado.tablero[fila+longitud][columna].tipo === tipo) {
+                while (fila + longitud < configuracion.filas && estado.tablero[fila+longitud][columna].tipo === tipo) {
                     longitud++;
                 }
                 
-                const celdas = [];
-                for (let i = 0; i < longitud; i++) {
-                    celdas.push({ fila: fila + i, columna });
-                }
-                
-                combinaciones.push({
-                    tipo,
-                    celdas,
-                    esHorizontal: false
-                });
-                
+                const celdas = Array.from({length: longitud}, (_, i) => ({fila: fila + i, columna}));
+                combinaciones.push({tipo, celdas, esHorizontal: false});
                 fila += longitud - 1;
             }
         }
@@ -370,256 +270,169 @@ function buscarCombinaciones() {
     return combinaciones;
 }
 
-// Procesar combinaciones encontradas
-function procesarCombinaciones(combinaciones) {
-    const celdasAEliminar = new Set();
-    const elementosEspeciales = [];
-    let creaPocionExp = false;
-    let pocionExpPosicion = null;
-    let creaBolsa = false;
-    let bolsaPosicion = null;
-
-    // Primera pasada: buscar combinaciones especiales
-    for (const combinacion of combinaciones) {
-        if (combinacion.celdas.length >= 5 && !creaPocionExp) {
-            creaPocionExp = true;
-            const centro = Math.floor(combinacion.celdas.length / 2);
-            pocionExpPosicion = combinacion.celdas[centro];
-        } else if (combinacion.celdas.length === 4 && !creaBolsa) {
-            creaBolsa = true;
-            bolsaPosicion = combinacion.celdas[0]; // Usamos la primera celda
-        }
+// Buscar patrones L o T para bolsas
+function buscarPatronLoT(combinacion, todasCombinaciones) {
+    if (combinacion.celdas.length !== 3) return null;
+    
+    for (const otraCombinacion of todasCombinaciones) {
+        if (otraCombinacion === combinacion || otraCombinacion.celdas.length !== 3) continue;
+        
+        const interseccion = combinacion.celdas.find(c1 => 
+            otraCombinacion.celdas.some(c2 => c1.fila === c2.fila && c1.columna === c2.columna));
+        
+        if (interseccion) return {posicion: interseccion, tipo: 'LoT'};
     }
+    return null;
+}
 
-    // Segunda pasada: procesar todas las combinaciones
+// Procesar combinaciones y crear elementos especiales VISIBLES
+function procesarCombinaciones(combinaciones) {
+    const elementosEspeciales = [];
+    const celdasAEliminar = new Set();
+    let creaPocionExp = false, pocionExpPosicion = null;
+    let creaBolsa = false, bolsaPosicion = null;
+    let creaFrascoH = false, frascoHPosicion = null;
+    let creaFrascoV = false, frascoVPosicion = null;
+
+    // Identificar combinaciones especiales
     for (const combinacion of combinaciones) {
-        for (const celda of combinacion.celdas) {
-            celdasAEliminar.add(`${celda.fila},${celda.columna}`);
-            
-            if (!creaPocionExp && !creaBolsa && combinacion.celdas.length >= 4) {
-                const elemento = estado.tablero[celda.fila][celda.columna];
-                if (!elemento.especial) {
-                    elementosEspeciales.push({
-                        fila: celda.fila,
-                        columna: celda.columna,
-                        especial: combinacion.esHorizontal ? 'FrascoH' : 'FrascoV'
-                    });
-                }
+        // En procesarCombinaciones():
+        if (combinacion.celdas.length >= 5) {
+            // Prioridad máxima a PocionExp
+            if (!creaPocionExp) {
+                creaPocionExp = true;
+                pocionExpPosicion = combinacion.celdas[2]; // Posición central
+            }
+        } else if (combinacion.celdas.length === 4) {
+            // Prioridad media a Frascos
+            if (combinacion.esHorizontal && !creaFrascoH && !creaPocionExp) {
+                creaFrascoH = true;
+                frascoHPosicion = combinacion.celdas[1];
+            } else if (!combinacion.esHorizontal && !creaFrascoV && !creaPocionExp) {
+                creaFrascoV = true;
+                frascoVPosicion = combinacion.celdas[1];
+            }
+        } else if (combinacion.celdas.length === 3) {
+            // Prioridad baja a Bolsas (solo si no hay otros especiales)
+            const patronLoT = buscarPatronLoT(combinacion, combinaciones);
+            if (patronLoT && !creaBolsa && !creaPocionExp && !creaFrascoH && !creaFrascoV) {
+                creaBolsa = true;
+                bolsaPosicion = patronLoT.posicion;
             }
         }
         
+        combinacion.celdas.forEach(celda => celdasAEliminar.add(`${celda.fila},${celda.columna}`));
         estado.puntuacion += combinacion.celdas.length * 10;
     }
 
-    // Crear elementos especiales si corresponde
-    if (creaPocionExp && pocionExpPosicion) {
+    // Crear elementos especiales VISIBLES en el tablero
+    if (creaPocionExp) {
+        elementosEspeciales.push({...pocionExpPosicion, especial: 'PocionExp'});
+    } else if (creaBolsa) {
+        const tipo = estado.tablero[bolsaPosicion.fila][bolsaPosicion.columna].tipo;
         elementosEspeciales.push({
-            fila: pocionExpPosicion.fila,
-            columna: pocionExpPosicion.columna,
-            especial: 'PocionExp'
+            ...bolsaPosicion,
+            especial: 'Bolsa' + tipo
         });
-    }
-    
-    if (creaBolsa && bolsaPosicion) {
-        elementosEspeciales.push({
-            fila: bolsaPosicion.fila,
-            columna: bolsaPosicion.columna,
-            especial: 'Bolsa' + estado.tablero[bolsaPosicion.fila][bolsaPosicion.columna].tipo
-        });
+    } else {
+        if (creaFrascoH) {
+            const tipo = estado.tablero[frascoHPosicion.fila][frascoHPosicion.columna].tipo;
+            elementosEspeciales.push({
+                ...frascoHPosicion,
+                especial: 'FrascoH',
+                tipo: tipo // Mantener el tipo original
+            });
+        }
+        if (creaFrascoV) {
+            const tipo = estado.tablero[frascoVPosicion.fila][frascoVPosicion.columna].tipo;
+            elementosEspeciales.push({
+                ...frascoVPosicion,
+                especial: 'FrascoV',
+                tipo: tipo // Mantener el tipo original
+            });
+        }
     }
 
+    // Animación de eliminación
     animarEliminacion(celdasAEliminar, elementosEspeciales);
 }
 
+// Animación de eliminación (sin activar efectos aún)
 function animarEliminacion(celdasAEliminar, elementosEspeciales) {
-    // Animación de eliminación
-    for (const coordenada of celdasAEliminar) {
+    celdasAEliminar.forEach(coordenada => {
         const [fila, columna] = coordenada.split(',').map(Number);
-        const celdaElemento = document.querySelector(`.celda[data-fila="${fila}"][data-columna="${columna}"] .elemento`);
-        if (celdaElemento) {
-            celdaElemento.classList.add('eliminando');
-        }
-    }
+        const elemento = document.querySelector(`.celda[data-fila="${fila}"][data-columna="${columna}"] .elemento`);
+        if (elemento) elemento.classList.add('eliminando');
+    });
     
     setTimeout(() => {
         // Eliminar celdas marcadas
-        for (const coordenada of celdasAEliminar) {
+        celdasAEliminar.forEach(coordenada => {
             const [fila, columna] = coordenada.split(',').map(Number);
             estado.tablero[fila][columna].tipo = null;
-            // No eliminamos el especial aquí para que las bolsas persistan
-        }
+            estado.tablero[fila][columna].especial = null;
+        });
         
-        // Aplicar elementos especiales
-        for (const especial of elementosEspeciales) {
+        // Aplicar elementos especiales VISIBLES
+        elementosEspeciales.forEach(especial => {
             const celda = estado.tablero[especial.fila][especial.columna];
-            
-            if (especial.especial.startsWith('Bolsa')) {
-                // Para bolsas: mantener el tipo del elemento que formó la combinación
-                celda.especial = especial.especial;
-                celda.tipo = especial.tipo; // Guardamos el tipo original
-            } else {
-                // Para otros especiales (poción, frascos)
-                celda.especial = especial.especial;
-                celda.tipo = celda.tipo || 
-                    configuracion.tiposElementos[Math.floor(Math.random() * configuracion.tiposElementos.length)];
-            }
-        }
+            celda.especial = especial.especial;
+            celda.tipo = especial.tipo || configuracion.tiposElementos[Math.floor(Math.random() * configuracion.tiposElementos.length)];
+        });
         
-        // Procesar efectos especiales inmediatos (poción explosiva)
-        const pocionExp = elementosEspeciales.find(e => e.especial === 'PocionExp');
-        if (pocionExp) {
-            const tipo = estado.tablero[pocionExp.fila][pocionExp.columna].tipo;
-            const celdasExplosion = new Set();
-            
-            for (let fila = 0; fila < configuracion.filas; fila++) {
-                for (let columna = 0; columna < configuracion.columnas; columna++) {
-                    if (estado.tablero[fila][columna].tipo === tipo) {
-                        celdasExplosion.add(`${fila},${columna}`);
-                        estado.puntuacion += 5;
-                    }
-                }
-            }
-            
-            animarExplosion(celdasExplosion);
-        } else {
-            rellenarEspaciosVacios();
-        }
-        
+        // Actualizar objetivos y rellenar espacios
         actualizarObjetivos(celdasAEliminar);
+        rellenarEspaciosVacios();
     }, 500);
 }
 
-function procesarCombinaciones(combinaciones) {
-    const celdasAEliminar = new Set();
-    const elementosEspeciales = [];
-    let creaPocionExp = false;
-    let pocionExpPosicion = null;
-    let creaBolsa = false;
-    let bolsaPosicion = null;
-    let tipoBolsa = null;
-
-    // Primera pasada: buscar combinaciones que generan especiales
-    for (const combinacion of combinaciones) {
-        if (combinacion.celdas.length >= 5 && !creaPocionExp) {
-            creaPocionExp = true;
-            const centro = Math.floor(combinacion.celdas.length / 2);
-            pocionExpPosicion = combinacion.celdas[centro];
-        } else if (combinacion.celdas.length === 4 && !creaBolsa) {
-            creaBolsa = true;
-            bolsaPosicion = combinacion.celdas[0];
-            tipoBolsa = combinacion.tipo; // Tipo de la combinación que formó la bolsa
-        }
-    }
-
-    // Segunda pasada: procesar todas las combinaciones
-    for (const combinacion of combinaciones) {
-        for (const celda of combinacion.celdas) {
-            celdasAEliminar.add(`${celda.fila},${celda.columna}`);
-            
-            // Generar frascos si no hay otros especiales
-            if (!creaPocionExp && !creaBolsa && combinacion.celdas.length >= 4) {
-                const elemento = estado.tablero[celda.fila][celda.columna];
-                if (!elemento.especial) {
-                    elementosEspeciales.push({
-                        fila: celda.fila,
-                        columna: celda.columna,
-                        especial: combinacion.esHorizontal ? 'FrascoH' : 'FrascoV',
-                        tipo: combinacion.tipo
-                    });
-                }
-            }
-        }
-        
-        estado.puntuacion += combinacion.celdas.length * 10;
-    }
-
-    // Crear especiales si corresponde
-    if (creaPocionExp && pocionExpPosicion) {
-        elementosEspeciales.push({
-            fila: pocionExpPosicion.fila,
-            columna: pocionExpPosicion.columna,
-            especial: 'PocionExp',
-            tipo: estado.tablero[pocionExpPosicion.fila][pocionExpPosicion.columna].tipo
-        });
-    }
-    
-    if (creaBolsa && bolsaPosicion) {
-        elementosEspeciales.push({
-            fila: bolsaPosicion.fila,
-            columna: bolsaPosicion.columna,
-            especial: 'Bolsa' + tipoBolsa,
-            tipo: tipoBolsa
-        });
-    }
-
-    animarEliminacion(celdasAEliminar, elementosEspeciales);
-}
-
-// Función para manejar combinaciones con bolsas
-function manejarCombinacionConBolsa(fila, columna) {
-    const celda = estado.tablero[fila][columna];
-    if (celda.especial && celda.especial.startsWith('Bolsa')) {
-        const tipoBolsa = celda.especial.replace('Bolsa', '');
-        const celdasAEliminar = new Set();
-        
-        // Eliminar todos los elementos del mismo tipo
-        for (let f = 0; f < configuracion.filas; f++) {
-            for (let c = 0; c < configuracion.columnas; c++) {
-                if (estado.tablero[f][c].tipo === tipoBolsa) {
-                    celdasAEliminar.add(`${f},${c}`);
-                    estado.puntuacion += 5;
-                }
-            }
-        }
-        
-        // Eliminar la bolsa también
-        celdasAEliminar.add(`${fila},${columna}`);
-        
-        animarExplosion(celdasAEliminar);
-        return true;
-    }
-    return false;
-}
-
-// Modificar la función manejarClic para soportar bolsas
+// Manejar clic en elementos especiales
 function manejarClic(fila, columna) {
     if (estado.bloqueado) return;
     
-    // Primero verificar si estamos haciendo clic en una bolsa
+    const celda = estado.tablero[fila][columna];
+    
+    // Si no hay elemento seleccionado, seleccionar este
     if (estado.elementoSeleccionado === null) {
-        if (manejarCombinacionConBolsa(fila, columna)) {
-            return;
-        }
         estado.elementoSeleccionado = { fila, columna };
         resaltarCelda(fila, columna, true);
-    } else {
-        const seleccionado = estado.elementoSeleccionado;
-        const esAdyacente = 
-            (Math.abs(seleccionado.fila - fila) === 1 && seleccionado.columna === columna) ||
-            (Math.abs(seleccionado.columna - columna) === 1 && seleccionado.fila === fila);
+        return;
+    }
+    
+    // Si ya hay elemento seleccionado, manejar intercambio
+    const seleccionado = estado.elementoSeleccionado;
+    const esAdyacente = (
+        (Math.abs(seleccionado.fila - fila) === 1 && seleccionado.columna === columna) || 
+        (Math.abs(seleccionado.columna - columna) === 1 && seleccionado.fila === fila
+    ));
+    
+    if (esAdyacente) {
+        estado.bloqueado = true;
+        resaltarCelda(seleccionado.fila, seleccionado.columna, false);
         
-        if (esAdyacente) {
-            estado.bloqueado = true;
-            resaltarCelda(seleccionado.fila, seleccionado.columna, false);
-            
-            // Verificar si estamos intercambiando con una bolsa
-            if (manejarCombinacionConBolsa(fila, columna) || 
-                manejarCombinacionConBolsa(seleccionado.fila, seleccionado.columna)) {
-                estado.elementoSeleccionado = null;
-                return;
-            }
-            
-            animarIntercambio(
-                seleccionado.fila, seleccionado.columna,
-                fila, columna,
-                () => {
-                    estado.movimientos--;
-                    actualizarUI();
+        animarIntercambio(
+            seleccionado.fila, seleccionado.columna,
+            fila, columna,
+            () => {
+                estado.movimientos--;
+                actualizarUI();
+                
+                // Verificar combinaciones especiales primero
+                const combinacionEspecial = verificarCombinacionEspecial(
+                    seleccionado.fila, seleccionado.columna,
+                    fila, columna
+                );
+                
+                if (combinacionEspecial) {
+                    procesarCombinacionEspecial(combinacionEspecial);
+                } else {
+                    // Lógica normal de combinaciones
                     const combinaciones = buscarCombinaciones();
                     if (combinaciones.length === 0) {
+                        // Revertir si no hay combinaciones
                         animarIntercambio(
-                            seleccionado.fila, seleccionado.columna,
                             fila, columna,
+                            seleccionado.fila, seleccionado.columna,
                             () => {
                                 estado.movimientos++;
                                 actualizarUI();
@@ -630,44 +443,150 @@ function manejarClic(fila, columna) {
                         procesarCombinaciones(combinaciones);
                     }
                 }
-            );
-        } else {
-            resaltarCelda(seleccionado.fila, seleccionado.columna, false);
-        }
-        estado.elementoSeleccionado = null;
+            }
+        );
+    } else {
+        // Si no es adyacente, cambiar selección
+        resaltarCelda(seleccionado.fila, seleccionado.columna, false);
+        estado.elementoSeleccionado = { fila, columna };
+        resaltarCelda(fila, columna, true);
     }
 }
-// Actualizar objetivos cuando se eliminan elementos
-function actualizarObjetivos(celdasEliminadas) {
-    for (const coordenada of celdasEliminadas) {
-        const [fila, columna] = coordenada.split(',').map(Number);
-        const tipoElemento = estado.tablero[fila][columna].tipo;
-        
-        if (tipoElemento) {
-            const objetivo = estado.objetivos.find(obj => obj.tipo === tipoElemento);
-            if (objetivo && objetivo.cantidad > 0) {
-                objetivo.cantidad--;
-                if (objetivo.cantidad < 0) objetivo.cantidad = 0;
+
+// Activar Poción Explosiva
+function activarPocionExp(fila, columna) {
+    estado.bloqueado = true;
+    const tipo = estado.tablero[fila][columna].tipo;
+    const celdasExplosion = new Set();
+    
+    // Eliminar la poción
+    celdasExplosion.add(`${fila},${columna}`);
+    
+    // Buscar todos los elementos del mismo tipo
+    for (let f = 0; f < configuracion.filas; f++) {
+        for (let c = 0; c < configuracion.columnas; c++) {
+            if (estado.tablero[f][c].tipo === tipo) {
+                celdasExplosion.add(`${f},${c}`);
+                estado.puntuacion += 5;
             }
         }
     }
     
-    // Actualizar visualización de objetivos
-    const objetivosElements = document.querySelectorAll('.objetivo');
-    estado.objetivos.forEach((objetivo, index) => {
-        if (objetivosElements[index]) {
-            const progreso = objetivosElements[index].querySelector('.progreso');
-            const cantidadOriginal = configuracion.niveles[estado.nivelActual].objetivos[index].cantidad;
-            const completado = cantidadOriginal - objetivo.cantidad;
-            progreso.textContent = `${completado}/${cantidadOriginal}`;
-            
-            if (objetivo.cantidad <= 0) {
-                objetivosElements[index].style.opacity = '0.6';
-                objetivosElements[index].style.textDecoration = 'line-through';
+    animarExplosionEspecial(celdasExplosion, 'pocion');
+}
+
+// Activar Frasco Horizontal
+function activarFrascoH(fila, columna) {
+    estado.bloqueado = true;
+    const celdasExplosion = new Set();
+    
+    // Eliminar el frasco
+    celdasExplosion.add(`${fila},${columna}`);
+    
+    // Eliminar toda la fila
+    for (let c = 0; c < configuracion.columnas; c++) {
+        celdasExplosion.add(`${fila},${c}`);
+        estado.puntuacion += 5;
+    }
+    
+    animarExplosionEspecial(celdasExplosion, 'frasco-h');
+}
+
+// Activar Frasco Vertical
+function activarFrascoV(fila, columna) {
+    estado.bloqueado = true;
+    const celdasExplosion = new Set();
+    
+    // Eliminar el frasco
+    celdasExplosion.add(`${fila},${columna}`);
+    
+    // Eliminar toda la columna
+    for (let f = 0; f < configuracion.filas; f++) {
+        celdasExplosion.add(`${f},${columna}`);
+        estado.puntuacion += 5;
+    }
+    
+    animarExplosionEspecial(celdasExplosion, 'frasco-v');
+}
+
+// Activar Bolsa
+function activarBolsa(fila, columna) {
+    estado.bloqueado = true;
+    const celdasExplosion1 = new Set();
+    const celdasExplosion2 = new Set();
+    
+    // Primera explosión (solo la bolsa)
+    celdasExplosion1.add(`${fila},${columna}`);
+    
+    // Segunda explosión (3x3) después de un retraso
+    setTimeout(() => {
+        for (let f = Math.max(0, fila - 1); f <= Math.min(configuracion.filas - 1, fila + 1); f++) {
+            for (let c = Math.max(0, columna - 1); c <= Math.min(configuracion.columnas - 1, columna + 1); c++) {
+                celdasExplosion2.add(`${f},${c}`);
+                estado.puntuacion += 5;
             }
+        }
+        animarExplosionEspecial(celdasExplosion2, 'bolsa');
+    }, 300);
+    
+    animarExplosionEspecial(celdasExplosion1, 'bolsa');
+}
+
+// Animación de explosión para elementos especiales
+function animarExplosionEspecial(celdasExplosion, tipoEfecto) {
+    celdasExplosion.forEach(coordenada => {
+        const [fila, columna] = coordenada.split(',').map(Number);
+        const elemento = document.querySelector(`.celda[data-fila="${fila}"][data-columna="${columna}"] .elemento`);
+        if (elemento) {
+            elemento.classList.add('explosion', tipoEfecto);
         }
     });
     
+    setTimeout(() => {
+        celdasExplosion.forEach(coordenada => {
+            const [fila, columna] = coordenada.split(',').map(Number);
+            estado.tablero[fila][columna].tipo = null;
+            estado.tablero[fila][columna].especial = null;
+        });
+        
+        actualizarObjetivos(celdasExplosion);
+        rellenarEspaciosVacios();
+        estado.bloqueado = false;
+    }, 500);
+}
+
+// Actualizar objetivos
+function actualizarObjetivos(celdasEliminadas) {
+    // Objeto para contar elementos eliminados por tipo
+    const contador = {};
+    configuracion.tiposElementos.forEach(tipo => contador[tipo] = 0);
+
+    // Contar elementos eliminados
+    celdasEliminadas.forEach(coordenada => {
+        const [fila, columna] = coordenada.split(',').map(Number);
+        const tipo = estado.tablero[fila][columna]?.tipo;
+        if (tipo) contador[tipo]++;
+    });
+
+    // Actualizar objetivos
+    estado.objetivos.forEach(objetivo => {
+        objetivo.cantidad = Math.max(0, objetivo.cantidad - contador[objetivo.tipo]);
+    });
+
+    // Actualizar UI
+    document.querySelectorAll('.objetivo').forEach((elemento, index) => {
+        const objetivo = estado.objetivos[index];
+        const cantidadOriginal = configuracion.niveles[estado.nivelActual].objetivos[index].cantidad;
+        const completado = cantidadOriginal - objetivo.cantidad;
+        
+        elemento.querySelector('.progreso').textContent = `${completado}/${cantidadOriginal}`;
+        
+        if (objetivo.cantidad <= 0) {
+            elemento.style.opacity = '0.6';
+            elemento.style.textDecoration = 'line-through';
+        }
+    });
+
     // Verificar si se completaron todos los objetivos
     if (estado.objetivos.every(obj => obj.cantidad <= 0)) {
         setTimeout(() => {
@@ -681,50 +600,151 @@ function actualizarObjetivos(celdasEliminadas) {
     }
 }
 
-// Rellenar espacios vacíos en el tablero
+
+// Function to check if a special combination exists between two cells
+function verificarCombinacionEspecial(fila1, columna1, fila2, columna2) {
+    // Get the two cells
+    const celda1 = estado.tablero[fila1][columna1];
+    const celda2 = estado.tablero[fila2][columna2];
+    
+    // Caso 1: Poción con cualquier elemento
+    if (celda1.especial === 'PocionExp' || celda2.especial === 'PocionExp') {
+        const pocion = celda1.especial === 'PocionExp' ? 
+            {fila: fila1, col: columna1, tipo: celda2.tipo} : 
+            {fila: fila2, col: columna2, tipo: celda1.tipo};
+        return {tipo: 'pocion', ...pocion};
+    }
+    
+    // Caso 2: Frasco con elemento del mismo tipo
+    if ((celda1.especial?.startsWith('Frasco') && celda2.tipo === celda1.tipo) ||
+        (celda2.especial?.startsWith('Frasco') && celda1.tipo === celda2.tipo)) {
+        const frasco = celda1.especial?.startsWith('Frasco') ? 
+            {fila: fila1, col: columna1, dir: celda1.especial.replace('Frasco', '')} : 
+            {fila: fila2, col: columna2, dir: celda2.especial.replace('Frasco', '')};
+        return {tipo: 'frasco', ...frasco};
+    }
+    
+    // Caso 3: Dos frascos
+    if (celda1.especial?.startsWith('Frasco') && celda2.especial?.startsWith('Frasco')) {
+        return {
+            tipo: 'doble-frasco',
+            fila1, col1: columna1, dir1: celda1.especial.replace('Frasco', ''),
+            fila2, col2: columna2, dir2: celda2.especial.replace('Frasco', '')
+        };
+    }
+    
+    // Caso 4: Bolsa con cualquier elemento
+    if (celda1.especial?.startsWith('Bolsa') || celda2.especial?.startsWith('Bolsa')) {
+        const bolsa = celda1.especial?.startsWith('Bolsa') ? 
+            {fila: fila1, col: columna1} : 
+            {fila: fila2, col: columna2};
+        return {tipo: 'bolsa', ...bolsa};
+    }
+    
+    return null;
+}
+
+
+function procesarCombinacionEspecial(combinacion) {
+    const celdasAEliminar = new Set();
+    let efectoEspecial = null;
+    
+    switch(combinacion.tipo) {
+        case 'pocion':
+            // Convertir todos los elementos del tipo en potiones
+            for (let f = 0; f < configuracion.filas; f++) {
+                for (let c = 0; c < configuracion.columnas; c++) {
+                    if (estado.tablero[f][c].tipo === combinacion.tipo) {
+                        estado.tablero[f][c] = {
+                            tipo: combinacion.tipo,
+                            especial: 'PocionExp'
+                        };
+                    }
+                }
+            }
+            celdasAEliminar.add(`${combinacion.fila},${combinacion.col}`);
+            break;
+            
+        case 'frasco':
+            // Activar frasco en su dirección
+            if (combinacion.dir === 'H') {
+                for (let c = 0; c < configuracion.columnas; c++) {
+                    celdasAEliminar.add(`${combinacion.fila},${c}`);
+                }
+            } else {
+                for (let f = 0; f < configuracion.filas; f++) {
+                    celdasAEliminar.add(`${f},${combinacion.col}`);
+                }
+            }
+            break;
+            
+        case 'doble-frasco':
+            // Crear cruz completa
+            for (let c = 0; c < configuracion.columnas; c++) {
+                celdasAEliminar.add(`${combinacion.fila1},${c}`);
+            }
+            for (let f = 0; f < configuracion.filas; f++) {
+                celdasAEliminar.add(`${f},${combinacion.col2}`);
+            }
+            break;
+            
+        case 'bolsa':
+            // Explosión en área 3x3
+            for (let f = Math.max(0, combinacion.fila - 1); f <= Math.min(configuracion.filas - 1, combinacion.fila + 1); f++) {
+                for (let c = Math.max(0, combinacion.col - 1); c <= Math.min(configuracion.columnas - 1, combinacion.col + 1); c++) {
+                    celdasAEliminar.add(`${f},${c}`);
+                }
+            }
+            break;
+    }
+    
+    animarExplosionEspecial(celdasAEliminar, combinacion.tipo);
+    actualizarObjetivos(celdasAEliminar);
+    rellenarEspaciosVacios();
+}
+
+// Rellenar espacios vacíos
 function rellenarEspaciosVacios() {
     let celdasRellenadas = 0;
     
     for (let columna = 0; columna < configuracion.columnas; columna++) {
+        // Primero: Hacer caer los elementos existentes
         let espaciosVacios = 0;
-        
-        // Contar espacios vacíos desde abajo hacia arriba
         for (let fila = configuracion.filas - 1; fila >= 0; fila--) {
             if (estado.tablero[fila][columna].tipo === null) {
                 espaciosVacios++;
             } else if (espaciosVacios > 0) {
                 // Mover elemento hacia abajo
                 estado.tablero[fila + espaciosVacios][columna] = {...estado.tablero[fila][columna]};
-                estado.tablero[fila][columna].tipo = null;
-                animarCaida(fila, columna, fila + espaciosVacios, columna);
+                estado.tablero[fila][columna] = {tipo: null, especial: null};
                 celdasRellenadas++;
             }
         }
         
-        // Rellenar espacios vacíos en la parte superior con nuevos elementos
+        // Segundo: Rellenar con nuevos elementos en la parte superior
         for (let fila = 0; fila < espaciosVacios; fila++) {
             estado.tablero[fila][columna] = {
                 tipo: configuracion.tiposElementos[Math.floor(Math.random() * configuracion.tiposElementos.length)],
                 especial: null
             };
-            animarNuevoElemento(fila, columna);
             celdasRellenadas++;
         }
     }
     
-    // Redibujar el tablero después de las animaciones
+
+    
+    // Tercero: Redibujar y verificar combinaciones
     if (celdasRellenadas > 0) {
+        dibujarTablero();
+        
         setTimeout(() => {
-            dibujarTablero();
-            
-            // Verificar nuevas combinaciones después de rellenar
             const nuevasCombinaciones = buscarCombinaciones();
             if (nuevasCombinaciones.length > 0) {
                 procesarCombinaciones(nuevasCombinaciones);
             } else {
                 estado.bloqueado = false;
                 
-                // Verificar si el juego ha terminado
+                // Verificar fin del juego
                 if (estado.movimientos <= 0 && !estado.objetivos.every(obj => obj.cantidad <= 0)) {
                     setTimeout(() => {
                         alert(`¡Se acabaron los movimientos! Puntuación: ${estado.puntuacion}`);
@@ -732,60 +752,7 @@ function rellenarEspaciosVacios() {
                     }, 500);
                 }
             }
-        }, 500);
-    } else {
-        estado.bloqueado = false;
-    }
-}
-
-// Rellenar espacios vacíos en el tablero (versión simplificada)
-function rellenarEspaciosVacios() {
-    let celdasRellenadas = 0;
-    
-    for (let columna = 0; columna < configuracion.columnas; columna++) {
-        let espaciosVacios = 0;
-        
-        // Contar espacios vacíos desde abajo hacia arriba
-        for (let fila = configuracion.filas - 1; fila >= 0; fila--) {
-            if (estado.tablero[fila][columna].tipo === null) {
-                espaciosVacios++;
-            } else if (espaciosVacios > 0) {
-                // Mover elemento hacia abajo
-                estado.tablero[fila + espaciosVacios][columna] = {...estado.tablero[fila][columna]};
-                estado.tablero[fila][columna].tipo = null;
-                celdasRellenadas++;
-            }
-        }
-        
-        // Rellenar espacios vacíos en la parte superior con nuevos elementos
-        for (let fila = 0; fila < espaciosVacios; fila++) {
-            estado.tablero[fila][columna] = {
-                tipo: configuracion.tiposElementos[Math.floor(Math.random() * configuracion.tiposElementos.length)],
-                especial: null
-            };
-            celdasRellenadas++;
-        }
-    }
-    
-    // Redibujar el tablero inmediatamente
-    if (celdasRellenadas > 0) {
-        dibujarTablero();
-        
-        // Verificar nuevas combinaciones después de rellenar
-        const nuevasCombinaciones = buscarCombinaciones();
-        if (nuevasCombinaciones.length > 0) {
-            procesarCombinaciones(nuevasCombinaciones);
-        } else {
-            estado.bloqueado = false;
-            
-            // Verificar si el juego ha terminado
-            if (estado.movimientos <= 0 && !estado.objetivos.every(obj => obj.cantidad <= 0)) {
-                setTimeout(() => {
-                    alert(`¡Se acabaron los movimientos! Puntuación: ${estado.puntuacion}`);
-                    iniciarJuego(estado.nivelActual);
-                }, 500);
-            }
-        }
+        }, 100); // Pequeño retraso para permitir que el navegador renderice
     } else {
         estado.bloqueado = false;
     }
@@ -803,4 +770,4 @@ document.getElementById('boton-reiniciar').addEventListener('click', () => {
 });
 
 // Iniciar el juego cuando se carga la página
-window.onload = () => iniciarJuego(0);
+window.addEventListener('DOMContentLoaded', () => iniciarJuego(0));
