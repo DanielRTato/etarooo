@@ -161,17 +161,38 @@ function intento(letra) {
     document.getElementById("acierto").classList.add("acierto", "rosa");
 
     if (player) {
-      contPlayer1--;
-      // Actualizar contador de intentos para jugador 1
-      intentosRojos.innerHTML = "Intentos restantes: " + contPlayer1;
-      // Actualizar imagen para jugador 1
-      document.getElementById("image" + contPlayer1).classList.add("fade-in");
+      /* --------- jugador 1 --------- */
+      const prevId = `image${contPlayer1}`;  // imagen que ESTÁ visible
+      contPlayer1--;                         // ↓ contador
+      const currId = `image${contPlayer1}`;  // imagen que va a mostrarse
+  
+      intentosRojos.textContent = `Intentos restantes: ${contPlayer1}`;
+      cambiarImagen(prevId, currId);
+  
     } else {
+      /* --------- jugador 2 --------- */
+      const prevId = `image${contPlayer2}_1`;
       contPlayer2--;
-      // Actualizar contador de intentos para jugador 2
-      intentosAmarillos.innerHTML = "Intentos restantes: " + contPlayer2;
-      // Actualizar imagen para jugador 2 (nota el sufijo _1)
-      document.getElementById("image" + contPlayer2 + "_1").classList.add("fade-in");
+      const currId = `image${contPlayer2}_1`;
+  
+      intentosAmarillos.textContent = `Intentos restantes: ${contPlayer2}`;
+      cambiarImagen(prevId, currId);
+    }
+    
+  }
+  function cambiarImagen(prevId, currId) {
+    /* oculta la anterior SIN transición */
+    const prevEl = document.getElementById(prevId);
+    if (prevEl) {
+      prevEl.className = "hidden";           // borra cualquier otra clase
+    }
+  
+    /* muestra la nueva */
+    const currEl = document.getElementById(currId);
+    if (currEl) {
+      currEl.classList.remove("hidden");     // aparece de golpe
+      void currEl.offsetWidth;               // reinicia animación (por si acaso)
+      currEl.classList.add("fade-in");       // opcional
     }
   }
 
