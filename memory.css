@@ -55,30 +55,51 @@ body {
    box-shadow: 0 0 15px rgba(200, 160, 255, 0.6);
 }
 
-#back-btn {
+/* Botón redondo de volver */
+.round-back-btn {
+   position: fixed;
+   top: 20px;
+   left: 20px;
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
    background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
    color: white;
    border: none;
-   padding: 12px 20px;
-   border-radius: 30px;
-   font-size: 16px;
+   font-size: 24px;
    font-weight: bold;
    cursor: pointer;
    transition: all 0.3s;
    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
    box-shadow: 
-      0 4px 8px rgba(0, 0, 0, 0.3),
-      0 0 10px rgba(138, 90, 255, 0.5);
-   margin: 1rem;
-}
+     0 4px 8px rgba(0, 0, 0, 0.3),
+     0 0 10px rgba(138, 90, 255, 0.5);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 1000;
+ }
 
-#back-btn:hover {
+ .round-back-btn svg {
+   width: 24px;
+   height: 24px;
+   stroke: white;
+ }
+ 
+ .round-back-btn:hover {
    background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
    transform: translateY(-2px);
    box-shadow: 
-      0 6px 12px rgba(0, 0, 0, 0.4),
-      0 0 15px rgba(138, 90, 255, 0.7);
-}
+     0 6px 12px rgba(0, 0, 0, 0.4),
+     0 0 15px rgba(138, 90, 255, 0.7);
+ }
+ 
+ .round-back-btn:active {
+   transform: translateY(0);
+   box-shadow: 
+     0 2px 4px rgba(0, 0, 0, 0.3),
+     0 0 8px rgba(138, 90, 255, 0.5);
+ }
 
 /* Estilos para las caras de las cartas */
 .back, .face {

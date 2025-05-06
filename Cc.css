@@ -5,14 +5,16 @@ body {
     margin: 0;
     padding: 20px;
     color: #e0d0ff;
+    min-height: 100vh;
+    box-sizing: border-box;
     background-image: 
         radial-gradient(circle at 20% 30%, rgba(139, 58, 191, 0.15) 0%, transparent 25%),
         radial-gradient(circle at 80% 70%, rgba(91, 33, 182, 0.15) 0%, transparent 25%);
 }
 
 #contenedor-juego {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 1000px; /* Aumentamos el ancho máximo */
+    margin: auto;
     background-color: #2a104a;
     border-radius: 20px;
     box-shadow: 
@@ -23,17 +25,24 @@ body {
     grid-template-columns: 1fr 300px;
     gap: 20px;
     border: 2px solid #4a1a8a;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
 }
 
 #panel-juego {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 #tablero {
-    width: 100%;
-    aspect-ratio: 1/1;
+    width: 600px; /* Tamaño aumentado */
+    height: 600px; /* Tamaño aumentado */
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
@@ -43,6 +52,7 @@ body {
     border-radius: 15px;
     border: 8px solid #6a2a9a;
     box-shadow: 0 0 20px rgba(139, 58, 191, 0.4);
+    margin: 0 auto; /* Centrado horizontal dentro del panel */
 }
 
 .celda {
@@ -251,19 +261,27 @@ body {
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     #contenedor-juego {
         grid-template-columns: 1fr;
+        width: 90%;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 20px auto;
+    }
+    
+    #tablero {
+        width: 90vw;
+        height: 90vw;
+        max-width: 500px;
+        max-height: 500px;
     }
     
     #panel-informacion {
         order: -1;
         margin-bottom: 20px;
-    }
-    
-    #tablero {
-        width: 100%;
-        max-width: 400px;
     }
 }
 
@@ -301,3 +319,47 @@ body {
     font-size: 18px;
 }
 
+/* Botón redondo de volver */
+.round-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
+    color: white;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        0 0 10px rgba(138, 90, 255, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+  .round-back-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+  }
+  
+  .round-back-btn:hover {
+    background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 6px 12px rgba(0, 0, 0, 0.4),
+      0 0 15px rgba(138, 90, 255, 0.7);
+  }
+  
+  .round-back-btn:active {
+    transform: translateY(0);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 0 8px rgba(138, 90, 255, 0.5);
+  }

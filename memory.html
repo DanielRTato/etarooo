@@ -16,12 +16,16 @@
     <span>Jugador 2: <span id="score2">0</span></span>
   </div>
   <button id="reset-btn">Reiniciar Juego</button>
-  <button id="back-btn">Volver a la Página Principal</button>
+  <button id="back-btn" class="round-back-btn">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </button>
   <script src="memory.js"></script>
   <script>
-    document.getElementById('back-btn').addEventListener('click', function() {
-      window.location.href = 'index.html';
-    });
+    document.querySelector('.round-back-btn').addEventListener('click', function() {
+  window.location.href = 'index.html';
+});
   </script>
 </body>
 </html>

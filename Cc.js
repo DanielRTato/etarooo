@@ -1,3 +1,8 @@
+document.querySelector('.round-back-btn').addEventListener('click', function() {
+    window.location.href = 'index.html';
+  });
+
+
 // Configuración del juego
 const configuracion = {
     filas: 8,
