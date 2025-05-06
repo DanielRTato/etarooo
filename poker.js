@@ -935,29 +935,32 @@ function getPokerData(mano) {
  *    Desempate por Full House
  *********************************************/
 function desempatarFullHouse(manoA, manoB) {
-  const { trio: ta, pair: pa } = getFullHouseData(manoA);
-  const { trio: tb, pair: pb } = getFullHouseData(manoB);
-  if (ta > tb) return 1;
-  if (tb > ta) return -1;
-  if (pa > pb) return 1;
-  if (pb > pa) return -1;
-  return 0;
+  const da = getFullHouseData(manoA);
+  const db = getFullHouseData(manoB);
+  if (!da || !db) throw new Error('Alguna mano no es full-house');
+
+  if (da.trio !== db.trio) return Math.sign(da.trio - db.trio);
+  return Math.sign(da.pair - db.pair);
 }
 
 function getFullHouseData(mano) {
-  const vals = mano.map(c => c.numero === 1 ? 14 : c.numero);
   const counts = {};
-  vals.forEach(v => counts[v] = (counts[v]||0) + 1);
+  mano.forEach(({ numero }) => {
+    const v = numero === 1 ? 14 : numero;
+    counts[v] = (counts[v] || 0) + 1;
+  });
+
   let trio = 0, pair = 0;
-  for (let v in counts) {
-    const n = +v;
-    if (counts[v] >= 3 && n > trio) trio = n;
+  for (const [vStr, cnt] of Object.entries(counts)) {
+    const v = +vStr;
+    if (cnt >= 3 && v > trio) trio = v;
   }
-  for (let v in counts) {
-    const n = +v;
-    if (n !== trio && counts[v] >= 2 && n > pair) pair = n;
+  for (const [vStr, cnt] of Object.entries(counts)) {
+    const v = +vStr;
+    if (v !== trio && cnt >= 2 && v > pair) pair = v;
   }
-  return { trio, pair };
+
+  return trio && pair ? { trio, pair } : null;
 }
 
 /*********************************************
