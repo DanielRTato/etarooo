@@ -115,14 +115,25 @@ function repartirCartas(baraja, numMano, numCampo) {
 
 
 // Paneles de juego
+let timeoutId = null;
+
 function mostrarMensaje(texto, duracion = 2000, estiloExtra = "") {
   const panel = document.getElementById("mensaje");
-  panel.textContent = texto;
-  panel.className = "panel " + estiloExtra;
-  panel.classList.add("show");
 
-  setTimeout(() => {
+  // ‼️ Si hay un temporizador en curso lo cancelamos
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    timeoutId = null;
+  }
+
+  // Actualizamos el contenido y las clases
+  panel.textContent = texto;
+  panel.className = `panel ${estiloExtra} show`;
+
+  // Programamos la desaparición
+  timeoutId = setTimeout(() => {
     panel.classList.remove("show");
+    timeoutId = null;            // limpiamos el registro
   }, duracion);
 }
 
@@ -839,7 +850,7 @@ function comprobarVictoria(manoV, campoV) {
   return highCard; // 0..14
 }
 
-/*********************************************
+/*********************************************  
  *    Función Principal de Desempate
  *********************************************/
 function desempatar(manoA, manoB, puntuacionEmpate) {
@@ -1245,21 +1256,23 @@ function verificarFinJuego(currPlayer) {
   const scoreRojo     = rojoElem     ? Number(rojoElem.textContent)     : 0;
   const scoreAmarillo = amarilloElem ? Number(amarilloElem.textContent) : 0;
 
-  const rojoGana     = scoreRojo     >= 1200 || scoreAmarillo     <= -500;
-  const amarilloGana = scoreAmarillo >= 1200 || scoreRojo <= -500;
+  const rojoGana     = scoreRojo     >= 0 || scoreAmarillo     <= -850;
+  const amarilloGana = scoreAmarillo >= 0 || scoreRojo <= -850;
 
   if (!rojoGana && !amarilloGana) {
+    return false;
+  } else if(rojoGana && amarilloGana){
     return false;
   }
 
   let ganador;
   if (rojoGana && !amarilloGana) {
-    ganador = 'Jugador Rojo';
+    ganador = 'Jugador Rosa';
   } else if (amarilloGana && !rojoGana) {
-    ganador = 'Jugador Amarillo';
+    ganador = 'Jugador Verde';
   } else {
     // empate: gana quien acaba de tirar
-    ganador = currPlayer === 'R' ? 'Jugador Rojo' : 'Jugador Amarillo';
+    ganador = currPlayer === 'R' ? 'Jugador Rosa' : 'Jugador Verde';
   }
 
   // ahora asignas claveLS, idSpan y estilo según “ganador”
@@ -1278,13 +1291,12 @@ function verificarFinJuego(currPlayer) {
 
   // mensaje y redirección
   mostrarMensaje(
-    `¡${ganador} gana la partida! Punto añadido. Volviendo al menú…`,
-    2000,
-    estilo
+    `¡${ganador} gana la partida! Volviendo al menú…`,
+    7000 
   );
   setTimeout(() => {
     window.location.href = 'index.html';
-  }, 2000);
+  }, 7000);
 
   return true;
 }
