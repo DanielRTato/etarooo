@@ -5,12 +5,12 @@
     --color-fondo: #1a001a;
     --color-texto: #ffffff;
     --color-hover: #ff8c00;
-    --brillo-hover: 0 0 15px #ff4500;
+    --brillo-hover: 0 0 10px #ff4500;
     --error-color: #ff0000;
     --success-color: #00ff00;
-    --color-sombra: rgba(255, 107, 0, 0.3);
+    --color-sombra: rgba(255, 107, 0, 0.2);
     --color-card: rgba(26, 0, 26, 0.8);
-    --color-glow: rgba(255, 107, 0, 0.5);
+    --color-glow: rgba(255, 107, 0, 0.3);
 }
 
 /* Reset básico */
@@ -45,12 +45,12 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
-        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
-        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px),
+        radial-gradient(white, rgba(255,255,255,.08) 1px, transparent 2px),
+        radial-gradient(white, rgba(255,255,255,.05) 2px, transparent 3px);
     background-size: 550px 550px, 350px 350px, 250px 250px;
     background-position: 0 0, 40px 60px, 130px 270px;
-    animation: twinkle 8s ease-in-out infinite;
+    animation: twinkle 12s ease-in-out infinite;
     z-index: -1;
 }
 
@@ -65,28 +65,28 @@ body::after {
     background: linear-gradient(
         to bottom,
         transparent 0%,
-        rgba(26, 0, 26, 0.2) 50%,
-        rgba(26, 0, 26, 0.4) 100%
+        rgba(26, 0, 26, 0.1) 50%,
+        rgba(26, 0, 26, 0.2) 100%
     );
     pointer-events: none;
     z-index: -1;
 }
 
 @keyframes twinkle {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.5; }
 }
 
 /* Header y Navegación */
 .header {
-    background: rgba(26, 0, 26, 0.95);
+    background: rgba(26, 0, 26, 0.9);
     padding: 0.5rem 0;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3px);
 }
 
 .nav-container {
@@ -102,11 +102,9 @@ body::after {
     font-family: 'Creepster', cursive;
     font-size: 3rem;
     color: var(--color-primario);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5),
-                 0 0 10px var(--color-primario);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     margin: 0;
-    animation: glow 3s infinite;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     text-align: center;
 }
 
@@ -199,36 +197,18 @@ body::after {
     overflow: hidden;
     transition: all 0.3s ease;
     border: 1px solid var(--color-primario);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     min-width: 0;
     height: 100%;
     position: relative;
-    animation: float 6s ease-in-out infinite;
-}
-
-.juego-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent, var(--color-glow), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
 }
 
 .juego-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     border-color: var(--color-hover);
-}
-
-.juego-card:hover::before {
-    opacity: 0.1;
 }
 
 .juego-card .enlace-juego {
@@ -246,14 +226,13 @@ body::after {
     object-fit: contain;
     border-radius: 10px;
     margin-bottom: 1rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
     padding: 0.5rem;
     transition: all 0.3s ease;
 }
 
 .juego-card:hover .boton-casa {
-    transform: scale(1.05);
-    animation: glow 2s infinite;
+    transform: scale(1.02);
 }
 
 .juego-info {
@@ -269,14 +248,12 @@ body::after {
     color: var(--color-primario);
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    text-shadow: 0 0 5px var(--color-primario);
+    text-shadow: 0 0 3px var(--color-primario);
     transition: all 0.3s ease;
 }
 
 .juego-card:hover .juego-info h3 {
     color: var(--color-hover);
-    text-shadow: 0 0 10px var(--color-hover);
-    animation: pulse 2s infinite;
 }
 
 .juego-info p {
@@ -288,7 +265,6 @@ body::after {
 
 .juego-card:hover .juego-info p {
     opacity: 1;
-    transform: translateY(-2px);
 }
 
 /* Sección Acerca de */
@@ -309,28 +285,12 @@ body::after {
 
 /* Footer */
 .footer {
-    background: rgba(26, 0, 26, 0.95);
+    background: rgba(26, 0, 26, 0.9);
     padding: 0.5rem 0;
-    border-top: 2px solid var(--color-primario);
+    border-top: 1px solid var(--color-primario);
     position: relative;
     z-index: 2;
-    backdrop-filter: blur(5px);
-}
-
-.footer::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        var(--color-primario) 20%, 
-        var(--color-primario) 80%, 
-        transparent 100%
-    );
-    animation: glow 3s infinite;
+    backdrop-filter: blur(3px);
 }
 
 .footer-content {
@@ -351,13 +311,7 @@ body::after {
     color: var(--color-primario);
     font-size: 1rem;
     margin-bottom: 0.3rem;
-    text-shadow: 0 0 5px var(--color-primario);
-    transition: all 0.3s ease;
-}
-
-.footer-section:hover h3 {
-    color: var(--color-hover);
-    text-shadow: 0 0 10px var(--color-hover);
+    text-shadow: 0 0 3px var(--color-primario);
 }
 
 .enlaces-footer {
@@ -393,7 +347,6 @@ body::after {
 
 .enlaces-footer a:hover, .correo-enlace:hover {
     color: var(--color-primario);
-    text-shadow: 0 0 5px var(--color-primario);
 }
 
 .copyright {
