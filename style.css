@@ -57,34 +57,6 @@ body {
     z-index: 1;
 }
 
-/* POSICIONAMIENTO DE CASAS EN LA GRID */
-.div1 { 
-    grid-area: 4 / 2 / 5 / 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.div2 { 
-    grid-area: 3 / 3 / 4 / 4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.div3 { 
-    grid-area: 3 / 5 / 4 / 6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.div4 { 
-    grid-area: 4 / 6 / 5 / 7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 /* ESTILOS PARA LOS BOTONES */
 .boton-juego {
