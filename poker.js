@@ -1259,13 +1259,18 @@ function verificarFinJuego(currPlayer) {
   const scoreRojo     = rojoElem     ? Number(rojoElem.textContent)     : 0;
   const scoreAmarillo = amarilloElem ? Number(amarilloElem.textContent) : 0;
 
-  const rojoGana     = scoreRojo     >= 1650 || scoreAmarillo     <= -850;
-  const amarilloGana = scoreAmarillo >= 1650 || scoreRojo <= -850;
+  const rojoGana     = scoreRojo     >= 0 || scoreAmarillo     <= -850;
+  const amarilloGana = scoreAmarillo >= 0 || scoreRojo <= -850;
 
   if (!rojoGana && !amarilloGana) {
-    return false;
+    if(scoreAmarillo==scoreRojo){
+      return false;
+    }
   } else if(rojoGana && amarilloGana){
-    return false;
+    if(scoreRojo==scoreAmarillo){
+      return false;
+    }
+    
   }
 
   let ganador;
@@ -1274,8 +1279,11 @@ function verificarFinJuego(currPlayer) {
   } else if (amarilloGana && !rojoGana) {
     ganador = 'Jugador Verde';
   } else {
-    // empate: gana quien acaba de tirar
-    ganador = currPlayer === 'R' ? 'Jugador Rosa' : 'Jugador Verde';
+    if(scoreAmarillo>scoreRojo){
+      ganador = 'Jugador Verde';
+    }else if(scoreRojo>scoreAmarillo){
+      ganador = 'Jugador Rosa';
+    }
   }
 
   // ahora asignas claveLS, idSpan y estilo según “ganador”
