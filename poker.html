@@ -6,40 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesa de Poker</title>
     <link rel="stylesheet" href="poker.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <!-- Botón de ayuda -->
-<button id="help-btn" class="round-help-btn" aria-label="Instrucciones">
-    <!-- Interrogante en SVG para mantener estilo vectorial -->
-    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 18h.01"/>
-      <path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/>
-      <circle cx="12" cy="12" r="10"/>
-    </svg>
-  </button>
-  
-  <!-- Panel flotante de instrucciones -->
-  <div id="help-panel" class="help-panel hidden">
-    <div class="help-content">
-      <button id="close-help" class="close-help-btn" aria-label="Cerrar ayuda">&times;</button>
-      <h2>Instrucciones del Apuesta Poker</h2>
-      <br>
-      <p>
-        <strong>Apuesta Poker</strong> es un duelo entre dos jugadores que apuestan
-        sobre el desenlace de la mano de póker que tienen a la vista. Tu marcador subirá
-        o bajará según aciertes o falles tu predicción.<br>
-        El primero en alcanzar <strong>1 650 puntos</strong> gana inmediatamente; del mismo
-        modo, si uno de los jugadores cae a <strong>−850 puntos</strong> o menos, pierde la
-        partida y su rival se lleva la victoria.<br>
-        <em>Nota:</em> Este póker se aparta de las reglas habituales: la baraja puede incluir más de dos comodines y en el campo se empieza con solo dos cartas descubiertas.
-      </p>
+    <button id="help-btn" class="round-help-btn" aria-label="Instrucciones">
+        <!-- Interrogante en SVG para mantener estilo vectorial -->
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 18h.01" />
+            <path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3" />
+            <circle cx="12" cy="12" r="10" />
+        </svg>
+    </button>
+
+    <!-- Panel flotante de instrucciones -->
+    <div id="help-panel" class="help-panel hidden">
+        <div class="help-content">
+            <button id="close-help" class="close-help-btn" aria-label="Cerrar ayuda">&times;</button>
+            <h2>Instrucciones del Apuesta Poker</h2>
+            <br>
+            <p>
+                <strong>Apuesta Poker</strong> es un duelo entre dos jugadores que apuestan
+                sobre el desenlace de la mano de póker que tienen a la vista. Tu marcador subirá
+                o bajará según aciertes o falles tu predicción.<br>
+                El primero en alcanzar <strong>1 650 puntos</strong> gana inmediatamente; del mismo
+                modo, si uno de los jugadores cae a <strong>−850 puntos</strong> o menos, pierde la
+                partida y su rival se lleva la victoria.<br>
+                <em>Nota:</em> Este póker se aparta de las reglas habituales: la baraja puede incluir más de dos
+                comodines y en el campo se empieza con solo dos cartas descubiertas.
+            </p>
+        </div>
     </div>
-  </div>
-  
+
     <button id="back-btn" class="round-back-btn">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 18l-6-6 6-6"/>
+            <path d="M15 18l-6-6 6-6" />
         </svg>
     </button>
     <h1 class="titulo">Apuesta Poker</h1>
@@ -107,4 +112,3 @@
 </body>
 
 </html>
-

@@ -1,5 +1,9 @@
 * {
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: bold;
 }
 
 /* Mantener estructura original del body */
@@ -326,10 +330,16 @@ picture img {
   transition: opacity .3s ease;
 }
 
+
+
 /* Clases que controlan la visibilidad */
 .hidden  { opacity: 0;   pointer-events: none; }
 .fade-in { opacity: 1; }                /* basta con esto */
-
+#image0, #image6, #image0_1, #image6_1 {
+  width: 133.5px;
+  height: auto;
+  margin-top: 153px;
+}
 
 #image5,
 #image4,
