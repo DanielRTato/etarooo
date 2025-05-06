@@ -268,3 +268,7 @@ function detectarColision (a,b){
     a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
     a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
 }
+document.querySelector('.round-back-btn').addEventListener('click', function() {
+    window.location.href = 'index.html';
+  });
+  
