@@ -1,11 +1,11 @@
 const totalCards = 12; // 6 pares
 const availableCards = [
-  '/assets/img/Bola+Soporte.png',
-  '/assets/img/caldero.png',
-  '/assets/img/escoba.png',
-  '/assets/img/FrascoPetaloH.png',
-  '/assets/img/PocionExp.png',
-  '/assets/img/sombrero.png'
+  'assets/img/Bola+Soporte.png',
+  'assets/img/caldero.png',
+  'assets/img/escoba.png',
+  'assets/img/FrascoPetaloH.png',
+  'assets/img/PocionExp.png',
+  'assets/img/sombrero.png'
 ];
 
 let cards = [];
