@@ -48,53 +48,83 @@ h1#msg-final {
 }
 
 /* Panel fijo, centrado en la parte superior */
-#acierto{
-  position:fixed;
-  top:12px;
-  left:50%;
-  transform:translateX(-50%) scale(0);
-  transform-origin:center top;
-  pointer-events:none;
-  opacity:0;
-  font-size:50px;
+#acierto {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  transform-origin: center top;
+  pointer-events: none;
+  opacity: 0;
+  font-size: 50px;
 }
 
 /* Barra inferior animada */
-#acierto::after{
-  content:"";
-  position:absolute;
-  bottom:-6px;          /* separa la barra del texto */
-  right:0;              /* arrancamos en el borde derecho */
-  width:100%;
-  height:4px;           /* grosor de la barra */
-  background:currentColor;
-  transform-origin:right center;   /* <─ así se “desenrolla” de derecha a izq. */
-  transform:scaleX(0);             /* empieza oculta */
+#acierto::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  /* separa la barra del texto */
+  right: 0;
+  /* arrancamos en el borde derecho */
+  width: 100%;
+  height: 4px;
+  /* grosor de la barra */
+  background: currentColor;
+  transform-origin: right center;
+  /* <─ así se “desenrolla” de derecha a izq. */
+  transform: scaleX(0);
+  /* empieza oculta */
 }
 
 /* Clase que dispara TODO: texto + zoom + barra */
-#acierto.acierto{
-  animation:zoomInOut 1s ease forwards;
+#acierto.acierto {
+  animation: zoomInOut 1s ease forwards;
 }
-#acierto.acierto::after{
-  animation:barra 1s ease forwards;
+
+#acierto.acierto::after {
+  animation: barra 1s ease forwards;
 }
 
 /* Colores semáforo */
-.rojo  { color:#e53935; }   /* rojo claro, cámbialo si quieres otro tono */
-.verde { color:#43a047; }
-
-/* Animaciones */
-@keyframes zoomInOut{
-  0%   { transform:translateX(-50%) scale(0);   opacity:0; }
-  40%  { transform:translateX(-50%) scale(1.2); opacity:1; }
-  60%  { transform:translateX(-50%) scale(1); }
-  100% { transform:translateX(-50%) scale(1); }
+.rojo {
+  color: #e53935;
 }
 
-@keyframes barra{
-  0%   { transform:scaleX(0); }
-  100% { transform:scaleX(1); }
+/* rojo claro, cámbialo si quieres otro tono */
+.verde {
+  color: #43a047;
+}
+
+/* Animaciones */
+@keyframes zoomInOut {
+  0% {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+  }
+
+  40% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 1;
+  }
+
+  60% {
+    transform: translateX(-50%) scale(1);
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes barra {
+  0% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
 }
 
 h2.palabra {
@@ -519,32 +549,46 @@ picture img {
   /* Sombras hover */
 }
 
-     /* Botón redondo de volver */
-     .round-back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
-      color: white;
-      border: none;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-      box-shadow: 
-          0 4px 8px rgba(0, 0, 0, 0.3),
-          0 0 10px rgba(138, 90, 255, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-  }
-    .round-back-btn svg {
-      width: 24px;
-      height: 24px;
-      stroke: white;
-    }
+.round-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
+  color: white;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.3),
+      0 0 10px rgba(138, 90, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.round-back-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+}
+
+.round-back-btn:hover {
+  background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(138, 90, 255, 0.7);
+}
+
+.round-back-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 8px rgba(138, 90, 255, 0.5);
+}
