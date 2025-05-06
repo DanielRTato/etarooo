@@ -3,38 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlappyMeiga</title>
+    <title>Flappy Meiga</title>
     <link rel="stylesheet" href="fb.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            color: white;
-            font-family: 'Arial Rounded MT Bold', sans-serif;
-        }
-    </style>
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen">
-        <div>
-            <h2>Cargando el juego...</h2>
-            <p>Por favor, espera mientras se cargan los recursos.</p>
-        </div>
-    </div>
     <button id="back-btn" class="round-back-btn">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M15 18l-6-6 6-6"/>
         </svg>
-      </button>    <div class="game-container">
+    </button>
+    <div class="game-container">
         <canvas id="tablero"></canvas>
         <div class="controls-guide">
             <div class="control-item">
@@ -64,11 +43,6 @@
         <script>
             document.getElementById('back-btn').addEventListener('click', function() {
                 window.location.href = 'index.html';
-            });
-
-            // Ocultar pantalla de carga cuando el juego esté listo
-            window.addEventListener('gameReady', function() {
-                document.getElementById('loadingScreen').style.display = 'none';
             });
         </script>
     </div>

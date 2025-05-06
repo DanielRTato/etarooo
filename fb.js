@@ -2,224 +2,126 @@
 pendientes
 funcion que reinicie el juego cuando gameOver
 arrelgar hitboxesuna
+boton para sinlenciar la musica
 */
 
 // variables de la ventana de juego
-let tablero;
-let tableroWidth = 1200;  // dimensiones del tablero
-let tableroHeight = 800; // dimensiones del tablero
-let dibujo;
- 
+let tablero = document.getElementById("tablero");
+let tableroWidth = 1200;
+let tableroHeight = 800;
+let dibujo = tablero.getContext("2d");
+tablero.width = tableroWidth;
+tablero.height = tableroHeight;
+
 // variables de la meiga
-let meigaWidth = 94
+let meigaWidth = 94;
 let meigaHeight = 84;
-let meigaX = tableroWidth /6//8
-let meigaY = tableroHeight/4 //2
-let meigaImg
+let meigaX = tableroWidth/6;
+let meigaY = tableroHeight/4;
+let meigaImg = new Image();
+meigaImg.src = "assets/imagenes/FB/rana_sinBordeNegro.png";
 
 let meiga = {
-    x : meigaX,
-    y : meigaY,
-    width : meigaWidth,
-    height : meigaHeight,
-}
-
-
+    x: meigaX,
+    y: meigaY,
+    width: meigaWidth,
+    height: meigaHeight
+};
 
 // variables de las tuberias
-let tuberiasArray= []
-let tuberiaWidth = 64 //64 
-let tuberiaHeight = 510 //512
-let tuberiaX = tableroWidth
-let tuberiaY = 0
+let tuberiasArray = [];
+let tuberiaWidth = 64;
+let tuberiaHeight = 510;
+let tuberiaX = tableroWidth;
+let tuberiaY = 0;
 
-let tuberiaArribaImg
-let tuberiaAbajoImg
+let tuberiaArribaImg = new Image();
+let tuberiaAbajoImg = new Image();
+tuberiaArribaImg.src = "assets/imagenes/FB/toppipe.png";
+tuberiaAbajoImg.src = "assets/imagenes/FB/bottompipe.png";
 
 // fisicas
-let velocidadX = -15
-let velocidadY = 0 // meiga velociadad de vuelo
-let gravedad = 0.4
+let velocidadX = -15;
+let velocidadY = 0;
+let gravedad = 0.4;
 
-let gameOver = false
-let puntuacion = 0
+let gameOver = false;
+let puntuacion = 0;
 
 // Sonidos
-let volarSonido = new Audio();
-let hitSonido = new Audio();
-let fondoSonido = new Audio();
+let volarSonido = new Audio("assets/audio/FB/sfx_wing.wav");
+let hitSonido = new Audio("assets/audio/FB/sfx_hit.wav");
+let fondoSonido = new Audio("assets/audio/FB/Bg_BABA_YAGA.mp3");
+fondoSonido.loop = true;
 
-// Intentar cargar los sonidos
-try {
-    volarSonido.src = "assets/audio/FB/sfx_wing.wav";
-    hitSonido.src = "assets/audio/FB/sfx_hit.wav";
-    fondoSonido.src = "assets/audio/FB/Bg_BABA_YAGA.mp3";
-    fondoSonido.loop = true;
-} catch (error) {
-    console.error("Error loading sounds:", error);
-    mostrarError('Error al cargar los sonidos. El juego continuará sin sonido.');
-}
-
-
-window.onload = function() { 
-    
-    tablero = document.getElementById("tablero")
-    tablero.width = tableroWidth
-    tablero.height = tableroHeight
-    dibujo = tablero.getContext("2d")
-
-    // Cargar imágenes
-    const images = {
-        meiga: new Image(),
-        topPipe: new Image(),
-        bottomPipe: new Image()
-    };
-
-    // Obtener la ruta absoluta del directorio del juego
-    const baseDir = window.location.href.split('/').slice(0, -1).join('/') + '/';
-    
-    images.meiga.src = baseDir + "assets/imagenes/FB/rana_sinBordeNegro.png";
-    images.topPipe.src = baseDir + "assets/imagenes/FB/toppipe.png";
-    images.bottomPipe.src = baseDir + "assets/imagenes/FB/bottompipe.png";
-
-    // Manejo de errores para las imágenes
-    images.meiga.onerror = () => {
-        console.error('Error al cargar la imagen de la meiga');
-        mostrarError('No se pudo cargar la imagen de la meiga');
-    };
-    images.topPipe.onerror = () => {
-        console.error('Error al cargar la imagen de la tubería superior');
-        mostrarError('No se pudo cargar la imagen de la tubería superior');
-    };
-    images.bottomPipe.onerror = () => {
-        console.error('Error al cargar la imagen de la tubería inferior');
-        mostrarError('No se pudo cargar la imagen de la tubería inferior');
-    };
-
-    // Esperar a que todas las imágenes se carguen
-    let loadedImages = 0;
-    const totalImages = 3;
-    const MAX_LOAD_TIME = 5000; // 5 segundos
-    let loadTimer;
-
-    function handleImageLoad() {
-        loadedImages++;
-        if (loadedImages === totalImages) {
-            // Todas las imágenes cargadas
-            meigaImg = images.meiga;
-            tuberiaArribaImg = images.topPipe;
-            tuberiaAbajoImg = images.bottomPipe;
-            dibujo.drawImage(meigaImg, meiga.x, meiga.y, meiga.width, meiga.height);
-            requestAnimationFrame(update);
-            setInterval(ponTuberia, 800);
-            document.addEventListener("keydown", ranaVoladora);
-            
-            // Emitir evento para ocultar pantalla de carga
-            const loadingScreen = document.getElementById('loadingScreen');
-            if (loadingScreen) {
-                loadingScreen.style.display = 'none';
-            }
-            clearTimeout(loadTimer);
-        }
-    }
-
-    // Configurar timeout en caso de que las imágenes no se carguen
-    loadTimer = setTimeout(() => {
-        if (loadedImages < totalImages) {
-            mostrarError('Error al cargar las imágenes. Por favor, verifica que tienes conexión a internet y que las imágenes están en la carpeta correcta.');
-        }
-    }, MAX_LOAD_TIME);
-
-    // Función para mostrar errores
-    function mostrarError(mensaje) {
-        const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-            loadingScreen.querySelector('h2').textContent = 'Error al cargar el juego';
-            loadingScreen.querySelector('p').textContent = mensaje;
-        }
-    }
-
-    // Agregar event listeners para las imágenes
-    Object.values(images).forEach(img => {
-        img.onload = handleImageLoad;
-        img.onerror = function() {
-            console.error(`Error loading image: ${this.src}`);
-            alert("Error loading game assets. Please make sure all game files are in the correct location.");
-        };
-    });
-}
-
+// Iniciar juego
+fondoSonido.play();
+requestAnimationFrame(update);
+setInterval(ponTuberia, 800);
+document.addEventListener("keydown", ranaVoladora);
 
 function update() {
-    
     requestAnimationFrame(update);
-    if (gameOver){
-        return 
-    }
+    if (gameOver) return;
+    
     dibujo.clearRect(0, 0, tablero.width, tablero.height);
   
-    velocidadY += gravedad
+    velocidadY += gravedad;
     meiga.y = Math.max(meiga.y + velocidadY, 0);
-    dibujo.drawImage(meigaImg, meiga.x, meiga.y, meiga.width, meiga.height); // meiga
+    dibujo.drawImage(meigaImg, meiga.x, meiga.y, meiga.width, meiga.height);
 
-    if (meiga.y > tablero.height){
-        gameOver = true
+    if (meiga.y > tablero.height) {
+        gameOver = true;
     }
 
     // tuberia avanza izquierda
     for (let i = 0; i < tuberiasArray.length; i++) {
         let tuberia = tuberiasArray[i];
-        tuberia.x += velocidadX; 
+        tuberia.x += velocidadX;
         dibujo.drawImage(tuberia.img, tuberia.x, tuberia.y, tuberia.width, tuberia.height);
 
-        if (!tuberia.superado && meiga.x > tuberia.x + tuberia.width){
-            puntuacion += 0.5
-            tuberia.superado = true
+        if (!tuberia.superado && meiga.x > tuberia.x + tuberia.width) {
+            puntuacion += 0.5;
+            tuberia.superado = true;
         }
 
         if (detectarColision(meiga, tuberia)) {
             hitSonido.play();
-            gameOver = true
+            gameOver = true;
         }
     }
-    // PUntuacion
-    dibujo.fillStyle = "white"
-    dibujo.font = "45px sans-serif"
-    dibujo.fillText (puntuacion,5,45)
 
-    if(gameOver) {
-        // Centrar el texto "GAME OVER"
-        dibujo.fillStyle = "red"; // Color rojo para destacar
-        dibujo.font = "60px 'Courier New', Courier, monospace"; // Fuente más grande y consistente
+    // Puntuacion
+    dibujo.fillStyle = "white";
+    dibujo.font = "45px sans-serif";
+    dibujo.fillText(Math.floor(puntuacion), 5, 45);
+
+    if (gameOver) {
+        dibujo.fillStyle = "red";
+        dibujo.font = "60px 'Courier New', Courier, monospace";
         let textoGameOver = "GAME OVER";
-        let textoX = (tablero.width - dibujo.measureText(textoGameOver).width) / 2; // Centrar horizontalmente
-        let textoY = tablero.height / 2; // Centrar verticalmente
+        let textoX = (tablero.width - dibujo.measureText(textoGameOver).width) / 2;
+        let textoY = tablero.height / 2;
         dibujo.fillText(textoGameOver, textoX, textoY);
-
-        // Pausar la música de fondo
         fondoSonido.pause();
-
-        // Mostrar el botón de reinicio
         document.getElementById("reiniciar").style.display = "block";
     }
-
 }
 
-function ponTuberia(){
-
-    let alturaTuberias = tuberiaY - tuberiaHeight/4 - Math.random()*(tuberiaHeight/2)
-    let espacioAbierto = tableroHeight/3.5 //4.5 original
+function ponTuberia() {
+    let alturaTuberias = tuberiaY - tuberiaHeight/4 - Math.random()*(tuberiaHeight/2);
+    let espacioAbierto = tableroHeight/3.5;
 
     // tuberias de arriba
     let tuberiaArriba = {
-        img : tuberiaArribaImg,
-        x : tuberiaX,
-        y : alturaTuberias,
-        width : tuberiaWidth,
-        height : tuberiaHeight,
-        superado : false
-    }
-    tuberiasArray.push(tuberiaArriba)
+        img: tuberiaArribaImg,
+        x: tuberiaX,
+        y: alturaTuberias,
+        width: tuberiaWidth,
+        height: tuberiaHeight,
+        superado: false
+    };
+    tuberiasArray.push(tuberiaArriba);
 
     // Tubería de abajo
     let tuberiaAbajo = {
@@ -227,10 +129,9 @@ function ponTuberia(){
         x: tuberiaX,
         y: alturaTuberias + tuberiaHeight + espacioAbierto,
         width: tuberiaWidth,
-        height: tuberiaHeight,
-        
-    }
-    tuberiasArray.push(tuberiaAbajo)
+        height: tuberiaHeight
+    };
+    tuberiasArray.push(tuberiaAbajo);
 }
 
 function reiniciarJuego() {
@@ -241,8 +142,7 @@ function reiniciarJuego() {
     puntuacion = 0;
     gameOver = false;
     fondoSonido.play();
-
-    document.getElementById("reiniciar").style.display = "none"; // Ocultar botón
+    document.getElementById("reiniciar").style.display = "none";
 }
 
 function ranaVoladora(e) {
@@ -251,24 +151,23 @@ function ranaVoladora(e) {
             if (fondoSonido.paused) {
                 fondoSonido.play();
             }
-
             volarSonido.play();
-            velocidadY = -6; // Movimiento normal
+            velocidadY = -6;
         }
     }
-    // Reiniciar con R
     if (e.code == "KeyR") {
         reiniciarJuego();
     }
 }
 
-function detectarColision (a,b){
-    return   a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
-    a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
-    a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
-    a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+function detectarColision(a, b) {
+    return a.x < b.x + b.width &&
+           a.x + a.width > b.x &&
+           a.y < b.y + b.height &&
+           a.y + a.height > b.y;
 }
+
 document.querySelector('.round-back-btn').addEventListener('click', function() {
     window.location.href = 'index.html';
-  });
+});
   
