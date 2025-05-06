@@ -10,6 +10,7 @@
     --success-color: #00ff00;
     --color-sombra: rgba(255, 107, 0, 0.3);
     --color-card: rgba(26, 0, 26, 0.8);
+    --color-glow: rgba(255, 107, 0, 0.5);
 }
 
 /* Reset básico */
@@ -93,17 +94,20 @@ body::after {
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
 .titulo-principal {
     font-family: 'Creepster', cursive;
-    font-size: 2rem;
+    font-size: 3rem;
     color: var(--color-primario);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5),
                  0 0 10px var(--color-primario);
     margin: 0;
+    animation: glow 3s infinite;
+    letter-spacing: 2px;
+    text-align: center;
 }
 
 .nav-menu {
@@ -142,7 +146,7 @@ body::after {
 /* Contenido Principal */
 .main-content {
     flex: 1;
-    margin-top: 60px;
+    margin-top: 80px;
     padding: 1rem;
     max-width: 1200px;
     margin-left: auto;
@@ -161,32 +165,70 @@ body::after {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* Animaciones */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 5px var(--color-glow); }
+    50% { box-shadow: 0 0 20px var(--color-glow); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
 /* Grid de Juegos */
 .juegos-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    padding: 0.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 1rem;
     flex: 1;
     max-width: 1200px;
     margin: 0 auto;
+    align-items: start;
 }
 
 .juego-card {
     background: var(--color-card);
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     border: 1px solid var(--color-primario);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    min-width: 0; /* Permite que las tarjetas se ajusten al contenedor */
+    min-width: 0;
+    height: 100%;
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+}
+
+.juego-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, var(--color-glow), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .juego-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02);
     box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+    border-color: var(--color-hover);
+}
+
+.juego-card:hover::before {
+    opacity: 0.1;
 }
 
 .juego-card .enlace-juego {
@@ -195,15 +237,23 @@ body::after {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 0.5rem;
+    padding: 1rem;
 }
 
 .juego-card .boton-casa {
     width: 100%;
-    height: auto;
-    object-fit: cover;
+    height: 300px;
+    object-fit: contain;
     border-radius: 10px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.juego-card:hover .boton-casa {
+    transform: scale(1.05);
+    animation: glow 2s infinite;
 }
 
 .juego-info {
@@ -212,18 +262,33 @@ body::after {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0.5rem;
 }
 
 .juego-info h3 {
     color: var(--color-primario);
-    font-size: 1.2rem;
-    margin-bottom: 0.3rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px var(--color-primario);
+    transition: all 0.3s ease;
+}
+
+.juego-card:hover .juego-info h3 {
+    color: var(--color-hover);
+    text-shadow: 0 0 10px var(--color-hover);
+    animation: pulse 2s infinite;
 }
 
 .juego-info p {
-    font-size: 0.8rem;
-    line-height: 1.2;
+    font-size: 1.1rem;
+    line-height: 1.4;
     opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.juego-card:hover .juego-info p {
+    opacity: 1;
+    transform: translateY(-2px);
 }
 
 /* Sección Acerca de */
@@ -249,6 +314,7 @@ body::after {
     border-top: 2px solid var(--color-primario);
     position: relative;
     z-index: 2;
+    backdrop-filter: blur(5px);
 }
 
 .footer::before {
@@ -264,6 +330,7 @@ body::after {
         var(--color-primario) 80%, 
         transparent 100%
     );
+    animation: glow 3s infinite;
 }
 
 .footer-content {
@@ -285,6 +352,12 @@ body::after {
     font-size: 1rem;
     margin-bottom: 0.3rem;
     text-shadow: 0 0 5px var(--color-primario);
+    transition: all 0.3s ease;
+}
+
+.footer-section:hover h3 {
+    color: var(--color-hover);
+    text-shadow: 0 0 10px var(--color-hover);
 }
 
 .enlaces-footer {
@@ -298,8 +371,24 @@ body::after {
 .enlaces-footer a, .correo-enlace {
     color: var(--color-texto);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
     font-size: 0.9rem;
+    position: relative;
+}
+
+.enlaces-footer a::after, .correo-enlace::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--color-primario);
+    transition: width 0.3s ease;
+}
+
+.enlaces-footer a:hover::after, .correo-enlace:hover::after {
+    width: 100%;
 }
 
 .enlaces-footer a:hover, .correo-enlace:hover {
@@ -316,7 +405,11 @@ body::after {
 @media (max-width: 1200px) {
     .juegos-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        gap: 1.5rem;
+    }
+    
+    .juego-card .boton-casa {
+        height: 250px;
     }
 }
 
@@ -333,11 +426,23 @@ body::after {
     }
 
     .titulo-principal {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
     }
 
     .section-title {
         font-size: 1.8rem;
+    }
+
+    .juego-card .boton-casa {
+        height: 200px;
+    }
+
+    .juego-info h3 {
+        font-size: 1.3rem;
+    }
+
+    .juego-info p {
+        font-size: 1rem;
     }
 }
 
@@ -347,7 +452,7 @@ body::after {
     }
 
     .titulo-principal {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 
     .section-title {
@@ -356,13 +461,10 @@ body::after {
 
     .juegos-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .juego-info h3 {
-        font-size: 1.1rem;
-    }
-
-    .juego-info p {
-        font-size: 0.7rem;
+    .juego-card .boton-casa {
+        height: 250px;
     }
 }
