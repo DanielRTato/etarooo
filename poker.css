@@ -399,3 +399,18 @@ body {
   /* Clase utilitaria para ocultar */
   .hidden { display: none; }
   
+  h1.titulo {
+    margin: 0px auto 20px auto;
+    text-align: center;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding: 10px 0;
+    /* Solo cambiar estos estilos */
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+    background: linear-gradient(45deg, #d4a0ff, #8a5aff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(138, 90, 255, 0.5);
+    animation: brillo 2s infinite alternate;
+  }
