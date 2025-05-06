@@ -356,3 +356,18 @@ function eleccionPlayer1() {
 
 // Iniciar
 window.onload = inicio();
+
+document.querySelector('.round-back-btn').addEventListener('click', function() {
+  window.location.href = 'index.html';
+});
+
+document.getElementById('help-btn')
+  .addEventListener('click', () => {
+    document.getElementById('help-panel').classList.remove('hidden');
+  });
+
+// Cerrar panel de ayuda
+document.getElementById('close-help')
+  .addEventListener('click', () => {
+    document.getElementById('help-panel').classList.add('hidden');
+  });

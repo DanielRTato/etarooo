@@ -2,20 +2,39 @@
 <html lang="es">
 
 <head>
-  <meta charset="utf-8">
-  <title>Ud.2 - Relacion de ejercicios 5</title>
-  <link rel="stylesheet" href="estilo-ahoracado.css">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilo-ahoracado.css">
 
 </head>
 
 <body>
+  <!-- Botón de ayuda -->
+<button id="help-btn" class="round-help-btn" aria-label="Instrucciones">
+  <!-- Interrogante en SVG para mantener estilo vectorial -->
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 18h.01"/>
+    <path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/>
+    <circle cx="12" cy="12" r="10"/>
+  </svg>
+</button>
+
+<!-- Panel flotante de instrucciones -->
+<div id="help-panel" class="help-panel hidden">
+  <div class="help-content">
+    <button id="close-help" class="close-help-btn" aria-label="Cerrar ayuda">&times;</button>
+    <h2>Instrucciones del juego</h2>
+    <p>
+      Aquí irán las reglas, controles, puntuaciones, etc.  
+      Sustituye este texto por lo que necesites.
+    </p>
+  </div>
+</div>
   <button id="back-btn" class="round-back-btn">
     <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M15 18l-6-6 6-6"/>
     </svg>
   </button>
-
   <div class="main-container">
 
     <h1 class="titulo">Juego del ahorcado</h1>
@@ -53,10 +72,6 @@
     </div>
     <div id="turnPanel" class="turn-panel">
       <p id="turnText">Turno de Jugador 1</p>
-    </div>
-    <button id="back-btn">Volver a la Página Principal</button>
-    <h2 class="palabra" id="palabra"></h2>
-    <div class="flex-row" id="turnos">
     </div>
 
 

@@ -1,0 +1,199 @@
+en el html se añade al final de todo (antes del <script>):
+
+
+<button id="back-btn" class="round-back-btn">
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M15 18l-6-6 6-6"/>
+  </svg>
+</button>
+
+en el css:
+
+/* Botón redondo de volver */
+.round-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
+  color: white;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(138, 90, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.round-back-btn:hover {
+  background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(138, 90, 255, 0.7);
+}
+
+.round-back-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 8px rgba(138, 90, 255, 0.5);
+}
+
+.round-back-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+}
+
+
+en el javascript:
+
+
+document.querySelector('.round-back-btn').addEventListener('click', function() {
+  window.location.href = 'index.html';
+});
+
+------------------------------------------------
+boton de instrucciones
+
+html
+
+<!-- Botón de ayuda -->
+<button id="help-btn" class="round-help-btn" aria-label="Instrucciones">
+  <!-- Interrogante en SVG para mantener estilo vectorial -->
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 18h.01"/>
+    <path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/>
+    <circle cx="12" cy="12" r="10"/>
+  </svg>
+</button>
+
+<!-- Panel flotante de instrucciones -->
+<div id="help-panel" class="help-panel hidden">
+  <div class="help-content">
+    <button id="close-help" class="close-help-btn" aria-label="Cerrar ayuda">&times;</button>
+    <h2>Instrucciones del juego</h2>
+    <p>
+      Aquí irán las reglas, controles, puntuaciones, etc.  
+      Sustituye este texto por lo que necesites.
+    </p>
+  </div>
+</div>
+
+/* Botón redondo de ayuda */
+.round-help-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;               /* Cambia de left a right */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.3),
+    0 0 10px rgba(138,90,255,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.round-help-btn:hover {
+  background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 12px rgba(0,0,0,0.4),
+    0 0 15px rgba(138,90,255,0.7);
+}
+
+.round-help-btn:active {
+  transform: translateY(0);
+}
+
+/* Panel de fondo oscuro */
+.help-panel {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+}
+
+/* Caja de contenido – versión oscura/translúcida */
+.help-content {
+  position: relative;
+  background: rgba(53, 33, 94, 0.85); /* morado oscuro semitransparente */
+  color: #f5f5ff;                     /* texto claro para buen contraste */
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 80%;
+  max-height: 80vh;
+  overflow-y: auto;
+
+  /* efecto vidrio */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+/* Botón de cierre (X) */
+.close-help-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  color: #6a3ac8;
+  cursor: pointer;
+}
+
+.close-help-btn:hover {
+  color: #8a5aff;
+}
+
+/* Clase utilitaria para ocultar */
+.hidden { display: none; }
+
+javascript
+
+
+
+// Mostrar panel de ayuda
+document.getElementById('help-btn')
+  .addEventListener('click', () => {
+    document.getElementById('help-panel').classList.remove('hidden');
+  });
+
+// Cerrar panel de ayuda
+document.getElementById('close-help')
+  .addEventListener('click', () => {
+    document.getElementById('help-panel').classList.add('hidden');
+  });
+
+
+
+
+
+
+

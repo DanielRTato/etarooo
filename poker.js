@@ -1259,13 +1259,11 @@ function verificarFinJuego(currPlayer) {
   const scoreRojo     = rojoElem     ? Number(rojoElem.textContent)     : 0;
   const scoreAmarillo = amarilloElem ? Number(amarilloElem.textContent) : 0;
 
-  const rojoGana     = scoreRojo     >= 0 || scoreAmarillo     <= -850;
-  const amarilloGana = scoreAmarillo >= 0 || scoreRojo <= -850;
+  const rojoGana     = scoreRojo     >= 1650 || scoreAmarillo     <= -850;
+  const amarilloGana = scoreAmarillo >= 1650 || scoreRojo <= -850;
 
   if (!rojoGana && !amarilloGana) {
-    if(scoreAmarillo==scoreRojo){
-      return false;
-    }
+    return false;
   } else if(rojoGana && amarilloGana){
     if(scoreRojo==scoreAmarillo){
       return false;
@@ -1325,3 +1323,18 @@ window.onload = function () {
   mostrarMensaje("¡Empecemos!", 2500);
   inicio(); // 
 };
+document.querySelector('.round-back-btn').addEventListener('click', function() {
+  window.location.href = 'index.html';
+});
+
+// Mostrar panel de ayuda
+document.getElementById('help-btn')
+  .addEventListener('click', () => {
+    document.getElementById('help-panel').classList.remove('hidden');
+  });
+
+// Cerrar panel de ayuda
+document.getElementById('close-help')
+  .addEventListener('click', () => {
+    document.getElementById('help-panel').classList.add('hidden');
+  });
