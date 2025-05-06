@@ -1,16 +1,16 @@
 /* Variables de colores */
 :root {
-    --color-primario: #ff6b00;
-    --color-secundario: #ff4500;
-    --color-fondo: #1a001a;
-    --color-texto: #ffffff;
-    --color-hover: #ff8c00;
-    --brillo-hover: 0 0 10px #ff4500;
-    --error-color: #ff0000;
-    --success-color: #00ff00;
-    --color-sombra: rgba(255, 107, 0, 0.2);
-    --color-card: rgba(26, 0, 26, 0.8);
-    --color-glow: rgba(255, 107, 0, 0.3);
+    --color-primario: #8a5aff;
+    --color-secundario: #6a3ac8;
+    --color-fondo: #1a0a2a;
+    --color-texto: #e0d0ff;
+    --color-hover: #9a6aff;
+    --brillo-hover: 0 0 10px rgba(138, 90, 255, 0.5);
+    --error-color: #da326d;
+    --success-color: #5ad44f;
+    --color-sombra: rgba(91, 33, 182, 0.3);
+    --color-card: rgba(42, 16, 74, 0.8);
+    --color-glow: rgba(138, 90, 255, 0.3);
 }
 
 /* Reset básico */
@@ -30,7 +30,7 @@ html, body {
 body {
     font-family: 'Special Elite', cursive;
     color: var(--color-texto);
-    background: linear-gradient(135deg, #1a001a 0%, #2d002d 25%, #1a001a 50%, #2d002d 75%, #1a001a 100%);
+    background: linear-gradient(135deg, var(--color-fondo) 0%, #2a104a 25%, var(--color-fondo) 50%, #2a104a 75%, var(--color-fondo) 100%);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -65,8 +65,8 @@ body::after {
     background: linear-gradient(
         to bottom,
         transparent 0%,
-        rgba(26, 0, 26, 0.1) 50%,
-        rgba(26, 0, 26, 0.2) 100%
+        rgba(26, 10, 42, 0.1) 50%,
+        rgba(26, 10, 42, 0.2) 100%
     );
     pointer-events: none;
     z-index: -1;
@@ -79,7 +79,7 @@ body::after {
 
 /* Header y Navegación */
 .header {
-    background: rgba(26, 0, 26, 0.9);
+    background: rgba(26, 10, 42, 0.9);
     padding: 0.5rem 0;
     position: fixed;
     width: 100%;
@@ -285,7 +285,7 @@ body::after {
 
 /* Footer */
 .footer {
-    background: rgba(26, 0, 26, 0.9);
+    background: rgba(26, 10, 42, 0.9);
     padding: 0.5rem 0;
     border-top: 1px solid var(--color-primario);
     position: relative;
