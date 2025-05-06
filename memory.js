@@ -1,7 +1,24 @@
+// Cargar los sonidos
 const sonidoCorrecto = new Audio('assets/audio/Memory/coin.mp3');
 const sonidoIncorrecto = new Audio('assets/audio/Memory/negative.mp3');
 const sonidoGanador = new Audio('assets/audio/Memory/winning.mp3');
+const sonidoClick = new Audio('assets/audio/Memory/click.mp3');
 
+// Hacer que el sonido pueda reproducirse de nuevo sin esperar a que termine
+sonidoClick.loop = false; // Asegurarse de que no sea repetido
+sonidoClick.volume = 1;  // Ajusta el volumen si es necesario
+
+// Seleccionar todos los botones
+const botones = document.querySelectorAll('button');
+
+// Agregar el evento de clic a cada botón para reproducir el sonido
+botones.forEach(boton => {
+  boton.addEventListener('click', () => {
+    // Reproducir el sonido de clic cada vez que se presiona un botón
+    sonidoClick.currentTime = 0; // Reinicia el tiempo de reproducción
+    sonidoClick.play(); // Reproduce el sonido de clic
+  });
+});
 const imagenesDisponibles = [
   'assets/img/Bola+Soporte.png',
   'assets/img/frascoPluma.png',
@@ -129,3 +146,19 @@ function iniciarJuego() {
 
 document.querySelector('#reset-btn').addEventListener('click', iniciarJuego);
 window.onload = iniciarJuego;
+
+document.querySelector('.round-back-btn').addEventListener('click', function() {
+  window.location.href = 'index.html';
+  
+});
+// Mostrar panel de ayuda
+document.getElementById('help-btn')
+  .addEventListener('click', () => {
+    document.getElementById('help-panel').classList.remove('hidden');
+  });
+
+// Cerrar panel de ayuda
+document.getElementById('close-help')
+  .addEventListener('click', () => {
+    document.getElementById('help-panel').classList.add('hidden');
+  });
