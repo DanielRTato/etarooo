@@ -1,13 +1,15 @@
 /* Variables de colores */
 :root {
-    --color-primario: #6a0dad;
-    --color-secundario: #9932cc;
+    --color-primario: #ff6b00;
+    --color-secundario: #ff4500;
     --color-fondo: #1a001a;
     --color-texto: #ffffff;
-    --color-hover: #8b008b;
-    --brillo-hover: 0 0 15px #ff00ff;
+    --color-hover: #ff8c00;
+    --brillo-hover: 0 0 15px #ff4500;
     --error-color: #ff0000;
     --success-color: #00ff00;
+    --color-sombra: rgba(255, 107, 0, 0.3);
+    --color-card: rgba(26, 0, 26, 0.8);
 }
 
 /* Reset básico */
@@ -17,178 +19,350 @@
     box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap');
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Special Elite', cursive;
     color: var(--color-texto);
-    height: 100vh;
-    overflow: hidden;
+    background: linear-gradient(135deg, #1a001a 0%, #2d002d 25%, #1a001a 50%, #2d002d 75%, #1a001a 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
-/* ESTILOS PARA EL FONDO */
-.contenedor-fondo {
+/* Efecto de estrellas en el fondo */
+body::before {
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    animation: twinkle 8s ease-in-out infinite;
     z-index: -1;
-    overflow: hidden;
 }
 
-.imagen-fondo {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* Efecto de niebla */
+body::after {
+    content: '';
+    position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(26, 0, 26, 0.2) 50%,
+        rgba(26, 0, 26, 0.4) 100%
+    );
+    pointer-events: none;
     z-index: -1;
 }
 
-/* CONTENEDOR GRID PRINCIPAL */
-.parent {
+@keyframes twinkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Header y Navegación */
+.header {
+    background: rgba(26, 0, 26, 0.95);
+    padding: 0.5rem 0;
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 14px;
-    grid-row-gap: 0px;
-    z-index: 1;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
 }
 
-/* POSICIONAMIENTO DE CASAS EN LA GRID */
-.div1 { 
-    grid-area: 4 / 2 / 5 / 3;
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
-.div2 { 
-    grid-area: 3 / 3 / 4 / 4;
+.titulo-principal {
+    font-family: 'Creepster', cursive;
+    font-size: 2rem;
+    color: var(--color-primario);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5),
+                 0 0 10px var(--color-primario);
+    margin: 0;
+}
+
+.nav-menu {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    list-style: none;
+    gap: 2rem;
 }
 
-.div3 { 
-    grid-area: 3 / 5 / 4 / 6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.div4 { 
-    grid-area: 4 / 6 / 5 / 7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ESTILOS PARA LOS BOTONES */
-.boton-juego {
-    width: 180px;
-    height: auto;
-    cursor: pointer;
-    transition: transform 0.4s ease-out, filter 0.4s ease-out;
-    transform: scale(1);
-    max-width: 100%;
-    object-fit: contain;
-}
-
-/* Efecto hover mejorado y compatible */
-.boton-juego:hover {
-    transform: scale(1.15);
-    filter: drop-shadow(var(--brillo-hover)) brightness(1.2);
-    transition: transform 0.4s ease-out, filter 0.4s ease-out;
-}
-
-/* Estilos para mensajes de error */
-.error-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: var(--error-color);
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 9999;
-    text-align: center;
-    font-size: 18px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-/* Estilos para mensajes de éxito */
-.success-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: var(--success-color);
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 9999;
-    text-align: center;
-    font-size: 18px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.enlace-juego {
-    display: block;
+.nav-menu a {
+    color: var(--color-texto);
     text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-/* ESTILOS DEL FOOTER */
-footer {
-    position: fixed;
-    bottom: 0;
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--color-primario);
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: var(--color-primario);
+}
+
+.nav-menu a:hover::after {
     width: 100%;
-    background: rgba(26, 0, 26, 0.7);
-    padding: 10px 0;
-    text-align: center;
-    border-top: 1px solid var(--color-secundario);
-    backdrop-filter: blur(3px);
-    z-index: 1; /* Asegúrate que sea mayor que el z-index del fondo */
 }
 
-.pie-footer {
-    display: inline-block;
+/* Contenido Principal */
+.main-content {
+    flex: 1;
+    margin-top: 60px;
+    padding: 1rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 120px);
+}
+
+.section-title {
+    font-family: 'Creepster', cursive;
+    font-size: 2rem;
+    color: var(--color-primario);
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Grid de Juegos */
+.juegos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 0.5rem;
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.juego-card {
+    background: var(--color-card);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: 1px solid var(--color-primario);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Permite que las tarjetas se ajusten al contenedor */
+}
+
+.juego-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+}
+
+.juego-card .enlace-juego {
+    text-decoration: none;
+    color: var(--color-texto);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.5rem;
+}
+
+.juego-card .boton-casa {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.juego-info {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.juego-info h3 {
+    color: var(--color-primario);
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.juego-info p {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    opacity: 0.9;
+}
+
+/* Sección Acerca de */
+.acerca-section {
+    margin-top: 4rem;
+    padding: 2rem;
+    background: var(--color-card);
+    border-radius: 15px;
+    border: 1px solid var(--color-primario);
+}
+
+.acerca-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+    background: rgba(26, 0, 26, 0.95);
+    padding: 0.5rem 0;
+    border-top: 2px solid var(--color-primario);
+    position: relative;
+    z-index: 2;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--color-primario) 20%, 
+        var(--color-primario) 80%, 
+        transparent 100%
+    );
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: center;
+}
+
+.footer-section {
+    text-align: center;
+}
+
+.footer-section h3 {
+    color: var(--color-primario);
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 0 5px var(--color-primario);
 }
 
 .enlaces-footer {
     list-style: none;
-    padding: 5px 0;
 }
 
 .enlaces-footer li {
-    display: inline-block;
-    margin: 0 15px;
+    margin-bottom: 0.2rem;
 }
 
-.enlaces-footer a {
+.enlaces-footer a, .correo-enlace {
     color: var(--color-texto);
     text-decoration: none;
-    font-size: 14px;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
 }
 
-.enlaces-footer a:hover {
-    color: var(--color-hover);
-}
-
-.correo-enlace {
+.enlaces-footer a:hover, .correo-enlace:hover {
     color: var(--color-primario);
-    text-decoration: none;
-    transition: color 0.3s;
-    font-size: 14px;
+    text-shadow: 0 0 5px var(--color-primario);
 }
 
-.correo-enlace:hover {
-    color: var(--color-hover);
+.copyright {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .juegos-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .titulo-principal {
+        font-size: 1.8rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 0.5rem;
+    }
+
+    .titulo-principal {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .juegos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .juego-info h3 {
+        font-size: 1.1rem;
+    }
+
+    .juego-info p {
+        font-size: 0.7rem;
+    }
 }
