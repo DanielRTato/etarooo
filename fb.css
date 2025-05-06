@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:wght@400;700&display=swap');
+
 /* FlappyMeiga - Tema místico oscuro */
 :root {
     --primary-color: #8a5aff;
@@ -9,6 +11,13 @@
     --shadow-color: rgba(91, 33, 182, 0.3);
 }
 
+* {
+    font-family: "Playwrite GB S", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
 body {
     position: fixed;
     top: 0;
@@ -18,7 +27,6 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     background-image: 
@@ -142,9 +150,9 @@ body {
 .control-item p {
     margin: 0;
     color: var(--text-color);
-    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
     font-size: 0.9rem;
     text-shadow: 0 0 5px rgba(224, 208, 255, 0.3);
+    font-weight: 400;
 }
 
 #tablero {
@@ -169,9 +177,8 @@ body {
     transform: translate(-50%, -50%);
     background: linear-gradient(to bottom, #ff9a5a, #ff6a3a);
     color: white;
-    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 700;
     border: none;
     border-radius: 30px;
     padding: 12px 25px;
