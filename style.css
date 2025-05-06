@@ -1,4 +1,3 @@
-/* Variables de colores */
 :root {
     --color-primario: #6a0dad;
     --color-secundario: #9932cc;
@@ -8,7 +7,6 @@
     --brillo-hover: 0 0 15px #ff00ff;
 }
 
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -18,112 +16,156 @@
 body {
     font-family: 'Arial', sans-serif;
     color: var(--color-texto);
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* ESTILOS PARA EL FONDO */
+/* Fondo */
 .contenedor-fondo {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Este valor debe ser menor que el z-index del footer */
+    inset: 0;
+    z-index: -1;
 }
 
 .imagen-fondo {
-    position: absolute;
-    min-width: 100%;
-    min-height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-/* CONTENEDOR GRID PRINCIPAL */
-.parent {
+/* Grid con márgenes extremos */
+.juegos-grid {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -25%;
+    bottom: 50px;
+    left: 120px; /* Margen izquierdo máximo */
+    right: 120px; /* Margen derecho máximo */
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 14px;
-    grid-row-gap: 0px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    align-items: end;
+    padding: 0;
+    gap: 0;
+    margin: 0;
     z-index: 1;
 }
 
+.juego-link {
+    height: 160%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 0 30px; /* Espaciado máximo entre casetas */
+    padding: 0;
+    overflow: visible;
+}
 
-/* ESTILOS PARA LOS BOTONES */
-.boton-juego {
-    width: 180px; /* Tamaño base */
+.juego-icono {
+    width: 100%;
+    max-width: 320px; /* Reducido ligeramente para compensar márgenes */
     height: auto;
-    cursor: pointer;
-    transition: all 0.4s ease-out;
-    transform: scale(1);
+    min-height: 360px;
+    max-height: 460px;
+    object-fit: contain;
+    margin: 0;
+    padding: 0;
+    transform: translateY(-40%);
+    transition: all 0.2s ease;
+    position: relative;
 }
 
-/* Efecto hover mejorado */
-.boton-juego:hover {
-    transform: scale(1.15);
-    filter: drop-shadow(var(--brillo-hover)) brightness(1.2);
-    transition: all 0.2s ease-in;
+.juego-icono:hover {
+    transform: scale(1.1) translateY(-40%);
+    z-index: 10;
+    filter: drop-shadow(0 0 30px var(--color-hover));
 }
 
-.enlace-juego {
-    display: block;
-    text-decoration: none;
-}
-
-/* ESTILOS DEL FOOTER */
+/* Footer sin márgenes */
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    left: 0;
     background: rgba(26, 0, 26, 0.7);
-    padding: 10px 0;
+    padding: 0.2rem 0;
     text-align: center;
-    border-top: 1px solid var(--color-secundario);
-    backdrop-filter: blur(3px);
-    z-index: 1; /* Asegúrate que sea mayor que el z-index del fondo */
+    border-top: 0.5px solid var(--color-secundario);
+    z-index: 2;
 }
 
 .pie-footer {
-    display: inline-block;
+    padding: 0.5rem;
 }
 
 .enlaces-footer {
     list-style: none;
-    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
 }
 
-.enlaces-footer li {
-    display: inline-block;
-    margin: 0 15px;
-}
-
-.enlaces-footer a {
+.enlaces-footer a, 
+.correo-enlace {
     color: var(--color-texto);
     text-decoration: none;
-    font-size: 14px;
-    transition: color 0.3s;
+    transition: color 0.2s ease;
+    font-size: 0.875rem;
 }
 
-.enlaces-footer a:hover {
-    color: var(--color-hover);
-}
-
-.correo-enlace {
-    color: var(--color-primario);
-    text-decoration: none;
-    transition: color 0.3s;
-    font-size: 14px;
-}
-
+.enlaces-footer a:hover, 
 .correo-enlace:hover {
     color: var(--color-hover);
+}
+
+@media (max-width: 1920px) {
+    .juegos-grid {
+        left: 100px;
+        right: 100px;
+    }
+    .juego-link {
+        margin: 0 25px;
+    }
+}
+
+@media (max-width: 1600px) {
+    .juegos-grid {
+        left: 80px;
+        right: 80px;
+    }
+    .juego-link {
+        margin: 0 20px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .juegos-grid {
+        grid-template-columns: repeat(3, 1fr);
+        left: 60px;
+        right: 60px;
+    }
+    .juego-link {
+        margin: 0 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .juegos-grid {
+        left: 40px;
+        right: 40px;
+    }
+    .juego-link {
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .juegos-grid {
+        grid-template-columns: repeat(2, 1fr);
+        left: 30px;
+        right: 30px;
+    }
+    .juego-link {
+        margin: 0 8px;
+    }
 }

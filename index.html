@@ -3,41 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MiniJuegos con temática de Halloween">
     <title>MiniJuegos Halloween</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="contenedor-fondo">
-        <img src="assets/imagenes/Fondo3.png" class="imagen-fondo" alt="Fondo Halloween">
+        <img src="assets/imagenes/Fondo3.png" class="imagen-fondo" alt="Fondo temático de Halloween con elementos espeluznantes">
     </div>
     
-    <div class="parent">
-        <div class="div1">
-            <a href="memory.html" class="enlace-juego">
-                <img src="assets/imagenes/Casa1.png" class="boton-casa" alt="Juego Ahorcado">
-            </a>
-        </div>
-        <div class="div2">
-            <a href="Cc.html" class="enlace-juego">
-                <img src="assets/imagenes/Casa2.png" class="boton-casa" alt="Juego Candy Crush">
-            </a>
-        </div>
-        <div class="div3">
-            <a href="fb.html" class="enlace-juego">
-                <img src="assets/imagenes/Casa3.png" class="boton-casa" alt="Juego Flappy Meiga">
-            </a>
-        </div>
-        <div class="div4">
-            <a href="Ahorcado.html" class="enlace-juego">
-                <img src="assets/imagenes/Casa4.png" class="boton-casa" alt="Juego Memory">
-            </a>
-        </div>
-        <div class="div5">
-            <a href="Ahorcado.html" class="enlace-juego">
-                <img src="assets/imagenes/Casa5.png" class="boton-casa" alt="Juego Memory">
-            </a>
-        </div>
-    </div>
+    <nav class="juegos-grid">
+        <a href="memory.html" class="juego-link">
+            <img src="assets/imagenes/Casa1.png" class="juego-icono" alt="Juego de Memoria - Halloween">
+        </a>
+        <a href="Cc.html" class="juego-link">
+            <img src="assets/imagenes/Casa2.png" class="juego-icono" alt="Juego tipo Candy Crush - Halloween">
+        </a>
+        <a href="fb.html" class="juego-link">
+            <img src="assets/imagenes/Casa3.png" class="juego-icono" alt="Juego Flappy Meiga - Halloween">
+        </a>
+        <a href="Ahorcado.html" class="juego-link">
+            <img src="assets/imagenes/Casa4.png" class="juego-icono" alt="Juego del Ahorcado - Halloween">
+        </a>
+        <a href="Ahorcado.html" class="juego-link">
+            <img src="assets/imagenes/Casa5.png" class="juego-icono" alt="Juego adicional - Halloween">
+        </a>
+    </nav>
     
     <footer>
         <div class="pie-footer">
@@ -48,6 +39,6 @@
             <p><a href="mailto:ataroSA@gmail.com" class="correo-enlace">ataroSA@gmail.com</a></p>
         </div>
     </footer>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
