@@ -17,6 +17,7 @@ body {
     height: 100vh;
     flex-direction: column;
     margin: 0;
+    transform: none !important;
 }
 
 .juego-container {
@@ -121,7 +122,7 @@ body {
 }
 
 .panel {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -138,6 +139,9 @@ body {
     border: 2px solid #8a5aff;
     box-shadow: 0 0 20px rgba(138, 90, 255, 0.3);
     text-shadow: 0 0 5px rgba(212, 160, 255, 0.5);
+    margin: 0;
+    width: auto;
+    white-space: nowrap;
 }
 
 .panel.show {
@@ -157,18 +161,32 @@ body {
 }
 
 
+/* Panel de Score para el Jugador Rojo */
 .scoreRojo {
-    background: linear-gradient(145deg, #da326d, #be2b3e);
-    border: 2px solid #da326d;
+    background: linear-gradient(145deg, #da326d, #b8224d); /* Rosa */
+    border: 2px solid rgba(0,0,0,0.5);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
     color: white;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+    margin-top: 10px;
+    text-align: center;
 }
-
+  
+/* Panel de Score para el Jugador Amarillo */
 .scoreAmarillo {
-    background: linear-gradient(145deg, #5ad44f, #48b33d);
-    border: 2px solid #5ad44f;
-    color: #1a3a1a;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, #5ad44f, #48b33d); /* Verde */
+    border: 2px solid rgba(0,0,0,0.5);  
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+    margin-top: 10px;
+    text-align: center;
 }
 .apostar_rojo_Gana,
 .apostar_rojo_Pierde {
@@ -218,9 +236,18 @@ body {
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 90, 255, 0.3); }
-    50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(138, 90, 255, 0.5); }
-    100% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 90, 255, 0.3); }
+    0% { 
+        transform: translate(-50%, -50%) scale(1); 
+        box-shadow: 0 0 20px rgba(138, 90, 255, 0.3); 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.03); 
+        box-shadow: 0 0 30px rgba(138, 90, 255, 0.5); 
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        box-shadow: 0 0 20px rgba(138, 90, 255, 0.3); 
+    }
 }
 
 @keyframes brillo {
