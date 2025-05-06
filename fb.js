@@ -14,7 +14,7 @@ let dibujo;
 let meigaWidth = 94
 let meigaHeight = 84;
 let meigaX = tableroWidth /6//8
-let meigaY = tableroHeight/2 //2
+let meigaY = tableroHeight/4 //2
 let meigaImg
 
 let meiga = {
@@ -24,11 +24,7 @@ let meiga = {
     height : meigaHeight,
 }
 
-// NUEVAS VARIABLES
-let turnoJugador = 1;
-let puntuacionJugador1 = 0;
-let puntuacionJugador2 = 0;
-let juegoTerminado = false;
+
 
 // variables de las tuberias
 let tuberiasArray= []
@@ -82,7 +78,7 @@ window.onload = function() {
     // Obtener la ruta absoluta del directorio del juego
     const baseDir = window.location.href.split('/').slice(0, -1).join('/') + '/';
     
-    images.meiga.src = baseDir + "assets/imagenes/FB/Rana_sinBordeNegro.svg";
+    images.meiga.src = baseDir + "assets/imagenes/FB/rana_sinBordeNegro.png";
     images.topPipe.src = baseDir + "assets/imagenes/FB/toppipe.png";
     images.bottomPipe.src = baseDir + "assets/imagenes/FB/bottompipe.png";
 
