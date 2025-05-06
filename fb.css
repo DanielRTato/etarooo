@@ -199,27 +199,3 @@ body {
         0 2px 4px rgba(0, 0, 0, 0.3),
         0 0 10px rgba(255, 154, 90, 0.5);
 }
-
-/* Efectos de animación */
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 90, 255, 0.8); }
-    50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(138, 90, 255, 1); }
-    100% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 90, 255, 0.8); }
-}
-
-/* Efecto de brillo para elementos interactivos */
-.key-icon, .action-icon, #reiniciar {
-    animation: brillo 2s infinite;
-}
-
-@keyframes brillo {
-    0% { filter: brightness(1); }
-    50% { filter: brightness(1.1); }
-    100% { filter: brightness(1); }
-}
-
-.svg-original {
-    width: auto;     
-    height: auto;    
-    max-width: 100%; 
-}
