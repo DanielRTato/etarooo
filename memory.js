@@ -1,151 +1,131 @@
-const correctSound = new Audio('/assets/audio/Memory/coin.mp3');
-const incorrectSound = new Audio('/assets/audio/Memory/negative.mp3');
-const winnerSound = new Audio('/assets/audio/Memory/winning.mp3');
+const sonidoCorrecto = new Audio('assets/audio/Memory/coin.mp3');
+const sonidoIncorrecto = new Audio('assets/audio/Memory/negative.mp3');
+const sonidoGanador = new Audio('assets/audio/Memory/winning.mp3');
 
-const totalCards = 12; // 6 pares
-const availableCards = [
-  '/assets/img/Bola+Soporte.png',
-  '/assets/img/caldero.png',
-  '/assets/img/escoba.png',
-  '/assets/img/FrascoPetaloH.png',
-  '/assets/img/PocionExp.png',
-  '/assets/img/sombrero.png'
+const imagenesDisponibles = [
+  'assets/img/Bola+Soporte.png',
+  'assets/img/frascoPluma.png',
+  'assets/img/Fogata.png',
+  'assets/img/FrascoPetaloH.png',
+  'assets/img/PocionExp.png',
+  'assets/img/FuegoAzul.png'
 ];
 
-let cards = [];
-let selectedCards = [];
-let currentMove = 0;
-let currentAttempts = 0;
-let turn = 1; // 1 = Jugador 1, 2 = Jugador 2
-let score1 = 0;
-let score2 = 0;
+let cartas = [];
+let cartasSeleccionadas = [];
+let movimientosActuales = 0;
+let intentosActuales = 0;
+let turno = 1; // 1 = Jugador 1, 2 = Jugador 2
+let puntaje1 = 0;
+let puntaje2 = 0;
 
-const cardTemplate = `
-  <div class="card">
-    <div class="back"></div>
-    <div class="face"></div>
-  </div>
-`;
-
-function updateStats() {
-  document.querySelector('#stats').innerHTML = `${currentAttempts} intentos`;
-  document.querySelector('#turn').innerText = `Turno: Jugador ${turn}`;  
-  document.querySelector('#score1').innerText = score1;
-  document.querySelector('#score2').innerText = score2;
+function actualizarEstadisticas() {
+  document.querySelector('#stats').innerHTML = `${intentosActuales} intentos`;
+  document.querySelector('#turn').innerText = `Turno: Jugador ${turno}`;
+  document.querySelector('#score1').innerText = puntaje1;
+  document.querySelector('#score2').innerText = puntaje2;
 }
 
-function activate(e) {
-  if (currentMove < 2) {
-    const card = e.target.closest('.card');
-    if (!card || card.classList.contains('active')) return;
+function activarCarta(e) {
+  if (movimientosActuales < 2) {
+    const carta = e.target.closest('.card');
+    if (!carta || carta.classList.contains('active')) return;
 
-    if (!selectedCards.includes(card)) {
-      card.classList.add('active');
-      selectedCards.push(card);
+    carta.classList.add('active');
+    cartasSeleccionadas.push(carta);
 
-      if (++currentMove === 2) {
-        currentAttempts++;
-        updateStats();
+    if (++movimientosActuales === 2) {
+      intentosActuales++;
+      actualizarEstadisticas();
 
-        const val1 = selectedCards[0].querySelector('.face').innerHTML;
-        const val2 = selectedCards[1].querySelector('.face').innerHTML;
+      const valor1 = cartasSeleccionadas[0].querySelector('.face').innerHTML;
+      const valor2 = cartasSeleccionadas[1].querySelector('.face').innerHTML;
 
-        if (val1 === val2) {
-          //sonido acertado
-          correctSound.play();
-          // Match
-          if (turn === 1) score1++;
+      if (valor1 === valor2) {
+        sonidoCorrecto.play();
+        turno === 1 ? puntaje1++ : puntaje2++;
 
-          else score2++;
-          const totalPairs = totalCards / 2;
-          const foundPairs = score1 + score2;
-        
-          if (foundPairs === totalPairs - 0) {
-            winnerSound.play(); //sonido ganador
-
-             // Mostrar confeti
-             confetti({
-             particleCount: 200,
-             spread: 70,
-             origin: { y: 0.6 }
+        if (puntaje1 + puntaje2 === imagenesDisponibles.length) {
+          sonidoGanador.play();
+          setTimeout(() => {
+            confetti({
+              particleCount: 200,
+              spread: 70,
+              origin: { y: 0.6 }
             });
 
-             // Mostrar mensaje opcional
-             setTimeout(() => {
-             alert(`🎉 ¡Jugador ${turn} gana! 🎉`);
-             }, 500);
-          }
-
-          selectedCards = [];
-          currentMove = 0;
-          updateStats();
-        } else {
-          //sonido erroneo
-          incorrectSound.play();
-
-          // Si no hay match, aplicar temblor
-          selectedCards[0].classList.add('shake');
-          selectedCards[1].classList.add('shake');
-
-          setTimeout(() => {
-            selectedCards[0].classList.remove('active', 'shake');
-            selectedCards[1].classList.remove('active', 'shake');
-            selectedCards = [];
-            currentMove = 0;
-            turn = turn === 1 ? 2 : 1;
-            updateStats();
-          }, 500); // Tiempo de temblor (debe coincidir con la duración de la animación)
+            const mensaje = document.getElementById('ganador');
+            const ganadorSpan = document.getElementById('ganadorNombre');
+            ganadorSpan.innerText = turno;
+            mensaje.classList.remove('oculto');
+            mensaje.classList.add('mostrar');
+          }, 500);
         }
+
+        cartasSeleccionadas = [];
+        movimientosActuales = 0;
+        actualizarEstadisticas();
+      } else {
+        sonidoIncorrecto.play();
+        cartasSeleccionadas[0].classList.add('shake');
+        cartasSeleccionadas[1].classList.add('shake');
+
+        setTimeout(() => {
+          cartasSeleccionadas[0].classList.remove('active', 'shake');
+          cartasSeleccionadas[1].classList.remove('active', 'shake');
+          cartasSeleccionadas = [];
+          movimientosActuales = 0;
+          turno = turno === 1 ? 2 : 1;
+          actualizarEstadisticas();
+        }, 500);
       }
     }
   }
 }
 
-function getFaceValue(index) {
-  return `<img src="${availableCards[index]}" alt="imagen">`;
-}
+function generarValoresCartas() {
+  const valores = [];
+  imagenesDisponibles.forEach((_, i) => {
+    valores.push(i, i); // Cada imagen tiene un par
+  });
 
-function generateCardValues() {
-  const values = [];
-  for (let i = 0; i < availableCards.length; i++) {
-    values.push(i);
-    values.push(i);
-  }
-
-  // Shuffle
-  for (let i = values.length - 1; i > 0; i--) {
+  for (let i = valores.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [values[i], values[j]] = [values[j], values[i]];
+    [valores[i], valores[j]] = [valores[j], valores[i]];
   }
-
-  return values;
+  return valores;
 }
 
-function initGame() {
-  selectedCards = [];
-  currentMove = 0;
-  currentAttempts = 0;
-  turn = 1;
-  score1 = 0;
-  score2 = 0;
-  updateStats();
+function iniciarJuego() {
+  cartasSeleccionadas = [];
+  movimientosActuales = 0;
+  intentosActuales = 0;
+  turno = 1;
+  puntaje1 = 0;
+  puntaje2 = 0;
+  actualizarEstadisticas();
 
-  const gameContainer = document.querySelector('#game');
-  gameContainer.innerHTML = '';
-  cards = [];
+  const mensaje = document.getElementById('ganador');
+  mensaje.classList.remove('mostrar');
+  mensaje.classList.add('oculto');
 
-  const shuffledValues = generateCardValues();
+  const contenedorJuego = document.querySelector('#game');
+  contenedorJuego.innerHTML = '';
+  cartas = [];
 
-  for (let i = 0; i < totalCards; i++) {
+  const valoresBarajados = generarValoresCartas();
+  valoresBarajados.forEach((valor) => {
     const div = document.createElement('div');
-    div.innerHTML = cardTemplate;
-    const valueIndex = shuffledValues[i];
-    div.querySelector('.face').innerHTML = getFaceValue(valueIndex);
-    div.querySelector('.card').addEventListener('click', activate);
-    cards.push(div);
-    gameContainer.appendChild(div);
-  }
+    div.classList.add('card');
+    div.innerHTML = `
+      <div class="back"></div>
+      <div class="face"><img src="${imagenesDisponibles[valor]}" alt="imagen"></div>
+    `;
+    div.addEventListener('click', activarCarta);
+    cartas.push(div);
+    contenedorJuego.appendChild(div);
+  });
 }
 
-document.querySelector('#reset-btn').addEventListener('click', initGame);
-window.onload = initGame;
+document.querySelector('#reset-btn').addEventListener('click', iniciarJuego);
+window.onload = iniciarJuego;

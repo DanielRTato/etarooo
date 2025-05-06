@@ -224,3 +224,23 @@ h2, h3, p {
    object-fit: contain; /* Mantiene proporción sin recortar */
    border-radius: 8px; /* Bordes redondeados */
  }
+ #ganador {
+   position: fixed;
+   top: 40%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background-color: rgba(90, 40, 130, 0.9);
+   color: #fff;
+   font-size: 32px; /* Más grande */
+   padding: 20px 40px; /* Más alto y ancho */
+   border-radius: 20px;
+   box-shadow: 0 0 30px rgba(138, 90, 255, 0.8);
+   z-index: 1000;
+   display: none;
+   text-align: center;
+   width: 70%; /* Esto lo hace más largo */
+   max-width: 600px; /* Evita que sea demasiado grande en pantallas grandes */
+ }
+ #ganador.mostrar {
+   display: block;
+ }
