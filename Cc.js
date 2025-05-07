@@ -357,35 +357,43 @@ function procesarCombinaciones(combinaciones) {
     animarEliminacion(celdasAEliminar, elementosEspeciales);
 }
 
-// Animación de eliminación (sin activar efectos aún)
+/* ---------------------------------------------------------------------------
+ * ANIMAR ELIMINACIÓN — ahora actualiza los objetivos *antes* de vaciar celdas
+ *---------------------------------------------------------------------------*/
 function animarEliminacion(celdasAEliminar, elementosEspeciales) {
-    celdasAEliminar.forEach(coordenada => {
-        const [fila, columna] = coordenada.split(',').map(Number);
-        const elemento = document.querySelector(`.celda[data-fila="${fila}"][data-columna="${columna}"] .elemento`);
-        if (elemento) elemento.classList.add('eliminando');
+    // 1. Efecto visual preliminar
+    celdasAEliminar.forEach(coord => {
+        const [fila, columna] = coord.split(',').map(Number);
+        const el = document.querySelector(`.celda[data-fila="${fila}"][data-columna="${columna}"] .elemento`);
+        if (el) el.classList.add('eliminando');
     });
-    
+
     setTimeout(() => {
-        // Eliminar celdas marcadas
-        celdasAEliminar.forEach(coordenada => {
-            const [fila, columna] = coordenada.split(',').map(Number);
-            estado.tablero[fila][columna].tipo = null;
-            estado.tablero[fila][columna].especial = null;
-        });
-        
-        // Aplicar elementos especiales VISIBLES
-        elementosEspeciales.forEach(especial => {
-            const celda = estado.tablero[especial.fila][especial.columna];
-            celda.especial = especial.especial;
-            celda.tipo = especial.tipo || configuracion.tiposElementos[Math.floor(Math.random() * configuracion.tiposElementos.length)];
-        });
-        
-        // Actualizar objetivos y rellenar espacios
+        // 2. Descuenta los objetivos mientras las celdas aún conservan su tipo
         actualizarObjetivos(celdasAEliminar);
+
+        // 3. Vacía las celdas eliminadas
+        celdasAEliminar.forEach(coord => {
+            const [fila, columna] = coord.split(',').map(Number);
+            const celda = estado.tablero[fila][columna];
+            celda.tipo = null;
+            celda.especial = null;
+        });
+
+        // 4. Coloca los elementos especiales resultantes
+        elementosEspeciales.forEach(e => {
+            const celda = estado.tablero[e.fila][e.columna];
+            celda.especial = e.especial;
+            celda.tipo = e.tipo ??
+                configuracion.tiposElementos[
+                    Math.floor(Math.random() * configuracion.tiposElementos.length)
+                ];
+        });
+
+        // 5. Rellena el tablero
         rellenarEspaciosVacios();
     }, 500);
 }
-
 // Manejar clic en elementos especiales
 function manejarClic(fila, columna) {
     if (estado.bloqueado) return;
@@ -532,63 +540,74 @@ function activarBolsa(fila, columna) {
     animarExplosionEspecial(celdasExplosion1, 'bolsa');
 }
 
-// Animación de explosión para elementos especiales
+/* ---------------------------------------------------------------------------
+ * ANIMAR EXPLOSIÓN ESPECIAL — misma idea: contar antes de borrar
+ *---------------------------------------------------------------------------*/
 function animarExplosionEspecial(celdasExplosion, tipoEfecto) {
-    celdasExplosion.forEach(coordenada => {
-        const [fila, columna] = coordenada.split(',').map(Number);
-        const elemento = document.querySelector(`.celda[data-fila="${fila}"][data-columna="${columna}"] .elemento`);
-        if (elemento) {
-            elemento.classList.add('explosion', tipoEfecto);
-        }
+    // 1. Efecto visual de explosión
+    celdasExplosion.forEach(coord => {
+        const [fila, columna] = coord.split(',').map(Number);
+        const el = document.querySelector(`.celda[data-fila="${fila}"][data-columna="${columna}"] .elemento`);
+        if (el) el.classList.add('explosion', tipoEfecto);
     });
-    
+
     setTimeout(() => {
-        celdasExplosion.forEach(coordenada => {
-            const [fila, columna] = coordenada.split(',').map(Number);
-            estado.tablero[fila][columna].tipo = null;
-            estado.tablero[fila][columna].especial = null;
-        });
-        
+        // 2. Descuenta los objetivos
         actualizarObjetivos(celdasExplosion);
+
+        // 3. Vacía las celdas afectadas
+        celdasExplosion.forEach(coord => {
+            const [fila, columna] = coord.split(',').map(Number);
+            const celda = estado.tablero[fila][columna];
+            celda.tipo = null;
+            celda.especial = null;
+        });
+
+        // 4. Rellenar y desbloquear
         rellenarEspaciosVacios();
         estado.bloqueado = false;
     }, 500);
 }
 
-// Actualizar objetivos
 function actualizarObjetivos(celdasEliminadas) {
-    // Objeto para contar elementos eliminados por tipo
+    // 1. Prepara el contador
     const contador = {};
-    configuracion.tiposElementos.forEach(tipo => contador[tipo] = 0);
+    configuracion.tiposElementos.forEach(t => (contador[t] = 0));
 
-    // Contar elementos eliminados
-    celdasEliminadas.forEach(coordenada => {
-        const [fila, columna] = coordenada.split(',').map(Number);
-        const tipo = estado.tablero[fila][columna]?.tipo;
-        if (tipo) contador[tipo]++;
-    });
-
-    // Actualizar objetivos
-    estado.objetivos.forEach(objetivo => {
-        objetivo.cantidad = Math.max(0, objetivo.cantidad - contador[objetivo.tipo]);
-    });
-
-    // Actualizar UI
-    document.querySelectorAll('.objetivo').forEach((elemento, index) => {
-        const objetivo = estado.objetivos[index];
-        const cantidadOriginal = configuracion.niveles[estado.nivelActual].objetivos[index].cantidad;
-        const completado = cantidadOriginal - objetivo.cantidad;
-        
-        elemento.querySelector('.progreso').textContent = `${completado}/${cantidadOriginal}`;
-        
-        if (objetivo.cantidad <= 0) {
-            elemento.style.opacity = '0.6';
-            elemento.style.textDecoration = 'line-through';
+    // 2. Cuenta eliminados (sin duplicados y solo tipos válidos)
+    [...new Set(celdasEliminadas)].forEach(coord => {
+        const [fila, col] = coord.split(',').map(Number);
+        const celda = estado.tablero[fila]?.[col];
+        if (celda && contador.hasOwnProperty(celda.tipo)) {
+            contador[celda.tipo]++;
         }
     });
 
-    // Verificar si se completaron todos los objetivos
-    if (estado.objetivos.every(obj => obj.cantidad <= 0)) {
+    // 3. Actualiza los objetivos
+    estado.objetivos.forEach(obj => {
+        const resta = contador[obj.tipo] ?? 0;
+        obj.cantidad = Math.max(0, obj.cantidad - resta);
+    });
+
+    // 4. Refresca la UI
+    document.querySelectorAll('.objetivo').forEach((el, i) => {
+        const obj = estado.objetivos[i];
+        const original = configuracion.niveles[estado.nivelActual].objetivos[i].cantidad;
+        const completado = original - obj.cantidad;
+
+        el.querySelector('.progreso').textContent = `${completado}/${original}`;
+
+        if (obj.cantidad <= 0) {
+            el.style.opacity = '0.6';
+            el.style.textDecoration = 'line-through';
+        } else {
+            el.style.opacity = '1';
+            el.style.textDecoration = 'none';
+        }
+    });
+
+    // 5. ¿Nivel completado?
+    if (estado.objetivos.every(o => o.cantidad <= 0)) {
         setTimeout(() => {
             if (estado.nivelActual + 1 < configuracion.niveles.length) {
                 iniciarJuego(estado.nivelActual + 1);
