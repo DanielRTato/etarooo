@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Crush Básico</title>
+    <link rel="stylesheet" href="Cc.css">
+</head>
+<body>
+    <h1>Magic Crush</h1>
+    <div id="contenedor-juego">
+        <div id="panel-juego">
+            <div id="tablero"></div>
+        </div>
+        
+        <div id="panel-informacion">
+            <div class="seccion-info">
+                <h3>Información</h3>
+                <div class="contador">
+                    <span>Movimientos:</span>
+                    <span class="valor" id="movimientos">15</span>
+                </div>
+                <div class="contador">
+                    <span>Puntuación:</span>
+                    <span class="valor" id="puntuacion">0</span>
+                </div>
+            </div>
+            
+            <div class="seccion-info">
+                <h3>Objetivos</h3>
+                <div id="objetivos-container">
+                    <!-- Los objetivos se insertarán aquí dinámicamente -->
+                </div>
+            </div>
+            
+            <button id="boton-reiniciar">Reiniciar Nivel</button>
+        </div>
+    </div>
+    <button id="back-btn" class="round-back-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      
+
+    <script src="Cc.js"></script>
+</body>
+</html>
