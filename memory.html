@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego de Memoria - 2 Jugadores</title>
+  <link rel="stylesheet" href="memory.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <h1>Magic Memory</h1>
+  <div id="game"></div> <!-- Aquí se mostrarán las cartas -->
+  <div id="stats">0 intentos</div> <!-- Número de intentos -->
+  <div id="turn">Turno: Jugador 1</div> <!-- Jugador actual -->
+  <div id="scores">
+    <span>Jugador 1: <span id="score1">0</span></span> |
+    <span>Jugador 2: <span id="score2">0</span></span>
+  </div>
+  <button id="reset-btn">Reiniciar Juego</button> <!-- Botón para reiniciar -->
+  <button id="back-btn" class="round-back-btn">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </button> <!-- Botón para volver -->
+  <!-- Botón de ayuda -->
+<button id="help-btn" class="round-help-btn" aria-label="Instrucciones">
+  <!-- Interrogante en SVG para mantener estilo vectorial -->
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 18h.01"/>
+    <path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/>
+    <circle cx="12" cy="12" r="10"/>
+  </svg>
+</button>
+
+<!-- Panel flotante de instrucciones -->
+<div id="help-panel" class="help-panel hidden">
+  <div class="help-content">
+    <button id="close-help" class="close-help-btn" aria-label="Cerrar ayuda">&times;</button>
+    <h2>Instrucciones del juego</h2>
+    <p>
+      El objetivo del juego es emparejar cartas con la misma imagen, jugando en turnos alternados entre dos jugadores. En cada turno, se deben voltear dos cartas; si son iguales, se quedan visibles, si no, se vuelven a tapar. Cada vez que se acierta un par, se suma un punto. El primer jugador en emparejar todas las cartas gana.
+    </p>
+  </div>
+</div>
+
+  <script src="memory.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <div id="ganador" class="oculto">🎉 ¡Jugador <span id="ganadorNombre"></span> gana! 🎉</div> <!-- Mensaje de ganador -->
+</body>
+</html>
