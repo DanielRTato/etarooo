@@ -1,0 +1,435 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: bold;
+}
+
+body {
+  background-color: #1a0a2a;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(139, 58, 191, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(91, 33, 182, 0.15) 0%, transparent 25%);
+  color: #e0d0ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  margin: 0;
+  transform: none !important;
+}
+
+.juego-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  background-color: rgba(42, 16, 74, 0.7);
+  border-radius: 20px;
+  padding: 20px;
+  border: 2px solid #6a2a9a;
+  box-shadow: 0 10px 25px rgba(91, 33, 182, 0.3);
+}
+
+.mesa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.manos,
+.comunitarias {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.carta {
+  width: 140px;
+  height: 210px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  border: 2px solid #8a5aff;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 15px rgba(138, 90, 255, 0.3);
+}
+
+.carta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(138, 90, 255, 0.5);
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.apostar {
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 90, 255, 0.3);
+}
+
+.apostar_rojo {
+  background: linear-gradient(145deg, #da326d, #be2b3e);
+  border: 1px solid #da326d;
+}
+
+.apostar_amarillo {
+  background: linear-gradient(145deg, #5ad44f, #48b33d);
+  border: 1px solid #5ad44f;
+  color: #1a3a1a;
+}
+
+.apostar:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(138, 90, 255, 0.5);
+}
+
+.multiplicador-panel {
+  background: rgba(50, 20, 80, 0.7);
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid #8a5aff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #e0d0ff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.multiplicador-panel .valor {
+  color: #8a5aff;
+  text-shadow: 0 0 10px rgba(138, 90, 255, 0.5);
+}
+
+.panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(42, 16, 74, 0.9);
+  color: #e0d0ff;
+  font-size: 1.5em;
+  padding: 1em 2em;
+  border-radius: 15px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1000;
+  border: 2px solid #8a5aff;
+  box-shadow: 0 0 20px rgba(138, 90, 255, 0.3);
+  text-shadow: 0 0 5px rgba(212, 160, 255, 0.5);
+  margin: 0;
+  width: auto;
+  white-space: nowrap;
+}
+
+.panel.show {
+  opacity: 1;
+  pointer-events: all;
+  animation: pulse 1.5s infinite;
+}
+
+.rojo {
+  background: linear-gradient(145deg, #da326d, #be2b3e);
+  border: 2px solid #da326d;
+}
+
+.amarillo {
+  background: linear-gradient(145deg, #5ad44f, #48b33d);
+  border: 2px solid #5ad44f;
+}
+
+
+/* Panel de Score para el Jugador Rojo */
+.scoreRojo {
+  background: linear-gradient(145deg, #da326d, #b8224d);
+  /* Rosa */
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Panel de Score para el Jugador Amarillo */
+.scoreAmarillo {
+  background: linear-gradient(145deg, #5ad44f, #48b33d);
+  /* Verde */
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: black;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+  text-align: center;
+}
+
+.apostar_rojo_Gana,
+.apostar_rojo_Pierde {
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: rgb(218, 50, 109);
+  color: white;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.apostar_rojo_Gana:hover,
+.apostar_rojo_Pierde:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.apostar_rojo_Gana:active,
+.apostar_rojo_Pierde:active {
+  transform: scale(0.98);
+}
+
+/* Botones del jugador amarillo */
+.apostar_amarillo_Gana,
+.apostar_amarillo_Pierde {
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: rgb(90, 212, 79);
+  color: black;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.apostar_amarillo_Gana:hover,
+.apostar_amarillo_Pierde:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.apostar_amarillo_Gana:active,
+.apostar_amarillo_Pierde:active {
+  transform: scale(0.98);
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 20px rgba(138, 90, 255, 0.3);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.03);
+    box-shadow: 0 0 30px rgba(138, 90, 255, 0.5);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 20px rgba(138, 90, 255, 0.3);
+  }
+}
+
+@keyframes brillo {
+  from {
+    text-shadow: 0 0 10px rgba(138, 90, 255, 0.5);
+  }
+
+  to {
+    text-shadow: 0 0 20px rgba(212, 160, 255, 0.8);
+  }
+}
+
+.encuadre {
+  border: 2px dashed #da326d;
+  padding: 3px 2px 2px 6px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(255, 107, 158, 0.3);
+}
+
+.contenedor-flex {
+  display: flex;
+  justify-content: center;
+}
+
+/* Botón redondo de volver */
+.round-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
+  color: white;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(138, 90, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.round-back-btn:hover {
+  background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(138, 90, 255, 0.7);
+}
+
+.round-back-btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 8px rgba(138, 90, 255, 0.5);
+}
+
+.round-back-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+}
+
+/* Botón redondo de ayuda */
+.round-help-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  /* Cambia de left a right */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #8a5aff, #6a3ac8);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(138, 90, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.round-help-btn:hover {
+  background: linear-gradient(to bottom, #9a6aff, #7a4ad8);
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(138, 90, 255, 0.7);
+}
+
+.round-help-btn:active {
+  transform: translateY(0);
+}
+
+/* Panel de fondo oscuro */
+.help-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+}
+
+/* Caja de contenido – versión oscura/translúcida */
+.help-content {
+  position: relative;
+  background: rgba(53, 33, 94, 0.85);
+  /* morado oscuro semitransparente */
+  color: #f5f5ff;
+  /* texto claro para buen contraste */
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 80%;
+  max-height: 80vh;
+  overflow-y: auto;
+
+  /* efecto vidrio */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Botón de cierre (X) */
+.close-help-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  color: #6a3ac8;
+  cursor: pointer;
+}
+
+.close-help-btn:hover {
+  color: #8a5aff;
+}
+
+/* Clase utilitaria para ocultar */
+.hidden {
+  display: none;
+}
+
+h1.titulo {
+  margin: 0px auto 20px auto;
+  text-align: center;
+  font-size: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 10px 0;
+  /* Solo cambiar estos estilos */
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  background: linear-gradient(45deg, #d4a0ff, #8a5aff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(138, 90, 255, 0.5);
+  animation: brillo 2s infinite alternate;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesa de Poker</title>
+    <link rel="stylesheet" href="poker.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Botón de ayuda -->
+    <button id="help-btn" class="round-help-btn" aria-label="Instrucciones">
+        <!-- Interrogante en SVG para mantener estilo vectorial -->
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 18h.01" />
+            <path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3" />
+            <circle cx="12" cy="12" r="10" />
+        </svg>
+    </button>
+
+    <!-- Panel flotante de instrucciones -->
+    <div id="help-panel" class="help-panel hidden">
+        <div class="help-content">
+            <button id="close-help" class="close-help-btn" aria-label="Cerrar ayuda">&times;</button>
+            <h2>Instrucciones del Apuesta Poker</h2>
+            <br>
+            <p>
+                <strong>Apuesta Poker</strong> es un duelo entre dos jugadores que apuestan
+                sobre el desenlace de la mano de póker que tienen a la vista. Tu marcador subirá
+                o bajará según aciertes o falles tu predicción.<br>
+                El primero en alcanzar <strong>1 650 puntos</strong> gana inmediatamente; del mismo
+                modo, si uno de los jugadores cae a <strong>−850 puntos</strong> o menos, pierde la
+                partida y su rival se lleva la victoria.<br>
+                <em>Nota:</em> Este póker se aparta de las reglas habituales: la baraja puede incluir más de dos
+                comodines y en el campo se empieza con solo dos cartas descubiertas.
+            </p>
+        </div>
+    </div>
+
+    <button id="back-btn" class="round-back-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6" />
+        </svg>
+    </button>
+    <h1 class="titulo">Apuesta Poker</h1>
+
+    <div class="juego-container">
+
+        <!-- Botones lado izquierdo -->
+        <div class="control-panel izquierda">
+            <div class="botones">
+                <button onclick="eleccionRojo(true)" class="apostar_rojo_Gana">Apuesto que Gana</button>
+                <button onclick="eleccionRojo(false)" class="apostar_rojo_Pierde">Apuesto que Pierde</button>
+            </div>
+            <div class="multiplicador-panel">
+                <p>Multiplicador: <span class="valor">x0</span></p>
+            </div>
+            <div class="scoreRojo">
+                <p>Score Rosa: <span class="valor">0</span></p>
+            </div>
+        </div>
+
+        <!-- Mesa con cartas -->
+        <div class="mesa">
+
+            <!-- Cartas del rival -->
+            <div class="manos rival">
+                <img src="dark/BACK.png" alt="Carta Rival 1" class="carta" id="rival1">
+                <img src="dark/BACK.png" alt="Carta Rival 2" class="carta" id="rival2">
+            </div>
+
+            <!-- Cartas comunitarias -->
+            <div class="comunitarias">
+                <img src="dark/BACK.png" alt="Carta Mesa 1" class="carta" id="mesa1">
+                <img src="dark/BACK.png" alt="Carta Mesa 2" class="carta" id="mesa2">
+                <img src="dark/BACK.png" alt="Carta Mesa 3" class="carta" id="mesa3">
+                <img src="dark/BACK.png" alt="Carta Mesa 4" class="carta" id="mesa4">
+                <img src="dark/BACK.png" alt="Carta Mesa 5" class="carta" id="mesa5">
+            </div>
+
+            <!-- Tus cartas -->
+            <div class="manos jugador">
+                <img src="dark/1-C.png" alt="Tu Carta 1" class="carta" id="jugador1">
+                <img src="dark/1-C.png" alt="Tu Carta 2" class="carta" id="jugador2">
+            </div>
+
+        </div>
+
+        <!-- Botones lado derecho -->
+        <div class="control-panel derecha">
+            <div class="botones">
+                <button onclick="eleccionAmarillo(true)" class="apostar_amarillo_Gana">Apuesta que Gana</button>
+                <button onclick="eleccionAmarillo(false)" class="apostar_amarillo_Pierde">Apuesta que Pierde</button>
+            </div>
+            <div class="multiplicador-panel">
+                <p>Multiplicador: <span class="valor">x0</span></p>
+            </div>
+            <div class="scoreAmarillo">
+                <p>Score Verde: <span class="valor">0</span></p>
+            </div>
+        </div>
+
+    </div>
+    <div id="mensaje" class="panel">Empecemos</div>
+
+    <script src="poker.js"></script>
+</body>
+
+</html>

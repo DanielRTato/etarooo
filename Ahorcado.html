@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilo-ahoracado.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Botón de ayuda -->
+<button id="help-btn" class="round-help-btn" aria-label="Instrucciones">
+  <!-- Interrogante en SVG para mantener estilo vectorial -->
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 18h.01"/>
+    <path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/>
+    <circle cx="12" cy="12" r="10"/>
+  </svg>
+</button>
+
+<!-- Panel flotante de instrucciones -->
+<div id="help-panel" class="help-panel hidden">
+  <div class="help-content">
+    <button id="close-help" class="close-help-btn" aria-label="Cerrar ayuda">&times;</button>
+    <h2>Instrucciones de Las Ranas Ahogadas</h2>
+<p>
+  <strong>Las Ranas Ahogadas</strong> es una versión competitiva inspirada en el ahorcado en la que dos jugadores
+  luchan por acumular más puntos… o por evitar que su rana se hunda antes de tiempo.
+</p>
+
+<ul>
+  <li><strong>Vidas:</strong> Cada jugador dispone de <strong>6 intentos fallidos</strong>. Al fallar los seis, su rana se ahoga y el rival gana la partida.</li>
+  <li><strong>Puntuación:</strong> El objetivo no es descubrir la palabra entera, sino acertar letras.<br>
+      • Cada <em>vocal</em> acertada otorga <strong>5&nbsp;puntos</strong>.<br>
+      • Cada <em>consonante</em> acertada otorga <strong>10&nbsp;puntos</strong>.</li>
+  <li><strong>Cómo se gana:</strong> La partida termina de dos maneras:
+    <ol>
+      <li>Uno de los jugadores pierde sus 6 vidas &rarr; su rana se ahoga y el rival vence.</li>
+      <li>Se revela la palabra sin que nadie se ahogue &rarr; gana quien haya sumado más puntos.</li>
+    </ol>
+  </li>
+</ul>
+
+<p>
+  <em>Nota:</em> Si descubres la palabra antes de tiempo, ¡no la pronuncies!
+  Revelarla daría ventaja a tu adversario, ya que la esencia del juego está en adivinar letras,
+  no en anunciar la solución.
+</p>
+  </div>
+</div>
+  <button id="back-btn" class="round-back-btn">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </button>
+  <div class="main-container">
+
+    <h1 class="titulo">Las Ranas Ahogadas</h1>
+    <h1 id="msg-final"></h1>
+    <h3 id="acierto"></h3>
+    <div class="ahorcados">
+
+      <div class="ahorcado1">
+        <div class="scoreRojo">Score: 0</div>
+        <picture>
+          <img src="img/ahorcado_6.png" alt="" id="image6">
+          <img src="img/ahorcado_5.png" alt="" id="image5">
+          <img src="img/ahorcado_4.png" alt="" id="image4">
+          <img src="img/ahorcado_3.png" alt="" id="image3">
+          <img src="img/ahorcado_2.png" alt="" id="image2">
+          <img src="img/ahorcado_1.png" alt="" id="image1">
+          <img src="img/ahorcado_0.png" alt="" id="image0">
+        </picture>
+        <div class="intentosRojo">Intentos restantes: 6</div>
+      </div>
+      <div class="ahorcado2">
+        <div class="scoreAmarillo">Score: 0</div>
+        <picture>
+          <img src="img/ahorcado_6.png" alt="" id="image6_1">
+          <img src="img/ahorcado_5.png" alt="" id="image5_1">
+          <img src="img/ahorcado_4.png" alt="" id="image4_1">
+          <img src="img/ahorcado_3.png" alt="" id="image3_1">
+          <img src="img/ahorcado_2.png" alt="" id="image2_1">
+          <img src="img/ahorcado_1.png" alt="" id="image1_1">
+          <img src="img/ahorcado_0.png" alt="" id="image0_1">
+        </picture>
+        <div class="intentosAmarillo">Intentos restantes: 6</div>
+      </div>
+      <h2 class="palabra" id="palabra"></h2>
+    </div>
+    <div id="turnPanel" class="turn-panel">
+      <p id="turnText">Turno de Jugador 1</p>
+    </div>
+
+
+
+  </div>
+  <div class="contenedor-flex">
+    <div class="letrero">
+      <div class="col">
+        <div class="flex-row" id="abcdario"></div> 
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+<!-- Panel modal para fin del juego -->
+<div id="endGamePanel" class="modal">
+  <div class="modal-content">
+    <h2>Fin del Juego</h2>
+    <p>El juego ha finalizado. Haz clic abajo para volver al inicio.</p>
+    <button id="btnHome">Volver al inicio</button>
+  </div>
+</div>
+
+  <script src="ahorcado.js"></script>
+  <script>
+    document.getElementById('back-btn').addEventListener('click', function() {
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+
+</html>
