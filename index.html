@@ -8,27 +8,55 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="contenedor-fondo">
-        <img src="assets/imagenes/Fondo3.png" class="imagen-fondo" alt="Fondo temático de Halloween con elementos espeluznantes">
-    </div>
-    
-    <nav class="juegos-grid">
-        <a href="memory.html" class="juego-link">
-            <img src="assets/imagenes/Casa1.png" class="juego-icono" alt="Juego de Memoria - Halloween">
-        </a>
-        <a href="Cc.html" class="juego-link">
-            <img src="assets/imagenes/Casa2.png" class="juego-icono" alt="Juego tipo Candy Crush - Halloween">
-        </a>
-        <a href="fb.html" class="juego-link">
-            <img src="assets/imagenes/Casa3.png" class="juego-icono" alt="Juego Flappy Meiga - Halloween">
-        </a>
-        <a href="Ahorcado.html" class="juego-link">
-            <img src="assets/imagenes/Casa4.png" class="juego-icono" alt="Juego del Ahorcado - Halloween">
-        </a>
-        <a href="Ahorcado.html" class="juego-link">
-            <img src="assets/imagenes/Casa5.png" class="juego-icono" alt="Juego adicional - Halloween">
-        </a>
-    </nav>
+    <header class="header">
+        <div class="nav-container">
+            <h1 class="titulo-principal">Ataro Games</h1>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="juegos-section">
+            <h2 class="section-title">Selecciona un Juego</h2>
+            <div class="juegos-grid">
+                <div class="juego-card">
+                    <a href="memory.html" class="enlace-juego">
+                        <img src="assets/imagenes/casa1.png" class="boton-casa" alt="Memory">
+                        <div class="juego-info">
+                            <h3>Memory</h3>
+                            <p>Encuentra las parejas de cartas</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="juego-card">
+                    <a href="Cc.html" class="enlace-juego">
+                        <img src="assets/imagenes/casa2.png" class="boton-casa" alt="Candy Crush">
+                        <div class="juego-info">
+                            <h3>Candy Crush</h3>
+                            <p>Combina dulces y gana puntos</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="juego-card">
+                    <a href="fb.html" class="enlace-juego">
+                        <img src="assets/imagenes/Casa3.png" class="boton-casa" alt="Flappy Meiga">
+                        <div class="juego-info">
+                            <h3>Flappy Meiga</h3>
+                            <p>Vuela entre las brujas</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="juego-card">
+                    <a href="Ahorcado.html" class="enlace-juego">
+                        <img src="assets/imagenes/casa4.png" class="boton-casa" alt="Ahorcado">
+                        <div class="juego-info">
+                            <h3>Ahorcado</h3>
+                            <p>Adivina la palabra oculta</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
     
     <footer>
         <div class="pie-footer">
