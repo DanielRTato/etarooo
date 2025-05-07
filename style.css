@@ -229,8 +229,9 @@ body::after {
 }
 .juego-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    border-color: var(--color-hover);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 105, 180, 0.8);
+    border: 2px solid var(--color-primario);
+    transition: all 0.3s ease;
 }
 
 .juego-card .enlace-juego {
