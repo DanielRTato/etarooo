@@ -1,14 +1,20 @@
 * {
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
+  font-family: "Comfortaa", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: bold;
 }
 
+.comfortaa-uniquifier {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* Mantener estructura original del body */
 body {
-  font-family: Cambria, Cochin, Georgia, "Times New Roman", Times, serif;
   margin: 0;
   padding: 20px;
   color: #333;
@@ -27,8 +33,6 @@ h1.titulo {
   text-transform: uppercase;
   letter-spacing: 3px;
   padding: 10px 0;
-  /* Solo cambiar estos estilos */
-  font-family: 'Arial Rounded MT Bold', sans-serif;
   background: linear-gradient(45deg, #d4a0ff, #8a5aff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -293,8 +297,7 @@ h2.palabra {
 }
 
 h3 {
-  text-align: center;
-  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+  text-align: center;"Comfortaa", sans-serif;
   font-size: 20px;
   margin-bottom: 10px;
   padding: 10px;

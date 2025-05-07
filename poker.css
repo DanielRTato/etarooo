@@ -2,13 +2,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: bold;
 }
 
+.comfortaa-uniquifier {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
 body {
+  font-family: "Comfortaa", sans-serif;
   background-color: #1a0a2a;
   background-image:
     radial-gradient(circle at 20% 30%, rgba(139, 58, 191, 0.15) 0%, transparent 25%),
@@ -425,8 +432,6 @@ h1.titulo {
   text-transform: uppercase;
   letter-spacing: 3px;
   padding: 10px 0;
-  /* Solo cambiar estos estilos */
-  font-family: 'Arial Rounded MT Bold', sans-serif;
   background: linear-gradient(45deg, #d4a0ff, #8a5aff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
